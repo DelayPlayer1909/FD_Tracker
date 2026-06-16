@@ -1,202 +1,442 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>FD Tracker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.19.0/webfont/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-background-tertiary,#f0f4f8);color:var(--color-text-primary,#1a1a1a)}
-.nav{background:var(--color-background-primary,#fff);border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 1rem;display:flex;align-items:center}
-.nav-brand{font-size:15px;font-weight:500;color:#0c447c;padding:14px 0;margin-right:auto;display:flex;align-items:center;gap:8px}
-.nav-tab{padding:14px 16px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--color-text-secondary,#666);border-bottom:2px solid transparent;transition:all 0.15s}
-.nav-tab.active{color:#185fa5;border-bottom-color:#185fa5}
-.screen{display:none;padding:1rem}
-.screen.active{display:block}
-.toolbar{display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:0.5px solid rgba(0,0,0,0.18);background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a1a);transition:all 0.15s;white-space:nowrap}
-.btn:hover{background:var(--color-background-secondary,#f5f5f5)}
-.btn-primary{background:#185fa5;color:#fff;border-color:#185fa5}.btn-primary:hover{background:#0c447c}
-.btn-sm{padding:4px 9px;font-size:11px;gap:4px}
-.btn-red{color:#a32d2d;border-color:#f09595;background:#fcebeb}.btn-red:hover{background:#f7c1c1}
-.btn-teal{color:#0f6e56;border-color:#5dcaa5;background:#e1f5ee}.btn-teal:hover{background:#9fe1cb}
-.btn-blue{color:#0c447c;border-color:#85b7eb;background:#e6f1fb}.btn-blue:hover{background:#b5d4f4}
-.btn-gray{color:#444441;border-color:#b4b2a9;background:#f1efe8}.btn-gray:hover{background:#d3d1c7}
-.chip-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center}
-.chip-lbl{font-size:11px;color:var(--color-text-secondary,#888);font-weight:500;min-width:36px}
-.chip{padding:4px 11px;border-radius:20px;font-size:12px;font-weight:500;border:0.5px solid rgba(0,0,0,0.15);background:var(--color-background-primary,#fff);cursor:pointer;color:var(--color-text-secondary,#666);transition:all 0.15s}
-.chip.active{background:#e6f1fb;border-color:#378add;color:#0c447c}
-.sec-hdr{font-size:12px;font-weight:500;color:var(--color-text-secondary,#666);margin-bottom:6px;display:flex;align-items:center;gap:6px;padding:0 2px}
-.tbl-section{margin-bottom:1.25rem}
-.tbl-wrap{background:var(--color-background-primary,#fff);border-radius:12px;border:0.5px solid rgba(0,0,0,0.1);overflow:hidden;overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--color-background-secondary,#f8f8f8);padding:10px 12px;text-align:left;font-weight:500;font-size:11px;color:var(--color-text-secondary,#666);border-bottom:0.5px solid rgba(0,0,0,0.1);white-space:nowrap}
-td{padding:11px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--color-background-secondary,#f9f9f9)}
-.row-active td:first-child{border-left:3px solid #378add;padding-left:9px}
-.row-matured td:first-child{border-left:3px solid #97c459;padding-left:9px}
-.row-soon td:first-child{border-left:3px solid #ef9f27;padding-left:9px}
-.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:500;white-space:nowrap}
-.b-active{background:#e6f1fb;color:#0c447c}
-.b-soon{background:#faeeda;color:#854f0b}
-.b-matured{background:#eaf3de;color:#3b6d11}
-.inline-edit{border:none;background:transparent;font-size:13px;color:var(--color-text-primary,#1a1a1a);width:100%;font-family:inherit;padding:2px 0;cursor:pointer}
-.inline-edit:focus{outline:1.5px solid #378add;border-radius:4px;background:#e6f1fb;padding:2px 5px}
-.act-cell{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.notif{border-radius:8px;padding:9px 13px;margin-bottom:10px;display:flex;align-items:center;gap:8px;font-size:12px}
-.notif-warn{background:#faeeda;border:0.5px solid #ef9f27;color:#854f0b}
-.notif-ok{background:#eaf3de;border:0.5px solid #97c459;color:#3b6d11}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--color-background-primary,#fff);border-radius:12px;padding:1.25rem;width:min(420px,94vw);max-height:88vh;overflow-y:auto;border:0.5px solid rgba(0,0,0,0.1)}
-.modal h3{font-size:15px;font-weight:500;margin-bottom:1rem}
-.fr{margin-bottom:11px}
-.fr label{display:block;font-size:11px;color:var(--color-text-secondary,#666);margin-bottom:3px;font-weight:500}
-.fr input,.fr select{width:100%;padding:7px 10px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.2);font-size:13px;font-family:inherit;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a1a)}
-.fr input:focus,.fr select:focus{outline:2px solid #378add}
-.tog-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:13px}
-.toggle{position:relative;width:38px;height:21px}
-.toggle input{opacity:0;width:0;height:0}
-.tslider{position:absolute;inset:0;background:#b4b2a9;border-radius:11px;cursor:pointer;transition:.2s}
-.tslider:before{content:'';position:absolute;width:15px;height:15px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
-input:checked+.tslider{background:#185fa5}
-input:checked+.tslider:before{transform:translateX(17px)}
-.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem}
-.mcard{background:var(--color-background-secondary,#f5f5f5);border-radius:8px;padding:13px}
-.mcard .lbl{font-size:11px;color:var(--color-text-secondary,#666);margin-bottom:3px}
-.mcard .val{font-size:19px;font-weight:500}
-.mcard .sub{font-size:11px;color:var(--color-text-secondary,#666);margin-top:2px}
-.chart-card{background:var(--color-background-primary,#fff);border-radius:12px;border:0.5px solid rgba(0,0,0,0.1);padding:1rem;margin-bottom:1rem}
-.chart-title{font-size:13px;font-weight:500;margin-bottom:12px}
-.sort-sel{padding:6px 10px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.18);font-size:12px;font-family:inherit;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a1a);cursor:pointer}
-.bank-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);font-size:13px}
-.analyze-tabs{display:flex;gap:6px;margin-bottom:1rem}
-.atab{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500;border:0.5px solid rgba(0,0,0,0.18);background:var(--color-background-primary,#fff);cursor:pointer;color:var(--color-text-secondary,#666);transition:all 0.15s}
-.atab.active{background:#185fa5;color:#fff;border-color:#185fa5}
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.bar-label{font-size:12px;color:var(--color-text-primary,#1a1a1a);min-width:90px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-track{flex:1;background:rgba(0,0,0,0.07);border-radius:4px;height:22px;position:relative;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:500;color:#fff;white-space:nowrap;transition:width 0.4s}
-.bar-amt{font-size:12px;color:var(--color-text-primary,#1a1a1a);min-width:80px;text-align:right;font-weight:500}
-.user-section{margin-bottom:1.5rem}
-.user-hdr{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid rgba(0,0,0,0.1);margin-bottom:10px}
-.fd-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;padding:2px 0}
-.fd-card{border-radius:12px;padding:12px 13px;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;position:relative;overflow:hidden}
-.fd-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.12)}
-.fd-card:active{transform:translateY(0)}
-.fd-card.blue{background:#e6f1fb;border:1.5px solid #378add}
-.fd-card.orange{background:#faeeda;border:1.5px solid #ef9f27}
-.fd-card.green{background:#eaf3de;border:1.5px solid #97c459}
-.fd-card .card-date{font-size:10px;font-weight:500;opacity:0.7;margin-bottom:4px}
-.fd-card .card-amount{font-size:16px;font-weight:600;margin-bottom:4px;line-height:1.2}
-.fd-card .card-bank{font-size:11px;font-weight:500;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fd-card .card-user{font-size:11px;opacity:0.65;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fd-card .card-badge{position:absolute;top:10px;right:10px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:10px}
-.fd-card.blue .card-badge{background:#185fa5;color:#fff}
-.fd-card.orange .card-badge{background:#ef9f27;color:#fff}
-.fd-card.green .card-badge{background:#3b6d11;color:#fff}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f0f4f8;
+  --surface:#fff;
+  --surface2:#f5f7fa;
+  --border:rgba(0,0,0,0.09);
+  --text:#1a1a1a;
+  --muted:#6b7280;
+  --blue:#185fa5;
+  --blue-light:#e6f1fb;
+  --blue-mid:#378add;
+  --teal:#1d9e75;
+  --teal-light:#e1f5ee;
+  --orange:#ef9f27;
+  --orange-light:#faeeda;
+  --red:#a32d2d;
+  --red-light:#fcebeb;
+  --green:#3b6d11;
+  --green-light:#eaf3de;
+  --radius:14px;
+  --radius-sm:9px;
+  --bottom-nav-h:64px;
+  --header-h:56px;
+}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px}
+
+/* ── HEADER ── */
+.header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 16px;z-index:100;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+}
+.header-brand{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600;color:var(--blue)}
+.header-brand i{font-size:20px}
+.header-actions{margin-left:auto;display:flex;gap:6px}
+.icon-btn{
+  width:36px;height:36px;border-radius:50%;border:none;
+  background:var(--surface2);color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;transition:background .15s
+}
+.icon-btn:active{background:var(--blue-light);color:var(--blue)}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-h);
+  background:var(--surface);border-top:1px solid var(--border);
+  display:flex;z-index:100;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.bnav-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;border:none;background:none;cursor:pointer;
+  color:var(--muted);font-size:10px;font-weight:500;transition:color .15s;padding-bottom:2px
+}
+.bnav-btn i{font-size:22px;transition:transform .15s}
+.bnav-btn.active{color:var(--blue)}
+.bnav-btn.active i{transform:scale(1.1)}
+
+/* ── SCROLL AREA ── */
+.page{
+  position:fixed;top:var(--header-h);left:0;right:0;
+  bottom:var(--bottom-nav-h);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:14px 14px 8px;display:none
+}
+.page.active{display:block}
+
+/* ── FAB ── */
+.fab{
+  position:fixed;bottom:calc(var(--bottom-nav-h) + 14px);right:16px;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--blue);color:#fff;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;cursor:pointer;z-index:90;
+  box-shadow:0 4px 16px rgba(24,95,165,0.4);
+  transition:transform .15s,box-shadow .15s
+}
+.fab:active{transform:scale(0.94);box-shadow:0 2px 8px rgba(24,95,165,0.3)}
+
+/* ── NOTIF ── */
+.notif{border-radius:var(--radius-sm);padding:10px 13px;margin-bottom:10px;display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.4}
+.notif i{font-size:16px;margin-top:1px;flex-shrink:0}
+.notif-warn{background:var(--orange-light);border:1px solid var(--orange);color:#854f0b}
+.notif-ok{background:var(--green-light);border:1px solid #97c459;color:var(--green)}
+
+/* ── CHIP BAR ── */
+.chip-section{margin-bottom:12px}
+.chip-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px;letter-spacing:.3px}
+.chip-scroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chip-scroll::-webkit-scrollbar{display:none}
+.chip{
+  padding:5px 13px;border-radius:20px;font-size:13px;font-weight:500;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0
+}
+.chip.active{background:var(--blue-light);border-color:var(--blue-mid);color:var(--blue)}
+.chip:active{opacity:.7}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px;margin-top:4px;display:flex;align-items:center;gap:6px}
+.sec-hdr i{font-size:15px}
+.tbl-section{margin-bottom:1rem}
+
+/* ── SORT ROW ── */
+.sort-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sort-row label{font-size:12px;color:var(--muted);white-space:nowrap}
+.sort-sel{
+  flex:1;padding:8px 10px;border-radius:var(--radius-sm);
+  border:1px solid var(--border);font-size:13px;font-family:inherit;
+  background:var(--surface);color:var(--text);
+}
+
+/* ── FD CARD GRID ── */
+.fd-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ── FD CARD ── */
+.fd-card{
+  border-radius:var(--radius);padding:13px 12px;cursor:pointer;
+  position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;
+  active-scale:.97
+}
+.fd-card:active{transform:scale(.97)}
+.fd-card.blue{background:var(--blue-light);border:1.5px solid var(--blue-mid)}
+.fd-card.orange{background:var(--orange-light);border:1.5px solid var(--orange)}
+.fd-card.green{background:var(--green-light);border:1.5px solid #97c459}
+.fd-card .card-badge{
+  position:absolute;top:9px;right:9px;
+  font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px
+}
+.fd-card.blue .card-badge{background:var(--blue);color:#fff}
+.fd-card.orange .card-badge{background:var(--orange);color:#fff}
+.fd-card.green .card-badge{background:var(--green);color:#fff}
+.fd-card .card-date{font-size:10px;font-weight:500;opacity:.65;margin-bottom:3px}
+.fd-card .card-amount{font-size:15px;font-weight:700;margin-bottom:3px;line-height:1.2;padding-right:36px}
 .fd-card.blue .card-amount{color:#0c447c}
 .fd-card.orange .card-amount{color:#854f0b}
-.fd-card.green .card-amount{color:#3b6d11}
+.fd-card.green .card-amount{color:var(--green)}
+.fd-card .card-bank,.fd-card .card-user{font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fd-card .card-user{opacity:.65;margin-top:1px}
+
+/* ── METRIC GRID ── */
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.mcard{background:var(--surface2);border-radius:var(--radius-sm);padding:13px 12px}
+.mcard .lbl{font-size:11px;color:var(--muted);margin-bottom:3px;font-weight:500}
+.mcard .val{font-size:20px;font-weight:700;line-height:1.1}
+.mcard .sub{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* ── ANALYZE TABS ── */
+.analyze-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.analyze-tabs::-webkit-scrollbar{display:none}
+.atab{
+  padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0
+}
+.atab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* ── CHART CARD ── */
+.chart-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:14px;margin-bottom:12px}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text)}
+
+/* ── USER AVATAR ── */
+.user-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.user-hdr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:12px}
+
+/* ── EXPORT ROW ── */
+.export-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+/* ── MODAL ── */
+.modal-bg{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);
+  z-index:200;align-items:flex-end;justify-content:center
+}
+.modal-bg.open{display:flex}
+.modal{
+  background:var(--surface);border-radius:20px 20px 0 0;
+  padding:20px 18px;width:100%;max-height:92vh;overflow-y:auto;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
+  border:1px solid var(--border);
+  animation:slideUp .22s ease-out
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:36px;height:4px;background:rgba(0,0,0,.15);border-radius:2px;margin:0 auto 16px}
+.modal h3{font-size:17px;font-weight:600;margin-bottom:14px;padding-right:28px}
+
+/* form rows */
+.fr{margin-bottom:12px}
+.fr label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600;letter-spacing:.2px}
+.fr input,.fr select{
+  width:100%;padding:10px 12px;border-radius:var(--radius-sm);
+  border:1px solid var(--border);font-size:15px;font-family:inherit;
+  background:var(--surface);color:var(--text);
+  -webkit-appearance:none
+}
+.fr input:focus,.fr select:focus{outline:2px solid var(--blue-mid);border-color:var(--blue-mid)}
+.tog-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;font-size:14px;border-bottom:1px solid var(--border)}
+.toggle{position:relative;width:44px;height:25px}
+.toggle input{opacity:0;width:0;height:0}
+.tslider{position:absolute;inset:0;background:#c4c4c4;border-radius:13px;cursor:pointer;transition:.2s}
+.tslider:before{content:'';position:absolute;width:19px;height:19px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+input:checked+.tslider{background:var(--blue)}
+input:checked+.tslider:before{transform:translateX(19px)}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 16px;border-radius:var(--radius-sm);
+  font-size:14px;font-weight:600;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);transition:all .15s;white-space:nowrap;font-family:inherit
+}
+.btn:active{opacity:.8;transform:scale(.98)}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-sm{padding:7px 12px;font-size:13px;gap:4px;border-radius:8px}
+.btn-red{color:var(--red);border-color:#f09595;background:var(--red-light)}
+.btn-teal{color:#0f6e56;border-color:#5dcaa5;background:var(--teal-light)}
+.btn-blue{color:#0c447c;border-color:#85b7eb;background:var(--blue-light)}
+.btn-gray{color:#444;border-color:#c4c4c4;background:var(--surface2)}
+.btn-full{width:100%;justify-content:center;margin-top:10px}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.modal-actions .btn{flex:1;justify-content:center}
+
+/* ── DETAIL MODAL ── */
+.detail-bar{height:5px;margin:-20px -18px 16px;border-radius:20px 20px 0 0}
+.detail-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:9px 0;border-bottom:1px solid var(--border)
+}
+.detail-row:last-child{border-bottom:none}
+.detail-lbl{font-size:12px;color:var(--muted);font-weight:500}
+.detail-val{font-size:14px;font-weight:600;text-align:right;max-width:60%}
+
+/* ── BANK / HISTORY LIST ── */
+.bank-item{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.bank-item:last-child{border-bottom:none}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.b-active{background:var(--blue-light);color:#0c447c}
+.b-soon{background:var(--orange-light);color:#854f0b}
+.b-matured{background:var(--green-light);color:var(--green)}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--muted)}
+.empty i{font-size:42px;opacity:.35;display:block;margin-bottom:10px}
+.empty p{font-size:14px}
+
+/* ── BAR CHART ROWS ── */
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bar-label{font-size:12px;min-width:80px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;background:rgba(0,0,0,.07);border-radius:4px;height:20px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:7px;font-size:10px;font-weight:600;color:#fff;white-space:nowrap;transition:width .4s}
+.bar-amt{font-size:11px;min-width:72px;text-align:right;font-weight:600}
+
+/* ── CLOSE BTN ── */
+.modal-close{
+  position:absolute;top:18px;right:16px;width:30px;height:30px;
+  border-radius:50%;background:var(--surface2);border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--muted);cursor:pointer
+}
+.modal-close:active{background:var(--border)}
+
+/* ── RENEW INFO ── */
+.renew-info{background:var(--blue-light);border-radius:var(--radius-sm);padding:11px 13px;margin-bottom:14px;font-size:13px;color:#0c447c;line-height:1.5}
+
+/* ── HIST ── */
+.hist-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:baseline}
+.hist-item:last-child{border-bottom:none}
+.hist-date{color:var(--blue);font-weight:600;min-width:72px;flex-shrink:0}
+.hist-amt{font-weight:600;margin-right:8px}
+.hist-lbl{color:var(--muted)}
+
+/* ── SCROLLBAR HIDE globally ── */
+::-webkit-scrollbar{width:0;height:0}
+
+/* ── PIE LEGEND ── */
+.pie-legend-item{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 0;border-bottom:1px solid var(--border)
+}
+.pie-legend-item:last-child{border-bottom:none}
+.pie-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.pie-name{font-size:12px;flex:1}
+.pie-amt{font-size:12px;font-weight:700}
+.pie-pct{font-size:11px;color:var(--muted);min-width:30px;text-align:right}
 </style>
+</head>
+<body>
 
-<div>
-<nav class="nav">
-  <div class="nav-brand"><i class="ti ti-building-bank" style="font-size:18px" aria-hidden="true"></i> FD Tracker</div>
-  <button class="nav-tab active" onclick="switchTab('invest',this)"><i class="ti ti-wallet" aria-hidden="true"></i> Invest</button>
-  <button class="nav-tab" onclick="switchTab('analyze',this)"><i class="ti ti-chart-pie" aria-hidden="true"></i> Analyze</button>
-</nav>
-
-<div id="screen-invest" class="screen active">
-  <div id="notif-area"></div>
-  <div class="toolbar">
-    <button class="btn btn-primary" onclick="openAddModal()"><i class="ti ti-plus" aria-hidden="true"></i> Add FD</button>
-    <button class="btn btn-gray" onclick="openBankModal()"><i class="ti ti-building-bank" aria-hidden="true"></i> Manage Banks</button>
-    <button class="btn btn-gray" onclick="openUserModal()"><i class="ti ti-users" aria-hidden="true"></i> Manage Users</button>
-    <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
-      <select class="sort-sel" id="sort-sel" onchange="renderAll()">
-        <option value="">Default</option>
-        <option value="bank">By Bank</option>
-        <option value="user">By User</option>
-        <option value="amount-desc">Amount ↓</option>
-        <option value="amount-asc">Amount ↑</option>
-        <option value="maturity">Maturity</option>
-      </select>
-      <button class="btn btn-sm btn-gray" onclick="exportCSV()"><i class="ti ti-download" aria-hidden="true"></i> CSV</button>
-      <button class="btn btn-sm btn-gray" onclick="exportPDF('all')"><i class="ti ti-file-text" aria-hidden="true"></i> PDF</button>
-    </div>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <i class="ti ti-building-bank"></i>FD Tracker
   </div>
-  <div class="chip-bar"><span class="chip-lbl">Bank:</span><div id="bank-chips"></div></div>
-  <div class="chip-bar"><span class="chip-lbl">User:</span><div id="user-chips"></div></div>
+  <div class="header-actions" id="invest-actions">
+    <button class="icon-btn" title="Manage Banks" onclick="openBankModal()"><i class="ti ti-building-bank"></i></button>
+    <button class="icon-btn" title="Manage Users" onclick="openUserModal()"><i class="ti ti-users"></i></button>
+    <button class="icon-btn" title="Export CSV" onclick="exportCSV()"><i class="ti ti-download"></i></button>
+  </div>
+  <div class="header-actions" id="analyze-actions" style="display:none">
+    <button class="icon-btn" title="Bank PDF" onclick="exportPDF('bank')"><i class="ti ti-file-text"></i></button>
+    <button class="icon-btn" title="Export CSV" onclick="exportCSV()"><i class="ti ti-download"></i></button>
+  </div>
+</header>
+
+<!-- INVEST PAGE -->
+<div id="page-invest" class="page active">
+  <div id="notif-area"></div>
+
+  <div class="sort-row">
+    <label>Sort:</label>
+    <select class="sort-sel" id="sort-sel" onchange="renderAll()">
+      <option value="">Default</option>
+      <option value="bank">By Bank</option>
+      <option value="user">By User</option>
+      <option value="amount-desc">Amount ↓</option>
+      <option value="amount-asc">Amount ↑</option>
+      <option value="maturity">Maturity</option>
+    </select>
+  </div>
+
+  <div class="chip-section">
+    <div class="chip-lbl">BANK</div>
+    <div class="chip-scroll" id="bank-chips"></div>
+  </div>
+  <div class="chip-section">
+    <div class="chip-lbl">USER</div>
+    <div class="chip-scroll" id="user-chips"></div>
+  </div>
 
   <div id="section-active" class="tbl-section">
-    <div class="sec-hdr"><i class="ti ti-table" aria-hidden="true"></i> FD Records <span style="color:#888;font-weight:400" id="fd-count"></span></div>
+    <div class="sec-hdr"><i class="ti ti-table"></i> FD Records <span id="fd-count" style="font-weight:400;color:var(--muted)"></span></div>
     <div id="fd-tbody" class="fd-card-grid"></div>
   </div>
-
   <div id="section-soon" class="tbl-section">
-    <div class="sec-hdr" style="color:#854f0b"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Maturing Soon <span style="font-weight:400;color:#888">(within 7 days)</span></div>
+    <div class="sec-hdr" style="color:#854f0b"><i class="ti ti-alert-triangle"></i> Maturing Soon <span style="font-weight:400;color:var(--muted)">(within 7 days)</span></div>
     <div id="soon-tbody" class="fd-card-grid"></div>
   </div>
-
   <div id="section-matured" class="tbl-section">
-    <div class="sec-hdr" style="color:#3b6d11"><i class="ti ti-check-circle" aria-hidden="true"></i> Matured FDs</div>
+    <div class="sec-hdr" style="color:var(--green)"><i class="ti ti-circle-check"></i> Matured FDs</div>
     <div id="matured-tbody" class="fd-card-grid"></div>
   </div>
 </div>
 
-<div id="screen-analyze" class="screen">
+<!-- ANALYZE PAGE -->
+<div id="page-analyze" class="page">
   <div id="metric-cards" class="metric-grid"></div>
   <div class="analyze-tabs">
-    <button class="atab active" onclick="switchAnalyzeTab('bank',this)"><i class="ti ti-building-bank" aria-hidden="true"></i> Bank-wise</button>
-    <button class="atab" onclick="switchAnalyzeTab('user',this)"><i class="ti ti-user" aria-hidden="true"></i> User-wise</button>
-    <button class="atab" onclick="switchAnalyzeTab('timeline',this)"><i class="ti ti-calendar" aria-hidden="true"></i> Timeline</button>
+    <button class="atab active" onclick="switchAnalyzeTab('bank',this)"><i class="ti ti-building-bank"></i> Bank-wise</button>
+    <button class="atab" onclick="switchAnalyzeTab('user',this)"><i class="ti ti-user"></i> User-wise</button>
+    <button class="atab" onclick="switchAnalyzeTab('timeline',this)"><i class="ti ti-calendar"></i> Timeline</button>
   </div>
+
   <div id="analyze-bank" class="analyze-panel">
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;align-items:center">
-      <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary,#666)">View bank:</span>
-      <div id="bank-select-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    <div style="margin-bottom:12px">
+      <div class="chip-lbl">VIEW BANK</div>
+      <div class="chip-scroll" id="bank-select-chips"></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title" id="bank-chart-title">Bank-wise deposit distribution</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
-        <div style="position:relative;width:170px;height:170px">
-          <canvas id="pieChart" role="img" aria-label="Pie chart bank-wise distribution"></canvas>
+      <div class="chart-title" id="bank-chart-title">All banks – deposit distribution</div>
+      <div style="display:flex;justify-content:center;margin-bottom:14px">
+        <div style="position:relative;width:180px;height:180px">
+          <canvas id="pieChart" role="img" aria-label="Bank-wise pie chart"></canvas>
         </div>
-        <div id="pie-legend" style="width:100%;max-width:320px;display:flex;flex-direction:column;gap:0"></div>
       </div>
+      <div id="pie-legend"></div>
     </div>
   </div>
+
   <div id="analyze-user" class="analyze-panel" style="display:none">
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;align-items:center">
-      <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary,#666)">View user:</span>
-      <div id="user-select-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    <div style="margin-bottom:12px">
+      <div class="chip-lbl">VIEW USER</div>
+      <div class="chip-scroll" id="user-select-chips"></div>
     </div>
     <div id="user-analysis"></div>
   </div>
+
   <div id="analyze-timeline" class="analyze-panel" style="display:none">
     <div class="chart-card">
       <div class="chart-title">Investment timeline by month</div>
-      <div style="position:relative;height:200px"><canvas id="barChart" role="img" aria-label="Monthly FD investments">Monthly FD investment chart.</canvas></div>
+      <div style="position:relative;height:200px">
+        <canvas id="barChart" role="img" aria-label="Monthly investment bar chart"></canvas>
+      </div>
     </div>
   </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-    <button class="btn btn-gray" onclick="exportPDF('bank')"><i class="ti ti-download" aria-hidden="true"></i> Bank-wise PDF</button>
-    <button class="btn btn-gray" onclick="exportPDF('total')"><i class="ti ti-download" aria-hidden="true"></i> Total PDF</button>
-    <button class="btn btn-gray" onclick="exportCSV()"><i class="ti ti-download" aria-hidden="true"></i> CSV</button>
+
+  <div class="export-row">
+    <button class="btn btn-gray btn-sm" onclick="exportPDF('bank')"><i class="ti ti-download"></i> Bank PDF</button>
+    <button class="btn btn-gray btn-sm" onclick="exportPDF('total')"><i class="ti ti-download"></i> Total PDF</button>
+    <button class="btn btn-gray btn-sm" onclick="exportCSV()"><i class="ti ti-download"></i> CSV</button>
   </div>
 </div>
-</div>
 
-<!-- Add/Edit Modal -->
+<!-- FAB -->
+<button class="fab" id="fab-add" onclick="openAddModal()" title="Add FD" aria-label="Add new FD">
+  <i class="ti ti-plus"></i>
+</button>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" id="bnav-invest" onclick="switchTab('invest',this)">
+    <i class="ti ti-wallet"></i>Invest
+  </button>
+  <button class="bnav-btn" id="bnav-analyze" onclick="switchTab('analyze',this)">
+    <i class="ti ti-chart-pie"></i>Analyze
+  </button>
+</nav>
+
+<!-- ── MODALS ── -->
+
+<!-- Add/Edit FD Modal -->
 <div class="modal-bg" id="fd-modal">
   <div class="modal">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('fd-modal')">×</button>
     <h3 id="modal-title">Add New FD</h3>
     <div class="fr"><label>Bank</label><select id="f-bank"></select></div>
     <div class="fr"><label>User / Account Holder</label><select id="f-user"></select></div>
     <div class="fr"><label>Start Date</label><input type="date" id="f-date"></div>
-    <div class="fr"><label>Principal Amount (₹)</label><input type="number" id="f-amount" placeholder="e.g. 50000" min="1"></div>
-    <div class="fr"><label>Interest Rate (% per annum)</label><input type="number" id="f-rate" placeholder="e.g. 7.5" step="0.01" min="0"></div>
-    <div class="fr"><label>Tenure (months)</label><input type="number" id="f-tenure" placeholder="e.g. 12" min="1"></div>
-    <div class="tog-row"><label>Compound interest (quarterly)</label><label class="toggle"><input type="checkbox" id="f-compound"><span class="tslider"></span></label></div>
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn btn-primary" onclick="saveFD()"><i class="ti ti-check" aria-hidden="true"></i> Save</button>
+    <div class="fr"><label>Principal Amount (₹)</label><input type="number" id="f-amount" placeholder="e.g. 50000" min="1" inputmode="numeric"></div>
+    <div class="fr"><label>Interest Rate (% per annum)</label><input type="number" id="f-rate" placeholder="e.g. 7.5" step="0.01" min="0" inputmode="decimal"></div>
+    <div class="fr"><label>Tenure (months)</label><input type="number" id="f-tenure" placeholder="e.g. 12" min="1" inputmode="numeric"></div>
+    <div class="tog-row"><span>Compound interest (quarterly)</span><label class="toggle"><input type="checkbox" id="f-compound"><span class="tslider"></span></label></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveFD()"><i class="ti ti-check"></i> Save</button>
       <button class="btn btn-gray" onclick="closeModal('fd-modal')">Cancel</button>
     </div>
   </div>
@@ -205,50 +445,58 @@ input:checked+.tslider:before{transform:translateX(17px)}
 <!-- Bank Modal -->
 <div class="modal-bg" id="bank-modal">
   <div class="modal">
-    <h3><i class="ti ti-building-bank" aria-hidden="true"></i> Manage Banks</h3>
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <input type="text" id="new-bank-inp" placeholder="Bank name" style="flex:1;padding:7px 10px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.2);font-size:13px;font-family:inherit;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a1a)">
-      <button class="btn btn-primary btn-sm" onclick="addBank()"><i class="ti ti-plus" aria-hidden="true"></i> Add</button>
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('bank-modal')">×</button>
+    <h3><i class="ti ti-building-bank"></i> Manage Banks</h3>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <input type="text" id="new-bank-inp" placeholder="Bank name" style="flex:1;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;background:var(--surface);color:var(--text)">
+      <button class="btn btn-primary btn-sm" onclick="addBank()"><i class="ti ti-plus"></i> Add</button>
     </div>
     <div id="bank-list"></div>
-    <button class="btn btn-gray" style="margin-top:12px;width:100%" onclick="closeModal('bank-modal')">Done</button>
+    <button class="btn btn-gray btn-full" onclick="closeModal('bank-modal')">Done</button>
   </div>
 </div>
 
 <!-- User Modal -->
 <div class="modal-bg" id="user-modal">
   <div class="modal">
-    <h3><i class="ti ti-users" aria-hidden="true"></i> Manage Users</h3>
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <input type="text" id="new-user-inp" placeholder="User / account holder name" style="flex:1;padding:7px 10px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.2);font-size:13px;font-family:inherit;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a1a)">
-      <button class="btn btn-primary btn-sm" onclick="addUser()"><i class="ti ti-plus" aria-hidden="true"></i> Add</button>
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('user-modal')">×</button>
+    <h3><i class="ti ti-users"></i> Manage Users</h3>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <input type="text" id="new-user-inp" placeholder="User / account holder name" style="flex:1;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;background:var(--surface);color:var(--text)">
+      <button class="btn btn-primary btn-sm" onclick="addUser()"><i class="ti ti-plus"></i> Add</button>
     </div>
     <div id="user-list"></div>
-    <button class="btn btn-gray" style="margin-top:12px;width:100%" onclick="closeModal('user-modal')">Done</button>
+    <button class="btn btn-gray btn-full" onclick="closeModal('user-modal')">Done</button>
   </div>
 </div>
 
 <!-- History Modal -->
 <div class="modal-bg" id="hist-modal">
   <div class="modal">
-    <h3><i class="ti ti-history" aria-hidden="true"></i> FD History</h3>
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('hist-modal')">×</button>
+    <h3><i class="ti ti-history"></i> FD History</h3>
     <div id="hist-content"></div>
-    <button class="btn btn-gray" style="margin-top:12px;width:100%" onclick="closeModal('hist-modal')">Close</button>
+    <button class="btn btn-gray btn-full" onclick="closeModal('hist-modal')">Close</button>
   </div>
 </div>
 
 <!-- Renew Modal -->
 <div class="modal-bg" id="renew-modal">
   <div class="modal">
-    <h3><i class="ti ti-refresh" aria-hidden="true"></i> Renew FD</h3>
-    <div id="renew-info" style="background:#e6f1fb;border-radius:8px;padding:10px;margin-bottom:12px;font-size:12px;color:#0c447c"></div>
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('renew-modal')">×</button>
+    <h3><i class="ti ti-refresh"></i> Renew FD</h3>
+    <div class="renew-info" id="renew-info"></div>
     <div class="fr"><label>Renewal Date</label><input type="date" id="r-date"></div>
-    <div class="fr"><label>New Amount (₹)</label><input type="number" id="r-amount" min="1"></div>
-    <div class="fr"><label>New Interest Rate (%)</label><input type="number" id="r-rate" step="0.01" min="0"></div>
-    <div class="fr"><label>New Tenure (months)</label><input type="number" id="r-tenure" min="1"></div>
-    <div class="tog-row"><label>Compound interest (quarterly)</label><label class="toggle"><input type="checkbox" id="r-compound"><span class="tslider"></span></label></div>
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn btn-primary" onclick="confirmRenew()"><i class="ti ti-refresh" aria-hidden="true"></i> Renew</button>
+    <div class="fr"><label>New Amount (₹)</label><input type="number" id="r-amount" min="1" inputmode="numeric"></div>
+    <div class="fr"><label>New Interest Rate (%)</label><input type="number" id="r-rate" step="0.01" min="0" inputmode="decimal"></div>
+    <div class="fr"><label>New Tenure (months)</label><input type="number" id="r-tenure" min="1" inputmode="numeric"></div>
+    <div class="tog-row"><span>Compound interest (quarterly)</span><label class="toggle"><input type="checkbox" id="r-compound"><span class="tslider"></span></label></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="confirmRenew()"><i class="ti ti-refresh"></i> Renew</button>
       <button class="btn btn-gray" onclick="closeModal('renew-modal')">Cancel</button>
     </div>
   </div>
@@ -256,17 +504,16 @@ input:checked+.tslider:before{transform:translateX(17px)}
 
 <!-- FD Detail Modal -->
 <div class="modal-bg" id="detail-modal">
-  <div class="modal" style="max-width:360px;position:relative">
-    <button onclick="closeModal('detail-modal')" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.07);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary,#666);z-index:1">×</button>
-    <div id="detail-color-bar" style="height:4px;margin:-1.25rem -1.25rem 1rem -1.25rem;border-radius:12px 12px 0 0"></div>
-    <h3 id="detail-title" style="margin-bottom:0.75rem;padding-right:28px">FD Details</h3>
-    <div id="detail-content" style="display:flex;flex-direction:column;gap:0"></div>
+  <div class="modal" style="position:relative">
+    <div id="detail-color-bar" class="detail-bar"></div>
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
+    <h3 id="detail-title" style="margin-bottom:10px;padding-right:28px">FD Details</h3>
+    <div id="detail-content"></div>
     <div id="detail-actions" style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"></div>
   </div>
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 let banks=JSON.parse(localStorage.getItem('fd_banks3')||'["SBI","HDFC Bank","ICICI Bank","Axis Bank","PNB"]');
 let users=JSON.parse(localStorage.getItem('fd_users3')||'["Sangita","Shivaji","Prathamesh","Chandrashekhar"]');
@@ -288,20 +535,17 @@ function calcVal(fd,asOf){
 function matDate(fd){const d=new Date(fd.date);d.setMonth(d.getMonth()+fd.tenure);return d;}
 function matVal(fd){return calcVal(fd,matDate(fd));}
 function daysLeft(fd){const m=matDate(fd),n=new Date();m.setHours(0,0,0,0);n.setHours(0,0,0,0);return Math.ceil((m-n)/(864e5));}
-function getStatus(fd){
-  if(fd.closed)return 'closed';
-  const dl=daysLeft(fd);
-  if(dl<=0)return 'matured';
-  if(dl<=7)return 'soon';
-  return 'active';
-}
+function getStatus(fd){if(fd.closed)return 'closed';const dl=daysLeft(fd);if(dl<=0)return 'matured';if(dl<=7)return 'soon';return 'active';}
 function initials(name){return name?name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2):'?';}
 
 function switchTab(s,el){
-  document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(e=>e.classList.remove('active'));
-  document.getElementById('screen-'+s).classList.add('active');
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('page-'+s).classList.add('active');
   el.classList.add('active');
+  document.getElementById('fab-add').style.display=s==='invest'?'flex':'none';
+  document.getElementById('invest-actions').style.display=s==='invest'?'flex':'none';
+  document.getElementById('analyze-actions').style.display=s==='analyze'?'flex':'none';
   if(s==='analyze')renderAnalyze();
 }
 
@@ -328,16 +572,12 @@ function renderAll(){
   document.getElementById('section-active').style.display=active.length?'block':'none';
   document.getElementById('section-soon').style.display=soon.length?'block':'none';
   document.getElementById('section-matured').style.display=matured.length?'block':'none';
-  renderTable(active);
-  renderSoonTable(soon);
-  renderMaturedTable(matured);
-  renderNotifs();
-  if(document.getElementById('screen-analyze').classList.contains('active'))renderAnalyze();
+  renderTable(active);renderSoonTable(soon);renderMaturedTable(matured);renderNotifs();
+  if(document.getElementById('page-analyze').classList.contains('active'))renderAnalyze();
 }
 
 function sortFDs(arr){
-  const s=document.getElementById('sort-sel').value;
-  const cp=[...arr];
+  const s=document.getElementById('sort-sel').value;const cp=[...arr];
   if(s==='bank')cp.sort((a,b)=>a.bank.localeCompare(b.bank));
   else if(s==='user')cp.sort((a,b)=>(a.user||'').localeCompare(b.user||''));
   else if(s==='amount-desc')cp.sort((a,b)=>b.amount-a.amount);
@@ -350,9 +590,9 @@ function renderTable(active){
   const el=document.getElementById('fd-tbody');
   document.getElementById('fd-count').textContent=`(${active.length})`;
   const sorted=sortFDs(active);
-  if(!sorted.length){el.innerHTML=`<div style="text-align:center;padding:1.5rem;color:#888;font-size:12px">No active FDs match the current filter.</div>`;return;}
+  if(!sorted.length){el.innerHTML=`<div style="grid-column:1/-1" class="empty"><i class="ti ti-inbox"></i><p>No active FDs match the filter.</p></div>`;return;}
   el.innerHTML=sorted.map(fd=>{
-    const dl=daysLeft(fd);const md=matDate(fd);
+    const dl=daysLeft(fd);
     return `<div class="fd-card blue" onclick="openDetail('${fd.id}')">
       <div class="card-badge">${dl}d left</div>
       <div class="card-date">${fmtDate(new Date(fd.date))}</div>
@@ -362,7 +602,6 @@ function renderTable(active){
     </div>`;
   }).join('');
 }
-
 function renderSoonTable(soon){
   const el=document.getElementById('soon-tbody');
   if(!soon.length){el.innerHTML='';return;}
@@ -377,15 +616,13 @@ function renderSoonTable(soon){
     </div>`;
   }).join('');
 }
-
 function renderMaturedTable(matured){
   const el=document.getElementById('matured-tbody');
   if(!matured.length){el.innerHTML='';return;}
   el.innerHTML=matured.map(fd=>{
-    const md=matDate(fd);
     return `<div class="fd-card green" onclick="openDetail('${fd.id}')">
       <div class="card-badge">Matured</div>
-      <div class="card-date">${fmtDate(md)}</div>
+      <div class="card-date">${fmtDate(matDate(fd))}</div>
       <div class="card-amount">${fmt(matVal(fd))}</div>
       <div class="card-bank"><i class="ti ti-building-bank" style="font-size:10px"></i> ${fd.bank}</div>
       <div class="card-user"><i class="ti ti-user" style="font-size:10px"></i> ${fd.user||'-'}</div>
@@ -398,8 +635,8 @@ function renderNotifs(){
   const matured=all.filter(f=>getStatus(f)==='matured');
   const soon=all.filter(f=>getStatus(f)==='soon');
   let html='';
-  if(matured.length)html+=`<div class="notif notif-ok"><i class="ti ti-check-circle" aria-hidden="true"></i> <strong>${matured.length}</strong> FD${matured.length>1?'s have':' has'} matured. See Matured FDs to renew.</div>`;
-  if(soon.length)html+=`<div class="notif notif-warn"><i class="ti ti-bell" aria-hidden="true"></i> <strong>${soon.length}</strong> FD${soon.length>1?'s are':' is'} maturing within 7 days.</div>`;
+  if(matured.length)html+=`<div class="notif notif-ok"><i class="ti ti-circle-check"></i><span><strong>${matured.length}</strong> FD${matured.length>1?'s have':' has'} matured. See Matured FDs to renew.</span></div>`;
+  if(soon.length)html+=`<div class="notif notif-warn"><i class="ti ti-bell"></i><span><strong>${soon.length}</strong> FD${soon.length>1?'s are':' is'} maturing within 7 days.</span></div>`;
   document.getElementById('notif-area').innerHTML=html;
 }
 
@@ -413,7 +650,42 @@ function renderChips(){
 }
 function setFilter(type,val){if(type==='bank')filterBank=val;else filterUser=val;renderAll();}
 
-function updateField(id,field,val){const fd=fds.find(f=>f.id===id);if(fd){fd[field]=isNaN(+val)||field==='bank'||field==='user'?val:+val;save();renderAll();}}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function openDetail(id){
+  const fd=fds.find(f=>f.id===id);if(!fd)return;
+  const st=getStatus(fd);const cv=calcVal(fd,new Date());const mv=matVal(fd);const md=matDate(fd);const dl=daysLeft(fd);
+  const colors={active:{bar:'#185fa5',title:'#0c447c'},soon:{bar:'#ef9f27',title:'#854f0b'},matured:{bar:'#97c459',title:'#3b6d11'}};
+  const c=colors[st]||colors.active;
+  document.getElementById('detail-color-bar').style.background=c.bar;
+  document.getElementById('detail-title').style.color=c.title;
+  document.getElementById('detail-title').textContent=fd.bank+' — '+fmt(fd.amount);
+
+  const row=(label,val)=>`<div class="detail-row"><span class="detail-lbl">${label}</span><span class="detail-val">${val}</span></div>`;
+  document.getElementById('detail-content').innerHTML=
+    row('Date',fmtDate(new Date(fd.date)))+row('Amount',fmt(fd.amount))+row('Bank',fd.bank)+
+    row('User',fd.user||'-')+row('Rate',fd.rate+'% p.a.')+row('Tenure',fd.tenure+' months')+
+    row('Type',fd.compound?'Compound (quarterly)':'Simple interest')+row('Maturity Date',fmtDate(md))+
+    row('Current Value',`<span style="color:${c.title}">${fmt(cv)}</span>`)+row('Maturity Value',fmt(mv))+
+    row('Status',st==='active'?`<span class="badge b-active">Active · ${dl}d left</span>`:st==='soon'?`<span class="badge b-soon">Maturing in ${dl}d</span>`:`<span class="badge b-matured">Matured</span>`);
+
+  let acts=`<button class="btn btn-sm btn-blue" onclick="openHistory('${id}');closeModal('detail-modal')"><i class="ti ti-history"></i> History</button>`;
+  if(st==='matured')acts+=`<button class="btn btn-sm btn-teal" onclick="openRenew('${id}');closeModal('detail-modal')"><i class="ti ti-refresh"></i> Renew</button>`;
+  acts+=`<button class="btn btn-sm btn-gray" onclick="closeModal('detail-modal');openAddModal(${JSON.stringify({id:fd.id,bank:fd.bank,user:fd.user,date:fd.date,amount:fd.amount,rate:fd.rate,tenure:fd.tenure,compound:fd.compound}).replace(/"/g,'&quot;')})"><i class="ti ti-edit"></i> Edit</button>`;
+  acts+=`<button class="btn btn-sm btn-red" onclick="if(confirm('Delete this FD?')){deleteFD('${id}');closeModal('detail-modal')}"><i class="ti ti-trash"></i> Delete</button>`;
+  document.getElementById('detail-actions').innerHTML=acts;
+  document.getElementById('detail-modal').classList.add('open');
+}
+
+function openBankModal(){renderBankList();document.getElementById('bank-modal').classList.add('open');}
+function addBank(){const inp=document.getElementById('new-bank-inp');const n=inp.value.trim();if(!n||banks.includes(n))return;banks.push(n);save();renderBankList();renderChips();inp.value='';}
+function removeBank(n){if(fds.some(f=>f.bank===n&&!f.closed)){alert('Cannot remove: bank has active FDs.');return;}banks=banks.filter(b=>b!==n);save();renderBankList();renderChips();}
+function renderBankList(){document.getElementById('bank-list').innerHTML=banks.map(b=>`<div class="bank-item"><span>${b}</span><button class="btn btn-sm btn-red" onclick="removeBank('${b}')"><i class="ti ti-trash"></i> Remove</button></div>`).join('');}
+
+function openUserModal(){renderUserList();document.getElementById('user-modal').classList.add('open');}
+function addUser(){const inp=document.getElementById('new-user-inp');const n=inp.value.trim();if(!n||users.includes(n))return;users.push(n);save();renderUserList();renderChips();inp.value='';}
+function removeUser(n){if(fds.some(f=>f.user===n&&!f.closed)){alert('Cannot remove: user has active FDs.');return;}users=users.filter(u=>u!==n);save();renderUserList();renderChips();}
+function renderUserList(){document.getElementById('user-list').innerHTML=users.map(u=>`<div class="bank-item"><span>${u}</span><button class="btn btn-sm btn-red" onclick="removeUser('${u}')"><i class="ti ti-trash"></i> Remove</button></div>`).join('');}
 
 function openAddModal(fd){
   editId=fd?fd.id:null;
@@ -436,6 +708,7 @@ function openAddModal(fd){
   }
   document.getElementById('fd-modal').classList.add('open');
 }
+
 function saveFD(){
   const bank=document.getElementById('f-bank').value;
   const user=document.getElementById('f-user').value;
@@ -445,20 +718,28 @@ function saveFD(){
   const tenure=parseInt(document.getElementById('f-tenure').value);
   const compound=document.getElementById('f-compound').checked;
   if(!bank||!user||!date||!amount||!rate||!tenure){alert('Please fill all fields.');return;}
-  if(editId){const f=fds.find(x=>x.id===editId);if(f){Object.assign(f,{bank,user,date,amount,rate,tenure,compound});}}
-  else{fds.push({id:Date.now().toString(),bank,user,date,amount,rate,tenure,compound,closed:false,history:[{date,amount,label:'Started'}]});}
+  if(editId){const f=fds.find(x=>x.id===editId);if(f)Object.assign(f,{bank,user,date,amount,rate,tenure,compound});}
+  else fds.push({id:Date.now().toString(),bank,user,date,amount,rate,tenure,compound,closed:false,history:[{date,amount,label:'Started'}]});
   save();closeModal('fd-modal');renderAll();
 }
+
 function deleteFD(id){if(!confirm('Delete this FD?'))return;fds=fds.filter(f=>f.id!==id);save();renderAll();}
+
 function openHistory(id){
   const fd=fds.find(f=>f.id===id);if(!fd)return;
-  document.getElementById('hist-content').innerHTML=fd.history.map(h=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.07);font-size:12px;align-items:baseline"><span style="color:#185fa5;font-weight:500;min-width:80px">${fmtDate(h.date)}</span><span style="font-weight:500">${fmt(h.amount)}</span><span style="color:var(--color-text-secondary,#666)">${h.label}</span></div>`).join('');
+  document.getElementById('hist-content').innerHTML=fd.history.map(h=>`
+    <div class="hist-item">
+      <span class="hist-date">${fmtDate(h.date)}</span>
+      <span class="hist-amt">${fmt(h.amount)}</span>
+      <span class="hist-lbl">${h.label}</span>
+    </div>`).join('');
   document.getElementById('hist-modal').classList.add('open');
 }
+
 function openRenew(id){
   renewId=id;const fd=fds.find(f=>f.id===id);if(!fd)return;
   const mv=Math.round(matVal(fd));
-  document.getElementById('renew-info').innerHTML=`<strong>${fd.bank}</strong>${fd.user?' · '+fd.user:''} &nbsp;|&nbsp; Principal: ${fmt(fd.amount)} &nbsp;|&nbsp; Maturity Value: <strong>${fmt(mv)}</strong>`;
+  document.getElementById('renew-info').innerHTML=`<strong>${fd.bank}</strong>${fd.user?' · '+fd.user:''}<br>Principal: ${fmt(fd.amount)} &nbsp;·&nbsp; Maturity Value: <strong>${fmt(mv)}</strong>`;
   document.getElementById('r-date').value=todayStr();
   document.getElementById('r-amount').value=mv;
   document.getElementById('r-rate').value=fd.rate;
@@ -466,6 +747,7 @@ function openRenew(id){
   document.getElementById('r-compound').checked=fd.compound||false;
   document.getElementById('renew-modal').classList.add('open');
 }
+
 function confirmRenew(){
   const fd=fds.find(f=>f.id===renewId);if(!fd)return;
   const date=document.getElementById('r-date').value;
@@ -478,56 +760,8 @@ function confirmRenew(){
   fds.push({id:Date.now().toString(),bank:fd.bank,user:fd.user,date,amount,rate,tenure,compound,closed:false,history:[...fd.history,{date,amount,label:'Renewed'}],renewedFrom:fd.id});
   save();closeModal('renew-modal');renderAll();
 }
-function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-function openDetail(id){
-  const fd=fds.find(f=>f.id===id);if(!fd)return;
-  const st=getStatus(fd);
-  const cv=calcVal(fd,new Date());
-  const mv=matVal(fd);
-  const md=matDate(fd);
-  const dl=daysLeft(fd);
-  const colors={active:{bar:'#185fa5',title:'#0c447c'},soon:{bar:'#ef9f27',title:'#854f0b'},matured:{bar:'#97c459',title:'#3b6d11'}};
-  const c=colors[st]||colors.active;
-  document.getElementById('detail-color-bar').style.background=c.bar;
-  document.getElementById('detail-title').style.color=c.title;
-  document.getElementById('detail-title').textContent=fd.bank+' — '+fmt(fd.amount);
-
-  const row=(label,val)=>`<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:0.5px solid rgba(0,0,0,0.06)">
-    <span style="font-size:11px;color:var(--color-text-secondary,#888);font-weight:500">${label}</span>
-    <span style="font-size:13px;font-weight:500;text-align:right;max-width:60%">${val}</span>
-  </div>`;
-
-  document.getElementById('detail-content').innerHTML=
-    row('Date', fmtDate(new Date(fd.date)))+
-    row('Amount', fmt(fd.amount))+
-    row('Bank', fd.bank)+
-    row('User', fd.user||'-')+
-    row('Rate', fd.rate+'% p.a.')+
-    row('Tenure', fd.tenure+' months')+
-    row('Type', fd.compound?'Compound (quarterly)':'Simple interest')+
-    row('Maturity Date', fmtDate(md))+
-    row('Current Value', `<span style="color:${c.title}">${fmt(cv)}</span>`)+
-    row('Maturity Value', fmt(mv))+
-    row('Status', st==='active'?`<span class="badge b-active">Active · ${dl}d left</span>`:st==='soon'?`<span class="badge b-soon">Maturing in ${dl}d</span>`:`<span class="badge b-matured">Matured</span>`);
-
-  let acts=`<button class="btn btn-sm btn-blue" onclick="openHistory('${id}');closeModal('detail-modal')"><i class="ti ti-history"></i> History</button>`;
-  if(st==='matured')acts+=`<button class="btn btn-sm btn-teal" onclick="openRenew('${id}');closeModal('detail-modal')"><i class="ti ti-refresh"></i> Renew</button>`;
-  acts+=`<button class="btn btn-sm btn-gray" onclick="closeModal('detail-modal');openAddModal(${JSON.stringify({id:fd.id,bank:fd.bank,user:fd.user,date:fd.date,amount:fd.amount,rate:fd.rate,tenure:fd.tenure,compound:fd.compound}).replace(/"/g,'&quot;')})"><i class="ti ti-edit"></i> Edit</button>`;
-  acts+=`<button class="btn btn-sm btn-red" onclick="if(confirm('Delete this FD?')){deleteFD('${id}');closeModal('detail-modal')}"><i class="ti ti-trash"></i> Delete</button>`;
-  document.getElementById('detail-actions').innerHTML=acts;
-  document.getElementById('detail-modal').classList.add('open');
-}
-function openBankModal(){renderBankList();document.getElementById('bank-modal').classList.add('open');}
-function addBank(){const inp=document.getElementById('new-bank-inp');const n=inp.value.trim();if(!n||banks.includes(n))return;banks.push(n);save();renderBankList();renderChips();inp.value='';}
-function removeBank(n){if(fds.some(f=>f.bank===n&&!f.closed)){alert('Cannot remove: bank has active FDs.');return;}banks=banks.filter(b=>b!==n);save();renderBankList();renderChips();}
-function renderBankList(){document.getElementById('bank-list').innerHTML=banks.map(b=>`<div class="bank-item"><span>${b}</span><button class="btn btn-sm btn-red" onclick="removeBank('${b}')"><i class="ti ti-trash" aria-hidden="true"></i> Remove</button></div>`).join('');}
-function openUserModal(){renderUserList();document.getElementById('user-modal').classList.add('open');}
-function addUser(){const inp=document.getElementById('new-user-inp');const n=inp.value.trim();if(!n||users.includes(n))return;users.push(n);save();renderUserList();renderChips();inp.value='';}
-function removeUser(n){if(fds.some(f=>f.user===n&&!f.closed)){alert('Cannot remove: user has active FDs.');return;}users=users.filter(u=>u!==n);save();renderUserList();renderChips();}
-function renderUserList(){document.getElementById('user-list').innerHTML=users.map(u=>`<div class="bank-item"><span>${u}</span><button class="btn btn-sm btn-red" onclick="removeUser('${u}')"><i class="ti ti-trash" aria-hidden="true"></i> Remove</button></div>`).join('');}
-
-function updateMetricCards(fdList, label){
+function updateMetricCards(fdList,label){
   const now=new Date();
   const ti=fdList.reduce((s,f)=>s+f.amount,0);
   const tc=fdList.reduce((s,f)=>s+calcVal(f,now),0);
@@ -535,7 +769,7 @@ function updateMetricCards(fdList, label){
   document.getElementById('metric-cards').innerHTML=`
     <div class="mcard"><div class="lbl">Total Invested</div><div class="val">${fmt(ti)}</div><div class="sub">${fdList.length} FD${fdList.length!==1?'s':''} ${label?'· '+label:''}</div></div>
     <div class="mcard"><div class="lbl">Current Value</div><div class="val">${fmt(tc)}</div><div class="sub">as of today</div></div>
-    <div class="mcard"><div class="lbl">Interest Earned</div><div class="val" style="color:#3b6d11">${fmt(tc-ti)}</div><div class="sub">${ti>0?((tc-ti)/ti*100).toFixed(1)+'% return':''}</div></div>
+    <div class="mcard"><div class="lbl">Interest Earned</div><div class="val" style="color:var(--green)">${fmt(tc-ti)}</div><div class="sub">${ti>0?((tc-ti)/ti*100).toFixed(1)+'% return':''}</div></div>
     <div class="mcard"><div class="lbl">Active Banks</div><div class="val">${[...new Set(allActive.map(f=>f.bank))].length}</div><div class="sub">${[...new Set(allActive.map(f=>f.user))].length} users</div></div>`;
 }
 
@@ -551,39 +785,30 @@ function renderBankChart(){
   const active=fds.filter(f=>!f.closed);
   const allBanks=[...new Set(active.map(f=>f.bank))].sort();
   if(!selectedAnalyzeBank||!allBanks.includes(selectedAnalyzeBank))selectedAnalyzeBank=null;
-
   const chipsEl=document.getElementById('bank-select-chips');
-  if(chipsEl){
-    chipsEl.innerHTML=`<button class="chip ${!selectedAnalyzeBank?'active':''}" onclick="selectAnalyzeBank(null)">All</button>`+
-      allBanks.map(b=>`<button class="chip ${selectedAnalyzeBank===b?'active':''}" onclick="selectAnalyzeBank('${b}')">${b}</button>`).join('');
-  }
-
+  if(chipsEl)chipsEl.innerHTML=`<button class="chip ${!selectedAnalyzeBank?'active':''}" onclick="selectAnalyzeBank(null)">All</button>`+
+    allBanks.map(b=>`<button class="chip ${selectedAnalyzeBank===b?'active':''}" onclick="selectAnalyzeBank('${b}')">${b}</button>`).join('');
   const filtered=selectedAnalyzeBank?active.filter(f=>f.bank===selectedAnalyzeBank):active;
   const bm={};filtered.forEach(f=>{bm[f.bank]=(bm[f.bank]||0)+f.amount;});
   const bl=Object.keys(bm).sort((a,b)=>bm[b]-bm[a]);
   const total=Object.values(bm).reduce((s,v)=>s+v,0);
   const bc=bl.map((_,i)=>PIE_COLORS[i%PIE_COLORS.length]);
-
   const titleEl=document.getElementById('bank-chart-title');
   if(titleEl)titleEl.textContent=selectedAnalyzeBank?`${selectedAnalyzeBank} – deposit breakdown`:'All banks – deposit distribution';
-
   document.getElementById('pie-legend').innerHTML=bl.map((b,i)=>`
-    <div style="display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.06)">
-      <div style="width:9px;height:9px;border-radius:50%;background:${bc[i]};flex-shrink:0"></div>
-      <div style="font-size:12px;color:var(--color-text-primary,#1a1a1a);flex-shrink:0">${b}</div>
-      <div style="flex:1;border-bottom:1px dotted rgba(0,0,0,0.12);height:1px;margin:0 4px"></div>
-      <div style="font-size:12px;font-weight:600;color:var(--color-text-primary,#1a1a1a);flex-shrink:0">${fmt(bm[b])}</div>
-      <div style="font-size:11px;color:var(--color-text-secondary,#888);flex-shrink:0;min-width:30px;text-align:right">${Math.round(bm[b]/total*100)}%</div>
+    <div class="pie-legend-item">
+      <div class="pie-dot" style="background:${bc[i]}"></div>
+      <div class="pie-name">${b}</div>
+      <div class="pie-amt">${fmt(bm[b])}</div>
+      <div class="pie-pct">${Math.round(bm[b]/total*100)}%</div>
     </div>`).join('');
-
   if(pieInst)pieInst.destroy();
   pieInst=new Chart(document.getElementById('pieChart'),{
     type:'pie',
     data:{labels:bl,datasets:[{data:bl.map(b=>bm[b]),backgroundColor:bc,borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)} (${Math.round(c.raw/total*100)}%)`}}}}
   });
-
-  updateMetricCards(filtered, selectedAnalyzeBank||'');
+  updateMetricCards(filtered,selectedAnalyzeBank||'');
 }
 function selectAnalyzeBank(b){selectedAnalyzeBank=b;renderBankChart();}
 
@@ -592,53 +817,42 @@ function renderUserAnalysis(){
   const active=fds.filter(f=>!f.closed);
   const container=document.getElementById('user-analysis');
   const chipsEl=document.getElementById('user-select-chips');
-  if(!active.length){
-    chipsEl.innerHTML='';
-    container.innerHTML=`<div style="text-align:center;padding:2rem;color:#888;font-size:13px">No FD data yet.</div>`;
-    return;
-  }
+  if(!active.length){chipsEl.innerHTML='';container.innerHTML=`<div class="empty"><i class="ti ti-inbox"></i><p>No FD data yet.</p></div>`;return;}
   const allUsers=[...new Set(active.map(f=>f.user||'Unknown'))];
   if(!selectedAnalyzeUser||!allUsers.includes(selectedAnalyzeUser))selectedAnalyzeUser=allUsers[0];
-
   chipsEl.innerHTML=allUsers.map(u=>`<button class="chip ${selectedAnalyzeUser===u?'active':''}" onclick="selectAnalyzeUser('${u}')">${u}</button>`).join('');
-
   const ui=allUsers.indexOf(selectedAnalyzeUser);
   const color=PIE_COLORS[ui%PIE_COLORS.length];
   const ufds=active.filter(f=>(f.user||'Unknown')===selectedAnalyzeUser);
   const ti=ufds.reduce((s,f)=>s+f.amount,0);
   const tc=ufds.reduce((s,f)=>s+calcVal(f,new Date()),0);
-  updateMetricCards(ufds, selectedAnalyzeUser);
+  updateMetricCards(ufds,selectedAnalyzeUser);
   const bankMap={};ufds.forEach(f=>{bankMap[f.bank]=(bankMap[f.bank]||0)+f.amount;});
   const bl=Object.keys(bankMap).sort((a,b)=>bankMap[b]-bankMap[a]);
   const bc=bl.map((_,i)=>PIE_COLORS[i%PIE_COLORS.length]);
   const total=bl.reduce((s,b)=>s+bankMap[b],0);
-
   const canvasId='user-pie-'+selectedAnalyzeUser.replace(/\s+/g,'_');
-  container.innerHTML=`<div class="chart-card user-section">
+  container.innerHTML=`<div class="chart-card">
     <div class="user-hdr">
       <div class="user-avatar" style="background:${color}22;color:${color}">${initials(selectedAnalyzeUser)}</div>
       <div>
-        <div style="font-size:14px;font-weight:500">${selectedAnalyzeUser}</div>
-        <div style="font-size:11px;color:var(--color-text-secondary,#666)">${ufds.length} FD${ufds.length>1?'s':''} &nbsp;·&nbsp; Invested: ${fmt(ti)} &nbsp;·&nbsp; Current: ${fmt(tc)} &nbsp;·&nbsp; <span style="color:#3b6d11">+${fmt(tc-ti)}</span></div>
+        <div style="font-size:15px;font-weight:600">${selectedAnalyzeUser}</div>
+        <div style="font-size:11px;color:var(--muted)">${ufds.length} FD${ufds.length>1?'s':''} · Invested: ${fmt(ti)} · Earned: <span style="color:var(--green)">+${fmt(tc-ti)}</span></div>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:1rem">
-      <div style="position:relative;width:170px;height:170px">
+    <div style="display:flex;justify-content:center;margin-bottom:14px">
+      <div style="position:relative;width:180px;height:180px">
         <canvas id="${canvasId}" role="img" aria-label="Pie chart for ${selectedAnalyzeUser}"></canvas>
       </div>
-      <div style="width:100%;max-width:320px;display:flex;flex-direction:column;gap:0">
-        ${bl.map((b,i)=>`
-        <div style="display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.06)">
-          <div style="width:9px;height:9px;border-radius:50%;background:${bc[i]};flex-shrink:0"></div>
-          <div style="font-size:12px;color:var(--color-text-primary,#1a1a1a);flex-shrink:0">${b}</div>
-          <div style="flex:1;border-bottom:1px dotted rgba(0,0,0,0.12);height:1px;margin:0 4px"></div>
-          <div style="font-size:12px;font-weight:600;color:var(--color-text-primary,#1a1a1a);flex-shrink:0">${fmt(bankMap[b])}</div>
-          <div style="font-size:11px;color:var(--color-text-secondary,#888);flex-shrink:0;min-width:30px;text-align:right">${Math.round(bankMap[b]/total*100)}%</div>
-        </div>`).join('')}
-      </div>
     </div>
+    ${bl.map((b,i)=>`
+      <div class="pie-legend-item">
+        <div class="pie-dot" style="background:${bc[i]}"></div>
+        <div class="pie-name">${b}</div>
+        <div class="pie-amt">${fmt(bankMap[b])}</div>
+        <div class="pie-pct">${Math.round(bankMap[b]/total*100)}%</div>
+      </div>`).join('')}
   </div>`;
-
   new Chart(document.getElementById(canvasId),{
     type:'pie',
     data:{labels:bl,datasets:[{data:bl.map(b=>bankMap[b]),backgroundColor:bc,borderWidth:2,borderColor:'#fff'}]},
@@ -666,6 +880,7 @@ function exportCSV(){
   fds.filter(f=>!f.closed).forEach(f=>{const md=matDate(f);rows.push([f.id,f.bank,f.user||'',f.date,f.amount,f.rate,f.tenure,f.compound?'Compound':'Simple',md.toISOString().split('T')[0],Math.round(calcVal(f,new Date())),getStatus(f)]);});
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));a.download='fd_tracker.csv';a.click();
 }
+
 function exportPDF(type){
   const win=window.open('','_blank');
   const active=fds.filter(f=>!f.closed);const now=new Date();
@@ -688,6 +903,12 @@ function exportPDF(type){
   c+=`</body></html>`;win.document.write(c);win.document.close();win.print();
 }
 
+// close modal on backdrop tap
+document.querySelectorAll('.modal-bg').forEach(bg=>{
+  bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('open');});
+});
+
+// Push notifications
 if('Notification' in window&&Notification.permission==='default'){
   Notification.requestPermission().then(p=>{if(p==='granted'){
     const mat=fds.filter(f=>!f.closed&&getStatus(f)==='matured');
@@ -696,5 +917,8 @@ if('Notification' in window&&Notification.permission==='default'){
     else if(sn.length)new Notification('FD Maturing Soon',{body:`${sn.length} FD${sn.length>1?'s are':' is'} maturing within 7 days.`});
   }});
 }
+
 renderAll();
 </script>
+</body>
+</html>
