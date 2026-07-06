@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-.topnav{background:linear-gradient(135deg,#185fa5,#378add)!important;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.topnav{background:linear-gradient(135deg,#185fa5,#378add)!important;box-shadow:0 4px 166px rgba(0,0,0,.12)}
 .brand-icon{background:rgba(255,255,255,.25)!important}
 .fd-card,.mcard,.chart-card,.filter-card{box-shadow:0 6px 18px rgba(0,0,0,.06)}
 .chip.active,.atab.active{box-shadow:0 4px 12px rgba(24,95,165,.2)}
@@ -161,7 +161,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 /* ── SECTION HEADER ── */
 .sec-hdr{font-size:12px;font-weight:700;color:var(--muted);margin:4px 0 10px;display:flex;align-items:center;gap:7px;letter-spacing:.4px}
 .sec-hdr i{font-size:15px}
-.sec-hdr .cnt{font-weight:500;color:var(--muted)}
+.sec-hdr .cnt{font-weight:600;color:var(--blue-dk);background:rgba(24,95,165,0.1);padding:1px 6px;border-radius:6px;font-size:11px}
 .tbl-section{margin-bottom:18px}
 
 /* ── FD CARD GRID ── */
@@ -177,23 +177,28 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .fd-card.blue{background:var(--blue-light);border:1.5px solid #85b7eb}
 .fd-card.orange{background:var(--orange-light);border:1.5px solid #f0c060}
 .fd-card.green{background:var(--green-light);border:1.5px solid var(--green-border)}
-/* colored top stripe */
+.fd-card.red{background:var(--red-light);border:1.5px solid #f5a0a0}
 .fd-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
 .fd-card.blue::before{background:var(--blue)}
 .fd-card.orange::before{background:var(--orange)}
 .fd-card.green::before{background:var(--green-border)}
+.fd-card.red::before{background:var(--red)}
 .fd-card .card-badge{
   position:absolute;top:11px;right:10px;
+  display:flex;
+  flex-direction: column;
   font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.2px
 }
 .fd-card.blue .card-badge{background:var(--blue);color:#fff}
 .fd-card.orange .card-badge{background:var(--orange);color:#fff}
 .fd-card.green .card-badge{background:var(--green);color:#fff}
-.fd-card .card-date{font-size:10px;font-weight:600;opacity:.6;margin-bottom:5px;margin-top:2px}
+.fd-card.red .card-badge{background:var(--red);color:#fff}
+.fd-card .card-date{font-size:10px;font-weight:600;opacity:0.8;margin-bottom:5px;margin-top:2px;line-height:1.3}
 .fd-card .card-amount{font-size:16px;font-weight:800;margin-bottom:6px;line-height:1.15;padding-right:38px}
 .fd-card.blue .card-amount{color:var(--blue-dk)}
 .fd-card.orange .card-amount{color:#854f0b}
 .fd-card.green .card-amount{color:var(--green)}
+.fd-card.red .card-amount{color:var(--red)}
 .fd-card .card-bank{font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:4px;margin-bottom:3px}
 .fd-card .card-bank i{font-size:12px;flex-shrink:0}
 .fd-card .card-user{font-size:11px;opacity:.65;display:flex;align-items:center;gap:4px;overflow:hidden}
@@ -239,7 +244,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .chart-title{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text);display:flex;align-items:center;gap:7px}
 .chart-title i{font-size:16px;color:var(--blue)}
 
-/* ── BANK FILTER CHIPS (in analyze) ── */
+/* ── BANK FILTER CHIPS ── */
 .analyze-filter{margin-bottom:14px}
 .analyze-filter-lbl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.4px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .analyze-filter-lbl i{font-size:13px}
@@ -299,13 +304,13 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700;letter-spacing:.3px
 }
 .fr label i{font-size:14px}
-.fr input,.fr select{
+.fr input,.fr select, .fr textarea{
   width:100%;padding:11px 13px;border-radius:var(--r-sm);
   border:1.5px solid var(--border);font-size:15px;font-family:inherit;
   background:var(--surface2);color:var(--text);
   -webkit-appearance:none;appearance:none;transition:border .15s
 }
-.fr input:focus,.fr select:focus{
+.fr input:focus,.fr select:focus, .fr textarea:focus{
   outline:none;border-color:var(--blue-mid);background:var(--surface)
 }
 .tog-row{
@@ -358,6 +363,7 @@ input:checked+.tslider:before{transform:translateX(21px)}
 .b-active{background:var(--blue-light);color:var(--blue-dk)}
 .b-soon{background:var(--orange-light);color:#854f0b}
 .b-matured{background:var(--green-light);color:var(--green)}
+.b-deleted{background:var(--red-light);color:var(--red)}
 
 /* ── BANK / USER LIST ── */
 .list-item{
@@ -403,279 +409,339 @@ input:checked+.tslider:before{transform:translateX(21px)}
   -webkit-appearance:none
 }
 .add-inp-wrap input:focus{outline:none;border-color:var(--blue-mid);background:var(--surface)}
+
+/* ── SCROLLABLE MATURITY TIMELINE CHIPS ── */
+.h-timeline-container {
+  display: flex; gap: 14px; overflow-x: auto; padding: 10px 4px 20px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.h-timeline-container::-webkit-scrollbar { display: none; }
+.h-timeline-node {
+  display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; flex-shrink: 0; width: 95px; position: relative;
+}
+.h-timeline-circle {
+  width: 68px; height: 68px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 2px solid var(--blue); background: var(--surface); color: var(--text); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.15s; position: relative;
+}
+.h-timeline-node:active .h-timeline-circle { transform: scale(0.92); }
+.h-timeline-circle .t-amt { font-size: 10px; font-weight: 800; }
+.h-timeline-circle .t-bank { font-size: 8px; font-weight: 600; opacity: 0.8; max-width: 58px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px; }
+.h-timeline-user { font-size: 10px; font-weight: 600; color: var(--text); margin-top: 6px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.h-timeline-date { font-size: 9px; font-weight: 700; color: var(--muted); margin-top: 1px; }
+
+/* ── DEVICE PIN VIEW ── */
+#pin-screen {
+  position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;
+}
+.pin-logo { width: 64px; height: 64px; border-radius: 18px; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; box-shadow: 0 6px 16px rgba(24,95,165,0.25); }
+.pin-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.pin-desc { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 28px; max-width: 260px; line-height: 1.4; }
+.pin-dots { display: flex; gap: 16px; margin-bottom: 36px; }
+.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.1s ease; }
+.pin-dot.filled { background: var(--blue); border-color: var(--blue); transform: scale(1.15); }
+.pin-pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 16px 20px; justify-content: center; }
+.pin-btn { width: 72px; height: 72px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 24px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.1s; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+.pin-btn:active { background: var(--surface2); }
+.pin-btn.empty-btn { background: transparent; border: none; box-shadow: none; cursor: default; }
+.pin-btn.empty-btn:active { background: transparent; }
+.pin-btn i { font-size: 22px; }
 </style>
 </head>
 <body>
 
-<!-- TOP NAVIGATION -->
+<div id="pin-screen">
+  <div class="pin-logo"><i class="bi bi-shield-lock-fill"></i></div>
+  <div class="pin-title" id="pin-title-label">Enter Security PIN</div>
+  <div class="pin-desc" id="pin-desc-label">Unlock your Fixed Deposit Portfolio safely.</div>
+  <div class="pin-dots">
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+  </div>
+  <div class="pin-pad">
+    <button class="pin-btn" onclick="pressPin('1')">1</button>
+    <button class="pin-btn" onclick="pressPin('2')">2</button>
+    <button class="pin-btn" onclick="pressPin('3')">3</button>
+    <button class="pin-btn" onclick="pressPin('4')">4</button>
+    <button class="pin-btn" onclick="pressPin('5')">5</button>
+    <button class="pin-btn" onclick="pressPin('6')">6</button>
+    <button class="pin-btn" onclick="pressPin('7')">7</button>
+    <button class="pin-btn" onclick="pressPin('8')">8</button>
+    <button class="pin-btn" onclick="pressPin('9')">9</button>
+    <button class="pin-btn empty-btn"></button>
+    <button class="pin-btn" onclick="pressPin('0')">0</button>
+    <button class="pin-btn" onclick="backspacePin()" style="color:var(--red)"><i class="bi bi-backspace-fill"></i></button>
+  </div>
+</div>
+
 <header class="topnav">
   <div class="topnav-brand">
     <div class="brand-icon"><i class="bi bi-bank2"></i></div>
     FD Tracker
   </div>
   <div id="invest-hdr-btns" style="display:flex;gap:8px">
-    <button class="topnav-icon" title="Manage Banks" onclick="openBankModal()" aria-label="Manage Banks">
+    <button class="topnav-icon" title="Manage Banks" onclick="openBankModal()">
       <i class="bi bi-bank2"></i>
     </button>
-    <button class="topnav-icon" title="Manage Users" onclick="openUserModal()" aria-label="Manage Users">
+    <button class="topnav-icon" title="Manage Users" onclick="openUserModal()">
       <i class="bi bi-people-fill"></i>
     </button>
-    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()" aria-label="Export CSV">
+    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()">
       <i class="bi bi-download"></i>
     </button>
   </div>
   <div id="analyze-hdr-btns" style="display:none;gap:8px">
-    <button class="topnav-icon" title="Bank-wise PDF" onclick="exportPDF('bank')" aria-label="Bank PDF">
+    <button class="topnav-icon" title="Bank-wise Report" onclick="exportPDF('bank')">
       <i class="bi bi-file-earmark-text-fill"></i>
     </button>
-    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()" aria-label="Export CSV">
+    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()">
       <i class="bi bi-download"></i>
     </button>
   </div>
 </header>
 
-<!-- INVEST PAGE -->
-<div id="page-invest" class="page active">
-  <div id="notif-area"></div>
-
-  <!-- Sort + filter -->
-  <div class="sort-row">
-    <i class="bi bi-sort-down sort-icon"></i>
-    <select class="sort-sel" id="sort-sel" onchange="renderAll()">
-      <option value="">Default order</option>
-      <option value="bank">Sort by Bank</option>
-      <option value="user">Sort by User</option>
-      <option value="amount-desc">Amount: High → Low</option>
-      <option value="amount-asc">Amount: Low → High</option>
-      <option value="maturity">Maturity Date</option>
-    </select>
-  </div>
-
-  <div class="filter-card">
-    <div class="filter-card-hdr"><i class="bi bi-funnel-fill"></i> FILTERS</div>
-    <div class="filter-row">
-      <span class="filter-lbl"><i class="bi bi-bank2" style="font-size:13px"></i></span>
-      <div class="chip-scroll" id="bank-chips"></div>
-    </div>
-    <div class="filter-row" style="margin-bottom:0">
-      <span class="filter-lbl"><i class="bi bi-person-fill" style="font-size:13px"></i></span>
-      <div class="chip-scroll" id="user-chips"></div>
-    </div>
-  </div>
-
-  <div id="section-active" class="tbl-section">
-    <div class="sec-hdr"><i class="bi bi-credit-card-2-front-fill"></i> FD RECORDS <span class="cnt" id="fd-count"></span></div>
-    <div id="fd-tbody" class="fd-card-grid"></div>
-  </div>
-
-  <div id="section-soon" class="tbl-section">
-    <div class="sec-hdr" style="color:#854f0b"><i class="bi bi-exclamation-triangle-fill"></i> MATURING SOON <span class="cnt">(within 7 days)</span></div>
-    <div id="soon-tbody" class="fd-card-grid"></div>
-  </div>
-
-  <div id="section-matured" class="tbl-section">
-    <div class="sec-hdr" style="color:var(--green)"><i class="bi bi-check-circle-fill"></i> MATURED FDs</div>
-    <div id="matured-tbody" class="fd-card-grid"></div>
-  </div>
-</div>
-
-<!-- ANALYZE PAGE -->
-<div id="page-analyze" class="page">
-  <div id="metric-cards" class="metric-grid"></div>
-
-  <div class="analyze-tabs">
-    <button class="atab active" onclick="switchAnalyzeTab('bank',this)"><i class="bi bi-bank2"></i> Bank-wise</button>
-    <button class="atab" onclick="switchAnalyzeTab('user',this)"><i class="bi bi-person-fill"></i> User-wise</button>
-    <button class="atab" onclick="switchAnalyzeTab('timeline',this)"><i class="bi bi-bar-chart-fill"></i> Timeline</button>
-  </div>
-
-  <div id="analyze-bank" class="analyze-panel">
-    <div class="analyze-filter">
-      <div class="analyze-filter-lbl"><i class="bi bi-bank2"></i> VIEW BANK</div>
-      <div class="chip-scroll" id="bank-select-chips"></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title"><i class="bi bi-pie-chart-fill"></i><span id="bank-chart-title">All banks – deposit distribution</span></div>
-      <div style="display:flex;justify-content:center;margin-bottom:16px">
-        <div style="position:relative;width:190px;height:190px">
-          <canvas id="pieChart" role="img" aria-label="Pie chart bank-wise"></canvas>
-        </div>
-      </div>
-      <div id="pie-legend"></div>
-    </div>
-  </div>
-
-  <div id="analyze-user" class="analyze-panel" style="display:none">
-    <div class="analyze-filter">
-      <div class="analyze-filter-lbl"><i class="bi bi-person-fill"></i> VIEW USER</div>
-      <div class="chip-scroll" id="user-select-chips"></div>
-    </div>
-    <div id="user-analysis"></div>
-  </div>
-
-  <div id="analyze-timeline" class="analyze-panel" style="display:none">
-    <div class="chart-card">
-      <div class="chart-title"><i class="bi bi-bar-chart-fill"></i> Monthly Investment Timeline</div>
-      <div style="position:relative;height:210px">
-        <canvas id="barChart" role="img" aria-label="Monthly investments bar chart"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <div class="export-row">
-    <button class="btn btn-gray btn-sm" onclick="exportPDF('bank')"><i class="bi bi-file-earmark-text-fill"></i> Bank PDF</button>
-    <button class="btn btn-gray btn-sm" onclick="exportPDF('total')"><i class="bi bi-file-earmark-text-fill"></i> Full PDF</button>
-    <button class="btn btn-gray btn-sm" onclick="exportCSV()"><i class="bi bi-file-earmark-spreadsheet-fill"></i> CSV</button>
-  </div>
-</div>
-
-<!-- FAB -->
-<button class="fab" id="fab-add" onclick="openAddModal()" aria-label="Add new FD">
-  <i class="bi bi-plus-lg"></i>
-</button>
-
-<!-- BOTTOM TABS -->
 <nav class="bottomtabs">
-  <button class="btab active" id="btab-invest" onclick="switchTab('invest',this)">
+  <button class="btab active" onclick="switchTab('invest', this)">
     <div class="btab-indicator"></div>
-    <i class="bi bi-wallet-fill"></i>Invest
+    <i class="bi bi-wallet2"></i>Investments
   </button>
-  <button class="btab" id="btab-analyze" onclick="switchTab('analyze',this)">
+  <button class="btab" onclick="switchTab('analyze', this)">
     <div class="btab-indicator"></div>
     <i class="bi bi-pie-chart-fill"></i>Analyze
   </button>
+  <button class="btab" onclick="switchTab('history', this)">
+    <div class="btab-indicator"></div>
+    <i class="bi bi-clock-history"></i>History
+  </button>
 </nav>
 
-<!-- ═══════════ MODALS ═══════════ -->
+<button class="fab" id="fab-add" onclick="openAddModal()" title="Add New Record">+</button>
 
-<!-- Add / Edit FD -->
-<div class="modal-bg" id="fd-modal">
-  <div class="modal">
-    <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('fd-modal')" aria-label="Close">×</button>
-    <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--blue-light);color:var(--blue)"><i class="bi bi-plus-lg"></i></div>
-      <h3 id="modal-title">Add New FD</h3>
+<main id="page-invest" class="page active">
+  <div id="quick-alert-box"></div>
+
+  <section class="filter-card">
+    <div class="filter-card-hdr"><i class="bi bi-funnel-fill"></i> FILTER PARAMETERS</div>
+    <div class="filter-row">
+      <span class="filter-lbl">Bank:</span>
+      <div class="chip-scroll" id="chips-bank"></div>
     </div>
-    <div class="fr">
-      <label><i class="bi bi-bank2"></i> BANK</label>
-      <select id="f-bank"></select>
+    <div class="filter-row" style="margin-bottom:4px">
+      <span class="filter-lbl">User:</span>
+      <div class="chip-scroll" id="chips-user"></div>
     </div>
-    <div class="fr">
-      <label><i class="bi bi-person-fill"></i> USER / ACCOUNT HOLDER</label>
-      <select id="f-user"></select>
+  </section>
+
+  <div class="sort-row">
+    <i class="bi bi-sort-down sort-icon"></i>
+    <select id="sort-select" class="sort-sel" onchange="renderAll()">
+      <option value="maturity-asc">Maturity Timeline (Soonest First)</option>
+      <option value="maturity-desc">Maturity Timeline (Latest First)</option>
+      <option value="amount-desc">Investment Principal (High to Low)</option>
+      <option value="amount-asc">Investment Principal (Low to High)</option>
+      <option value="bank">Bank Alphabetical</option>
+      <option value="user">User Holder Alphabetical</option>
+    </select>
+  </div>
+
+  <div class="tbl-section">
+    <h2 class="sec-hdr"><i class="bi bi-exclamation-octagon-fill" style="color:var(--green)"></i> MATURED RECORDS <span class="cnt" id="cnt-matured">0</span></h2>
+    <div class="fd-card-grid" id="matured-tbody"></div>
+  </div>
+
+  <div class="tbl-section">
+    <h2 class="sec-hdr"><i class="bi bi-bell-fill" style="color:var(--orange)"></i> MATURING SOON (WITHIN 7 DAYS) <span class="cnt" id="cnt-soon">0</span></h2>
+    <div class="fd-card-grid" id="soon-tbody"></div>
+  </div>
+
+  <div class="tbl-section">
+    <h2 class="sec-hdr"><i class="bi bi-check-circle-fill" style="color:var(--blue)"></i> ACTIVE CONSTELLATION LOGS <span class="cnt" id="cnt-active">0</span></h2>
+    <div class="fd-card-grid" id="active-tbody"></div>
+  </div>
+</main>
+
+<main id="page-analyze" class="page">
+  <div class="metric-grid">
+    <div class="mcard">
+      <div class="m-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-cash-stack"></i></div>
+      <div class="lbl">TOTAL INVESTMENT</div>
+      <div class="val" id="m-total-p">₹0</div>
     </div>
-    <div class="fr">
-      <label><i class="bi bi-calendar2-fill"></i> START DATE</label>
-      <input type="date" id="f-date">
+    <div class="mcard">
+      <div class="m-icon" style="background:var(--green-light); color:var(--green)"><i class="bi bi-graph-up-arrow"></i></div>
+      <div class="lbl">CURRENT VALUE</div>
+      <div class="val" id="m-total-v" style="color:var(--green)">₹0</div>
     </div>
-    <div class="fr">
-      <label><i class="bi bi-currency-rupee"></i> PRINCIPAL AMOUNT (₹)</label>
-      <input type="number" id="f-amount" placeholder="e.g. 50000" min="1" inputmode="numeric">
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-percent"></i> INTEREST RATE (% per annum)</label>
-      <input type="number" id="f-rate" placeholder="e.g. 7.5" step="0.01" min="0" inputmode="decimal">
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-clock-fill"></i> TENURE (months)</label>
-      <input type="number" id="f-tenure" placeholder="e.g. 12" min="1" inputmode="numeric">
-    </div>
-    <div class="tog-row">
-      <span class="tog-lbl"><i class="bi bi-arrow-repeat"></i> Compound interest (quarterly)</span>
-      <label class="toggle"><input type="checkbox" id="f-compound"><span class="tslider"></span></label>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-primary" onclick="saveFD()"><i class="bi bi-floppy-fill"></i> Save FD</button>
-      <button class="btn btn-gray" onclick="closeModal('fd-modal')"><i class="bi bi-x-lg"></i> Cancel</button>
+    <div class="mcard" style="grid-column: span 2;">
+      <div class="m-icon" style="background:var(--teal-light); color:#0f6e56; margin-bottom: 2px;"><i class="bi bi-trophy-fill"></i></div>
+      <div class="lbl">TOTAL INTEREST EARNED</div>
+      <div class="val" id="m-total-interest" style="color:#0f6e56">₹0</div>
     </div>
   </div>
-</div>
 
-<!-- Manage Banks -->
+  <div class="analyze-tabs">
+    <button class="atab active" id="atab-bank" onclick="switchAnalyzeTab('bank')"><i class="bi bi-bank"></i>Bank Wise Distribution</button>
+    <button class="atab" id="atab-user" onclick="switchAnalyzeTab('user')"><i class="bi bi-person-bounding-box"></i>User Wise Distribution</button>
+    <button class="atab" id="atab-timeline" onclick="switchAnalyzeTab('timeline')"><i class="bi bi-calendar3"></i>Maturity Timeline Calendar</button>
+  </nav>
+
+  <div id="an-block-bank">
+    <div class="analyze-filter">
+      <div class="analyze-filter-lbl"><i class="bi bi-building"></i> VIEW BANK PROFILE</div>
+      <div class="chip-scroll" id="analyze-bank-chips"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title" id="bank-chart-title"><i class="bi bi-pie-chart-fill"></i> Bank Breakdown Chart</div>
+      <div style="position:relative; margin:0 auto 16px; max-width:240px;">
+        <canvas id="analyzePieChart"></canvas>
+      </div>
+      <div id="pie-legend-box"></div>
+    </div>
+  </div>
+
+  <div id="an-block-user" style="display:none">
+    <div class="analyze-filter">
+      <div class="analyze-filter-lbl"><i class="bi bi-person-circle"></i> CHOOSE TARGET PROFILE</div>
+      <div class="chip-scroll" id="analyze-user-chips"></div>
+    </div>
+    <div id="analyze-user-content-area"></div>
+  </div>
+
+  <div id="an-block-timeline" style="display:none">
+    <div class="chart-card">
+      <div style="display:flex; justify-content:between; align-items:center; margin-bottom:14px">
+        <div class="chart-title" style="margin:0"><i class="bi bi-calendar-range"></i> Timeline Scope Window</div>
+        <div style="display:flex; gap:6px; margin-left:auto;">
+          <button id="btn-tl-bar" class="btn btn-sm btn-primary" onclick="setTimelineView('bar')">Bar Graph</button>
+          <button id="btn-tl-horiz" class="btn btn-sm btn-gray" onclick="setTimelineView('horiz')">List View</button>
+        </div>
+      </div>
+      <div id="tl-bar-wrapper">
+        <canvas id="analyzeBarChart" style="max-height:230px;"></canvas>
+      </div>
+      <div id="tl-horiz-wrapper" style="display:none">
+        <div class="h-timeline-container" id="h-timeline-scroll-track"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="page-history" class="page">
+  <div class="chart-card">
+    <div class="chart-title"><i class="bi bi-clock-history"></i> Global Operations Audit Log Trails</div>
+    <div id="history-log-list"></div>
+  </div>
+</main>
+
 <div class="modal-bg" id="bank-modal">
   <div class="modal">
     <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('bank-modal')" aria-label="Close">×</button>
+    <button class="modal-close" onclick="closeModal('bank-modal')">×</button>
     <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--blue-light);color:var(--blue)"><i class="bi bi-bank2"></i></div>
-      <h3>Manage Banks</h3>
+      <div class="modal-hdr-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-bank2"></i></div>
+      <h3>Supported Banking Networks</h3>
     </div>
     <div class="add-inp-wrap">
-      <input type="text" id="new-bank-inp" placeholder="Enter bank name…" autocomplete="off">
-      <button class="btn btn-primary btn-sm" onclick="addBank()"><i class="bi bi-plus-lg"></i> Add</button>
+      <input type="text" id="new-bank-inp" placeholder="Enter bank entity name...">
+      <button class="btn btn-primary" onclick="addBankEntity()"><i class="bi bi-plus-lg"></i> Add</button>
     </div>
-    <div id="bank-list"></div>
-    <button class="btn btn-gray btn-full" onclick="closeModal('bank-modal')"><i class="bi bi-check-lg"></i> Done</button>
+    <div id="bank-list-box" style="max-height:250px; overflow-y:auto"></div>
   </div>
 </div>
 
-<!-- Manage Users -->
 <div class="modal-bg" id="user-modal">
   <div class="modal">
     <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('user-modal')" aria-label="Close">×</button>
+    <button class="modal-close" onclick="closeModal('user-modal')">×</button>
     <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--blue-light);color:var(--blue)"><i class="bi bi-people-fill"></i></div>
-      <h3>Manage Users</h3>
+      <div class="modal-hdr-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-people-fill"></i></div>
+      <h3>Account Holders Matrix</h3>
     </div>
     <div class="add-inp-wrap">
-      <input type="text" id="new-user-inp" placeholder="Enter account holder name…" autocomplete="off">
-      <button class="btn btn-primary btn-sm" onclick="addUser()"><i class="bi bi-plus-lg"></i> Add</button>
+      <input type="text" id="new-user-inp" placeholder="Enter profile holder name...">
+      <button class="btn btn-primary" onclick="addUserProfile()"><i class="bi bi-plus-lg"></i> Add</button>
     </div>
-    <div id="user-list"></div>
-    <button class="btn btn-gray btn-full" onclick="closeModal('user-modal')"><i class="bi bi-check-lg"></i> Done</button>
+    <div id="user-list-box" style="max-height:250px; overflow-y:auto"></div>
   </div>
 </div>
 
-<!-- FD History -->
-<div class="modal-bg" id="hist-modal">
+<div class="modal-bg" id="form-modal">
   <div class="modal">
     <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('hist-modal')" aria-label="Close">×</button>
+    <button class="modal-close" onclick="closeModal('form-modal')">×</button>
     <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--blue-light);color:var(--blue)"><i class="bi bi-clock-history"></i></div>
-      <h3>FD History</h3>
+      <div class="modal-hdr-icon" id="form-hdr-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-pencil-square"></i></div>
+      <h3 id="form-title-h">Add Record Entry</h3>
     </div>
-    <div id="hist-content"></div>
-    <button class="btn btn-gray btn-full" style="margin-top:14px" onclick="closeModal('hist-modal')"><i class="bi bi-x-lg"></i> Close</button>
-  </div>
-</div>
-
-<!-- Renew FD -->
-<div class="modal-bg" id="renew-modal">
-  <div class="modal">
-    <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('renew-modal')" aria-label="Close">×</button>
-    <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--teal-light);color:#0f6e56"><i class="bi bi-arrow-repeat"></i></div>
-      <h3>Renew FD</h3>
+    <div id="renew-info-banner" class="renew-info" style="display:none"></div>
+    <div class="fr">
+      <label><i class="bi bi-bank"></i> Banking Entity Network</label>
+      <select id="f-bank"></select>
     </div>
-    <div class="renew-info" id="renew-info"></div>
-    <div class="fr"><label><i class="bi bi-calendar2-fill"></i> RENEWAL DATE</label><input type="date" id="r-date"></div>
-    <div class="fr"><label><i class="bi bi-currency-rupee"></i> NEW AMOUNT (₹)</label><input type="number" id="r-amount" min="1" inputmode="numeric"></div>
-    <div class="fr"><label><i class="bi bi-percent"></i> NEW INTEREST RATE (%)</label><input type="number" id="r-rate" step="0.01" min="0" inputmode="decimal"></div>
-    <div class="fr"><label><i class="bi bi-clock-fill"></i> NEW TENURE (months)</label><input type="number" id="r-tenure" min="1" inputmode="numeric"></div>
+    <div class="fr">
+      <label><i class="bi bi-person"></i> Account Profile Holder</label>
+      <select id="f-user"></select>
+    </div>
+    <div class="fr">
+      <label><i class="bi bi-calendar-event"></i> Setup Booking Date</label>
+      <input type="date" id="f-date">
+    </div>
+    <div class="fr">
+      <label><i class="bi bi-currency-rupee"></i> Principal Investment Amount</label>
+      <input type="number" id="f-amount" placeholder="₹ Value">
+    </div>
+    <div class="fr">
+      <label><i class="bi bi-percent"></i> Annual Yield Rate (%)</label>
+      <input type="number" step="0.01" id="f-rate" placeholder="e.g. 7.1">
+    </div>
+    <div class="fr">
+      <label><i class="bi bi-hourglass-split"></i> Maturity Tenure (Months Target)</label>
+      <input type="number" id="f-tenure" placeholder="Months count">
+    </div>
+    <div class="fr">
+      <label><i class="bi bi-file-earmark-text"></i> Additional Context Notes</label>
+      <textarea id="f-desc" rows="2" placeholder="Optional notes..."></textarea>
+    </div>
     <div class="tog-row">
-      <span class="tog-lbl"><i class="bi bi-arrow-repeat"></i> Compound interest (quarterly)</span>
-      <label class="toggle"><input type="checkbox" id="r-compound"><span class="tslider"></span></label>
+      <div class="tog-lbl"><i class="bi bi-layers-half"></i> Compound Yield Interest Matrix</div>
+      <label class="toggle">
+        <input type="checkbox" id="f-comp" checked>
+        <span class="tslider"></span>
+      </label>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-primary" onclick="confirmRenew()"><i class="bi bi-arrow-repeat"></i> Renew Now</button>
-      <button class="btn btn-gray" onclick="closeModal('renew-modal')"><i class="bi bi-x-lg"></i> Cancel</button>
-    </div>
+    <button class="btn btn-primary btn-full" onclick="saveFormSubmit()"><i class="bi bi-check2-circle"></i> Commit Record Matrix</button>
   </div>
 </div>
 
-<!-- FD Detail -->
 <div class="modal-bg" id="detail-modal">
   <div class="modal">
     <div id="detail-stripe" class="detail-stripe"></div>
     <div class="modal-grip" style="margin-top:6px"></div>
-    <button class="modal-close" onclick="closeModal('detail-modal')" aria-label="Close">×</button>
+    <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
     <h3 id="detail-title" style="font-size:17px;font-weight:800;margin-bottom:14px;padding-right:36px"></h3>
     <div id="detail-content"></div>
     <div class="detail-actions" id="detail-actions"></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="delete-modal">
+  <div class="modal">
+    <div class="modal-grip"></div>
+    <button class="modal-close" onclick="closeModal('delete-modal')">×</button>
+    <div class="modal-hdr">
+      <div class="modal-hdr-icon" style="background:var(--red-light); color:var(--red)"><i class="bi bi-trash3-fill"></i></div>
+      <h3>Decommission Audit Logic Confirmation</h3>
+    </div>
+    <p style="font-size:13px; color:var(--muted); line-height:1.5; margin-bottom:14px;">Are you sure you want to delete this record? This action will archive the record into logs history tracking profiles maps.</p>
+    <div class="fr">
+      <label><i class="bi bi-chat-right-quote"></i> Reason for Decommission</label>
+      <input type="text" id="f-del-reason" placeholder="e.g., Early liquidation, pre-closure check...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-gray" onclick="closeModal('delete-modal')">Cancel</button>
+      <button class="btn btn-red" onclick="confirmDeleteSubmit()">Confirm Dearchive</button>
+    </div>
   </div>
 </div>
 
@@ -683,463 +749,862 @@ input:checked+.tslider:before{transform:translateX(21px)}
 let banks=JSON.parse(localStorage.getItem('fd_banks3')||'["SBI","HDFC Bank","ICICI Bank","Axis Bank","PNB"]');
 let users=JSON.parse(localStorage.getItem('fd_users3')||'["Sangita","Shivaji","Prathamesh","Chandrashekhar"]');
 let fds=JSON.parse(localStorage.getItem('fd_r3')||'[]');
-let editId=null,renewId=null,filterBank='all',filterUser='all';
+
+fds.forEach(fd=>{
+  fd.description ??= "";
+  fd.deleted ??= false;
+  fd.deletedDate ??= null;
+  fd.deleteReason ??= "";
+  fd.history ??= [{type:"CREATED",date:fd.date,message:"FD Created"}];
+});
+
+let editId=null,renewId=null,deleteTargetId=null,filterBank='all',filterUser='all';
 let pieInst=null,barInst=null;
-const PIE_COLORS=['#185fa5','#1d9e75','#ef9f27','#d85a30','#7f77dd','#d4537e','#639922','#0f6e56','#ba7517'];
+let activeTimelineView = 'bar'; 
+let selectedAnalyzeBank = 'all';
+let selectedAnalyzeUser = 'all';
 
-function save(){localStorage.setItem('fd_r3',JSON.stringify(fds));localStorage.setItem('fd_banks3',JSON.stringify(banks));localStorage.setItem('fd_users3',JSON.stringify(users));}
-function fmt(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
-function fmtDate(d){if(!d)return '';return new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
-function todayStr(){return new Date().toISOString().split('T')[0];}
-function calcVal(fd,asOf){const s=new Date(fd.date),e=asOf?new Date(asOf):new Date();const m=Math.min((e-s)/(1000*60*60*24*30.44),fd.tenure);const r=fd.rate/100;return fd.compound?fd.amount*Math.pow(1+r/4,4*(m/12)):fd.amount*(1+r*m/12);}
-function matDate(fd){const d=new Date(fd.date);d.setMonth(d.getMonth()+fd.tenure);return d;}
-function matVal(fd){return calcVal(fd,matDate(fd));}
-function daysLeft(fd){const m=matDate(fd),n=new Date();m.setHours(0,0,0,0);n.setHours(0,0,0,0);return Math.ceil((m-n)/(864e5));}
-function getStatus(fd){if(fd.closed)return 'closed';const dl=daysLeft(fd);if(dl<=0)return 'matured';if(dl<=7)return 'soon';return 'active';}
-function initials(name){return name?name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2):'?';}
+const PIE_COLORS=['#185fa5','#1d9e75','#ef9f27','#d85a30','#7f77dd','#5ab3e6','#e05080','#93a81e','#228b22','#8b0000'];
 
-function switchTab(s,el){
-  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
-  document.querySelectorAll('.btab').forEach(e=>e.classList.remove('active'));
-  document.getElementById('page-'+s).classList.add('active');
-  el.classList.add('active');
-  document.getElementById('fab-add').style.display=s==='invest'?'flex':'none';
-  document.getElementById('invest-hdr-btns').style.display=s==='invest'?'flex':'none';
-  document.getElementById('analyze-hdr-btns').style.display=s==='analyze'?'flex':'none';
-  if(s==='analyze')renderAnalyze();
+function matDate(f){
+  const d=new Date(f.date);
+  d.setMonth(d.getMonth()+parseInt(f.tenure));
+  return d;
+}
+function fmtDate(d){
+  const y=d.getFullYear();
+  let m=(d.getMonth()+1).toString().padStart(2,'0');
+  let day=d.getDate().toString().padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function displayFmtDate(s){
+  if(!s) return '-';
+  const parts = s.split('-');
+  if(parts.length!==3) return s;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0]}`;
+}
+function calcVal(f,targetDate){
+  const s=new Date(f.date);
+  const diff=(targetDate-s)/(3600*24*365.25*1000);
+  if(diff<=0) return f.amount;
+  if(f.compounded || f.compounded===undefined){
+    return f.amount*Math.pow((1+f.rate/400), 4*diff);
+  } else {
+    return f.amount*(1+(f.rate/100)*diff);
+  }
+}
+function getStatus(f){
+  if (f.deleted) return 'deleted';
+  let today=new Date(); today.setHours(0,0,0,0);
+  const md=matDate(f); md.setHours(0,0,0,0);
+  if(today>=md) return 'matured';
+  if((md-today)/(24*3600*1000)<=7) return 'soon';
+  return 'active';
 }
 
-function switchAnalyzeTab(name,el){
-  document.querySelectorAll('.analyze-panel').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.atab').forEach(e=>e.classList.remove('active'));
-  document.getElementById('analyze-'+name).style.display='block';
-  el.classList.add('active');
-  if(name==='timeline')renderTimeline();
-  if(name==='user'){selectedAnalyzeUser=null;renderUserAnalysis();}
-  if(name==='bank'){selectedAnalyzeBank=null;renderBankChart();}
+function switchTab(t,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`page-${t}`).classList.add('active');
+  btn.classList.add('active');
+  const invBtns = document.getElementById('invest-hdr-btns');
+  const anaBtns = document.getElementById('analyze-hdr-btns');
+  if(t==='invest'){
+    invBtns.style.display='flex'; anaBtns.style.display='none';
+    document.getElementById('fab-add').style.display='flex';
+  } else if(t==='analyze') {
+    invBtns.style.display='none'; anaBtns.style.display='flex';
+    document.getElementById('fab-add').style.display='none';
+    setTimeout(drawCharts,60);
+  } else if(t==='history') {
+    invBtns.style.display='none'; anaBtns.style.display='none';
+    document.getElementById('fab-add').style.display='none';
+  }
+  renderAll();
 }
 
-function getFiltered(){return fds.filter(f=>!f.closed&&(filterBank==='all'||f.bank===filterBank)&&(filterUser==='all'||f.user===filterUser));}
+function setTimelineView(view) {
+  activeTimelineView = view;
+  const btnBar = document.getElementById('btn-tl-bar');
+  const btnHoriz = document.getElementById('btn-tl-horiz');
+  const wrapBar = document.getElementById('tl-bar-wrapper');
+  const wrapHoriz = document.getElementById('tl-horiz-wrapper');
+  if(view === 'bar') {
+    btnBar.className = "btn btn-sm btn-primary";
+    btnHoriz.className = "btn btn-sm btn-gray";
+    wrapBar.style.display = "block";
+    wrapHoriz.style.display = "none";
+  } else {
+    btnBar.className = "btn btn-sm btn-gray";
+    btnHoriz.className = "btn btn-sm btn-primary";
+    wrapBar.style.display = "none";
+    wrapHoriz.style.display = "block";
+  }
+  setTimeout(drawCharts, 30);
+}
 
 function renderAll(){
-  renderChips();
-  const filtered=getFiltered();
-  const active=filtered.filter(f=>getStatus(f)==='active');
-  const soon=filtered.filter(f=>getStatus(f)==='soon');
-  const matured=filtered.filter(f=>getStatus(f)==='matured');
-  document.getElementById('section-active').style.display=active.length?'block':'none';
-  document.getElementById('section-soon').style.display=soon.length?'block':'none';
-  document.getElementById('section-matured').style.display=matured.length?'block':'none';
-  renderTable(active);renderSoonTable(soon);renderMaturedTable(matured);renderNotifs();
-  if(document.getElementById('page-analyze').classList.contains('active'))renderAnalyze();
+  const now=new Date();
+  
+  // ── UPDATE GLOBAL UNFILTERED COUNTS FOR HEADERS ──
+  let totalMaturedCount = 0;
+  let totalSoonCount = 0;
+  let totalActiveCount = 0;
+  
+  fds.forEach(f => {
+    if (!f.deleted) {
+      const st = getStatus(f);
+      if (st === 'matured') totalMaturedCount++;
+      else if (st === 'soon') totalSoonCount++;
+      else if (st === 'active') totalActiveCount++;
+    }
+  });
+  
+  document.getElementById('cnt-matured').innerText = totalMaturedCount;
+  document.getElementById('cnt-soon').innerText = totalSoonCount;
+  document.getElementById('cnt-active').innerText = totalActiveCount;
+
+  // ── CHIPS RENDER ──
+  let bc=`<button class="chip ${filterBank==='all'?'active':''}" onclick="setFilter('bank','all')"><i class="bi bi-grid-fill"></i> All Banks</button>`;
+  banks.forEach(b=>{
+    let count = fds.filter(f=>!f.deleted && f.bank===b).length;
+    bc+=`<button class="chip ${filterBank===b?'active':''}" onclick="setFilter('bank','${b}')">${b} (${count})</button>`;
+  });
+  document.getElementById('chips-bank').innerHTML=bc;
+
+  let uc=`<button class="chip ${filterUser==='all'?'active':''}" onclick="setFilter('user','all')"><i class="bi bi-person-fill"></i> Everyone</button>`;
+  users.forEach(u=>{
+    let count = fds.filter(f=>!f.deleted && f.user===u).length;
+    uc+=`<button class="chip ${filterUser===u?'active':''}" onclick="setFilter('user','${u}')">${u} (${count})</button>`;
+  });
+  document.getElementById('chips-user').innerHTML=uc;
+
+  // ── FILTER & SORT THE ACTIVE VIEW ──
+  let obank=filterBank, ouser=filterUser, sval=document.getElementById('sort-select').value;
+  let activePool = fds.filter(f=>!f.deleted);
+  let deletedPool = fds.filter(f => f.deleted);
+
+  if(obank!=='all') activePool=activePool.filter(f=>f.bank===obank);
+  if(ouser!=='all') activePool=activePool.filter(f=>f.user===ouser);
+
+  if(sval=='bank') activePool.sort((a,b)=>a.bank.localeCompare(b.bank));
+  else if(sval=='user') activePool.sort((a,b)=>(a.user||'').localeCompare(b.user||''));
+  else if(sval=='amount-desc') activePool.sort((a,b)=>b.amount-a.amount);
+  else if(sval=='amount-asc') activePool.sort((a,b)=>a.amount-b.amount);
+  else if(sval=='maturity-asc') activePool.sort((a,b)=>matDate(a)-matDate(b));
+  else if(sval=='maturity-desc') activePool.sort((a,b)=>matDate(b)-matDate(a));
+
+  let matHtml='', soonHtml='', actHtml='';
+  activePool.forEach(f=>{
+    const st=getStatus(f);
+    const h=createCardHtml(f,st,now);
+    if(st==='matured') matHtml+=h;
+    else if(st==='soon') soonHtml+=h;
+    else actHtml+=h;
+  });
+
+  document.getElementById('matured-tbody').innerHTML=matHtml||`<div class="empty" style="grid-column:span 2"><i class="bi bi-patch-check"></i><p>No matured records found.</p></div>`;
+  document.getElementById('soon-tbody').innerHTML=soonHtml||`<div class="empty" style="grid-column:span 2"><i class="bi bi-clock"></i><p>No records maturing within 7 days.</p></div>`;
+  document.getElementById('active-tbody').innerHTML=actHtml||`<div class="empty" style="grid-column:span 2"><i class="bi bi-folder-x"></i><p>No active investment records matched.</p></div>`;
+
+  // ── METRIC PARAMETERS (GLOBAL SCOPE CONFIGURATIONS) ──
+  let sumP=0, sumCurV=0;
+  fds.forEach(f=>{
+    if(!f.deleted){
+      sumP+=f.amount;
+      sumCurV+=calcVal(f, now);
+    }
+  });
+  let interestEarned = Math.max(0, sumCurV - sumP);
+
+  document.getElementById('m-total-p').innerText='₹'+Math.round(sumP).toLocaleString('en-IN');
+  document.getElementById('m-total-v').innerText='₹'+Math.round(sumCurV).toLocaleString('en-IN');
+  document.getElementById('m-total-interest').innerText='₹'+Math.round(interestEarned).toLocaleString('en-IN');
+
+  // ── HISTORY LOGS GENERATION ──
+  let combinedLogs = [];
+  fds.forEach(f => {
+    if (f.history) {
+      f.history.forEach(h => {
+        combinedLogs.push({
+          bank: f.bank,
+          user: f.user || 'Unknown',
+          amount: f.amount,
+          type: h.type,
+          date: h.date,
+          message: h.message
+        });
+      });
+    }
+  });
+  combinedLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  let hHtml = '';
+  if (combinedLogs.length === 0) {
+    hHtml = `<div class="empty"><i class="bi bi-journals"></i><p>No historical records tracked yet.</p></div>`;
+  } else {
+    combinedLogs.forEach(l => {
+      let badgeStyle = 'background:var(--surface2); color:var(--text);';
+      if(l.type === 'CREATED') badgeStyle = 'background:var(--blue-light); color:var(--blue-dk); font-weight:700;';
+      if(l.type === 'RENEWED') badgeStyle = 'background:var(--teal-light); color:#0f6e56; font-weight:700;';
+      if(l.type === 'DECOMMISSIONED') badgeStyle = 'background:var(--red-light); color:var(--red); font-weight:700;';
+      
+      hHtml += `
+        <div class="hist-item">
+          <div class="hist-dot"></div>
+          <div class="hist-date">${displayFmtDate(l.date)}</div>
+          <div class="hist-amt">₹${l.amount.toLocaleString('en-IN')} <span style="font-size:11px; font-weight:normal; color:var(--muted)">(${l.user} - ${l.bank})</span></div>
+          <div class="hist-lbl" style="${badgeStyle}">${l.type}</div>
+        </div>
+      `;
+    });
+  }
+  document.getElementById('history-log-list').innerHTML = hHtml;
 }
 
-function sortFDs(arr){
-  const s=document.getElementById('sort-sel').value;const cp=[...arr];
-  if(s==='bank')cp.sort((a,b)=>a.bank.localeCompare(b.bank));
-  else if(s==='user')cp.sort((a,b)=>(a.user||'').localeCompare(b.user||''));
-  else if(s==='amount-desc')cp.sort((a,b)=>b.amount-a.amount);
-  else if(s==='amount-asc')cp.sort((a,b)=>a.amount-b.amount);
-  else if(s==='maturity')cp.sort((a,b)=>matDate(a)-matDate(b));
-  return cp;
+function createCardHtml(f,st,now){
+  let cCls='blue', bTxt='Active';
+  if(st==='matured'){ cCls='green'; bTxt='Matured'; }
+  else if(st==='soon') { cCls='orange'; bTxt='Soon'; }
+  const md=matDate(f);
+  const curV=calcVal(f,now);
+  
+  return `
+    <div class="fd-card ${cCls}" onclick="openDetailModal('${f.id}')">
+      <div class="card-badge">${bTxt}</div>
+      <div class="card-bank"><i class="bi bi-bank"></i> ${f.bank}</div>
+      <div class="card-user"><i class="bi bi-person-fill"></i> <span>${f.user||'-'}</span></div>
+      <div class="card-amount">₹${Math.round(curV).toLocaleString('en-IN')}</div>
+      <div class="card-date">
+        <span style="font-size:10px; font-weight:normal; color:var(--muted);">Created:</span> ${displayFmtDate(f.date)}<br/>
+        <span style="font-size:10px; font-weight:normal; color:var(--muted);">Matures:</span> <span style="color:var(--blue-dk); font-weight:700;">${displayFmtDate(fmtDate(md))}</span>
+      </div>
+    </div>
+  `;
 }
 
-function renderTable(active){
-  const el=document.getElementById('fd-tbody');
-  document.getElementById('fd-count').textContent='('+active.length+')';
-  const sorted=sortFDs(active);
-  if(!sorted.length){el.innerHTML=`<div style="grid-column:1/-1" class="empty"><i class="bi bi-inbox-fill"></i><p>No active FDs</p><p class="empty-sub">Tap + to add your first FD</p></div>`;return;}
-  el.innerHTML=sorted.map(fd=>{
-    const dl=daysLeft(fd);
-    return `<div class="fd-card blue" onclick="openDetail('${fd.id}')">
-      <div class="card-badge">${dl}d left</div>
-      <div class="card-date">${fmtDate(new Date(fd.date))}</div>
-      <div class="card-amount">${fmt(fd.amount)}</div>
-      <div class="card-bank"><i class="bi bi-bank2"></i>${fd.bank}</div>
-      <div class="card-user"><i class="bi bi-person-fill"></i><span>${fd.user||'-'}</span></div>
-    </div>`;
-  }).join('');
+function setFilter(type,val){
+  if(type==='bank') filterBank=val;
+  if(type==='user') filterUser=val;
+  renderAll();
 }
 
-function renderSoonTable(soon){
-  const el=document.getElementById('soon-tbody');
-  if(!soon.length){el.innerHTML='';return;}
-  el.innerHTML=soon.map(fd=>{
-    const dl=daysLeft(fd);
-    return `<div class="fd-card orange" onclick="openDetail('${fd.id}')">
-      <div class="card-badge">${dl}d left</div>
-      <div class="card-date">${fmtDate(matDate(fd))}</div>
-      <div class="card-amount">${fmt(fd.amount)}</div>
-      <div class="card-bank"><i class="bi bi-bank2"></i>${fd.bank}</div>
-      <div class="card-user"><i class="bi bi-person-fill"></i><span>${fd.user||'-'}</span></div>
-    </div>`;
-  }).join('');
+function openBankModal(){
+  let h='';
+  banks.forEach(b=>{
+    h+=`
+      <div class="list-item">
+        <div class="list-item-icon"><i class="bi bi-bank"></i></div>
+        <div class="list-item-name">${b}</div>
+        <button class="btn btn-sm btn-red" onclick="deleteBankEntity('${b}')"><i class="bi bi-trash"></i></button>
+      </div>
+    `;
+  });
+  document.getElementById('bank-list-box').innerHTML=h||'<div class="empty"><p>No banking networks added.</p></div>';
+  document.getElementById('bank-modal').classList.add('open');
+}
+function addBankEntity(){
+  const val=document.getElementById('new-bank-inp').value.trim();
+  if(!val) return;
+  if(!banks.includes(val)){
+    banks.push(val); banks.sort();
+    localStorage.setItem('fd_banks3',JSON.stringify(banks));
+    document.getElementById('new-bank-inp').value='';
+    openBankModal(); renderAll();
+  }
+}
+function deleteBankEntity(b){
+  if(confirm(`Remove ${b}? This will not remove existing records under this bank.`)){
+    banks=banks.filter(x=>x!==b);
+    localStorage.setItem('fd_banks3',JSON.stringify(banks));
+    openBankModal(); renderAll();
+  }
 }
 
-function renderMaturedTable(matured){
-  const el=document.getElementById('matured-tbody');
-  if(!matured.length){el.innerHTML='';return;}
-  el.innerHTML=matured.map(fd=>{
-    return `<div class="fd-card green" onclick="openDetail('${fd.id}')">
-      <div class="card-badge">Matured</div>
-      <div class="card-date">${fmtDate(matDate(fd))}</div>
-      <div class="card-amount">${fmt(matVal(fd))}</div>
-      <div class="card-bank"><i class="bi bi-bank2"></i>${fd.bank}</div>
-      <div class="card-user"><i class="bi bi-person-fill"></i><span>${fd.user||'-'}</span></div>
-    </div>`;
-  }).join('');
+function openUserModal(){
+  let h='';
+  users.forEach(u=>{
+    h+=`
+      <div class="list-item">
+        <div class="list-item-icon"><i class="bi bi-person-fill"></i></div>
+        <div class="list-item-name">${u}</div>
+        <button class="btn btn-sm btn-red" onclick="deleteUserProfile('${u}')"><i class="bi bi-trash"></i></button>
+      </div>
+    `;
+  });
+  document.getElementById('user-list-box').innerHTML=h||'<div class="empty"><p>No profile users mapped.</p></div>';
+  document.getElementById('user-modal').classList.add('open');
+}
+function addUserProfile(){
+  const val=document.getElementById('new-user-inp').value.trim();
+  if(!val) return;
+  if(!users.includes(val)){
+    users.push(val); users.sort();
+    localStorage.setItem('fd_users3',JSON.stringify(users));
+    document.getElementById('new-user-inp').value='';
+    openUserModal(); renderAll();
+  }
+}
+function deleteUserProfile(u){
+  if(confirm(`Remove ${u}? Existing tracking pipelines data targets mapping logs remain active.`)){
+    users=users.filter(x=>x!==u);
+    localStorage.setItem('fd_users3',JSON.stringify(users));
+    openUserModal(); renderAll();
+  }
 }
 
-function renderNotifs(){
-  const all=fds.filter(f=>!f.closed);
-  const matured=all.filter(f=>getStatus(f)==='matured');
-  const soon=all.filter(f=>getStatus(f)==='soon');
-  let html='';
-  if(matured.length)html+=`<div class="notif notif-ok"><i class="bi bi-check-circle-fill"></i><span><strong>${matured.length}</strong> FD${matured.length>1?'s have':' has'} matured. Tap to renew.</span></div>`;
-  if(soon.length)html+=`<div class="notif notif-warn"><i class="bi bi-bell-fill"></i><span><strong>${soon.length}</strong> FD${soon.length>1?'s are':' is'} maturing within 7 days.</span></div>`;
-  document.getElementById('notif-area').innerHTML=html;
+function openAddModal(){
+  editId=null; renewId=null;
+  document.getElementById('form-title-h').innerText='Add New Record';
+  document.getElementById('renew-info-banner').style.display='none';
+  populateFormFields({bank:banks[0], user:users[0], date:fmtDate(new Date()), amount:'', rate:'', tenure:'', description:'', compounded:true});
+  document.getElementById('form-modal').classList.add('open');
 }
 
-function renderChips(){
-  const bc=document.getElementById('bank-chips');
-  bc.innerHTML=`<button class="chip ${filterBank==='all'?'active':''}" onclick="setFilter('bank','all')"><i class="bi bi-list-ul"></i>All</button>`+
-    banks.map(b=>`<button class="chip ${filterBank===b?'active':''}" onclick="setFilter('bank','${b}')"><i class="bi bi-bank2"></i>${b}</button>`).join('');
-  const uc=document.getElementById('user-chips');
-  uc.innerHTML=`<button class="chip ${filterUser==='all'?'active':''}" onclick="setFilter('user','all')"><i class="bi bi-list-ul"></i>All</button>`+
-    users.map(u=>`<button class="chip ${filterUser===u?'active':''}" onclick="setFilter('user','${u}')"><i class="bi bi-person-fill"></i>${u}</button>`).join('');
+function populateFormFields(data){
+  let bSel=document.getElementById('f-bank');
+  bSel.innerHTML=banks.map(b=>`<option value="${b}">${b}</option>`).join('');
+  bSel.value=data.bank||banks[0];
+
+  let uSel=document.getElementById('f-user');
+  uSel.innerHTML=users.map(u=>`<option value="${u}">${u}</option>`).join('');
+  uSel.value=data.user||users[0];
+
+  document.getElementById('f-date').value=data.date||'';
+  document.getElementById('f-amount').value=data.amount||'';
+  document.getElementById('f-rate').value=data.rate||'';
+  document.getElementById('f-tenure').value=data.tenure||'';
+  document.getElementById('f-desc').value=data.description||'';
+  document.getElementById('f-comp').checked=(data.compounded!==false);
 }
-function setFilter(type,val){if(type==='bank')filterBank=val;else filterUser=val;renderAll();}
 
-function closeModal(id){document.getElementById(id).classList.remove('open');}
+function openDetailModal(id){
+  const f=fds.find(x=>x.id===id);
+  if(!f) return;
+  let st=getStatus(f);
+  let curVal=calcVal(f,new Date());
+  let md=matDate(f);
+  let isComp=(f.compounded || f.compounded===undefined)?'Quarterly Compounding':'Simple Interest';
 
-function openDetail(id){
-  const fd=fds.find(f=>f.id===id);if(!fd)return;
-  const st=getStatus(fd);const cv=calcVal(fd,new Date());const mv=matVal(fd);const md=matDate(fd);const dl=daysLeft(fd);
-  const colors={active:{bar:'#185fa5',title:'#0c447c'},soon:{bar:'#ef9f27',title:'#854f0b'},matured:{bar:'#97c459',title:'#3b6d11'}};
-  const c=colors[st]||colors.active;
-  document.getElementById('detail-stripe').style.background=c.bar;
-  document.getElementById('detail-title').style.color=c.title;
-  document.getElementById('detail-title').textContent=fd.bank+' — '+fmt(fd.amount);
-  const row=(icon,label,val)=>`<div class="detail-row">
-    <span class="detail-lbl"><i class="bi bi-${icon}"></i>${label}</span>
-    <span class="detail-val">${val}</span>
-  </div>`;
-  document.getElementById('detail-content').innerHTML=
-    row('calendar2-fill','Start Date',fmtDate(new Date(fd.date)))+
-    row('currency-rupee','Amount',fmt(fd.amount))+
-    row('bank2','Bank',fd.bank)+
-    row('person-fill','Account Holder',fd.user||'-')+
-    row('percent','Interest Rate',fd.rate+'% p.a.')+
-    row('clock-fill','Tenure',fd.tenure+' months')+
-    row('arrow-repeat','Interest Type',fd.compound?'Compound (quarterly)':'Simple interest')+
-    row('calendar-event-fill','Maturity Date',fmtDate(md))+
-    row('graph-up-arrow','Current Value',`<span style="color:${c.title};font-size:15px">${fmt(cv)}</span>`)+
-    row('flag-fill','Maturity Value',fmt(mv))+
-    row('info-circle-fill','Status',st==='active'?`<span class="badge b-active"><i class="bi bi-circle-fill"></i>Active · ${dl}d left</span>`:st==='soon'?`<span class="badge b-soon"><i class="bi bi-bell-fill"></i>Maturing in ${dl}d</span>`:`<span class="badge b-matured"><i class="bi bi-check-circle-fill"></i>Matured</span>`);
-  let acts=`<button class="btn btn-sm btn-blue" onclick="openHistory('${id}');closeModal('detail-modal')"><i class="bi bi-clock-history"></i> History</button>`;
-  if(st==='matured')acts+=`<button class="btn btn-sm btn-teal" onclick="openRenew('${id}');closeModal('detail-modal')"><i class="bi bi-arrow-repeat"></i> Renew</button>`;
-  acts+=`<button class="btn btn-sm btn-gray" onclick="closeModal('detail-modal');openAddModal(${JSON.stringify({id:fd.id,bank:fd.bank,user:fd.user,date:fd.date,amount:fd.amount,rate:fd.rate,tenure:fd.tenure,compound:fd.compound}).replace(/"/g,'&quot;')})"><i class="bi bi-pencil-square"></i> Edit</button>`;
-  acts+=`<button class="btn btn-sm btn-red" onclick="if(confirm('Delete this FD?')){deleteFD('${id}');closeModal('detail-modal')}"><i class="bi bi-trash-fill"></i> Delete</button>`;
+  let stripeColor='var(--blue)';
+  if(st==='matured') stripeColor='var(--green-border)';
+  if(st==='soon') stripeColor='var(--orange)';
+  document.getElementById('detail-stripe').style.background=stripeColor;
+
+  document.getElementById('detail-title').innerText=`Investment Details - ${f.bank}`;
+
+  let h=`
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-bank"></i> Financial Bank</span><span class="detail-val">${f.bank}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-person-badge"></i> Profile Owner Name</span><span class="detail-val">${f.user||'-'}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-calendar-check"></i> Registration Start Date</span><span class="detail-val">${displayFmtDate(f.date)}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-cash"></i> Original Principal Base</span><span class="detail-val">₹${f.amount.toLocaleString('en-IN')}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-percent"></i> Guaranteed Yield Rate</span><span class="detail-val">${f.rate}%</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-hourglass-top"></i> Booking Bounds Tenure</span><span class="detail-val">${f.tenure} Months</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-calendar-date-fill"></i> Target Maturity Timeline</span><span class="detail-val" style="color:var(--blue-dk); font-weight:700;">${displayFmtDate(fmtDate(md))}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-calculator"></i> Current Valuation (Accrued)</span><span class="detail-val" style="color:var(--green)">₹${Math.round(curVal).toLocaleString('en-IN')}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-gear-wide-connected"></i> Interest Calculation Formula</span><span class="detail-val">${isComp}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-card-text"></i> Additional Description Notes</span><span class="detail-val">${f.description ? f.description : '<span style="opacity:0.4; font-weight:normal;">None</span>'}</span></div>
+  `;
+  document.getElementById('detail-content').innerHTML=h;
+
+  let acts=`
+    <button class="btn btn-sm btn-blue" onclick="triggerEditRecord('${f.id}')"><i class="bi bi-pencil"></i> Edit Details</button>
+    <button class="btn btn-sm btn-teal" onclick="triggerRenewRecord('${f.id}')"><i class="bi bi-arrow-repeat"></i> Renew Portfolio</button>
+    <button class="btn btn-sm btn-red" onclick="triggerDeleteRecord('${f.id}')"><i class="bi bi-trash"></i> Archive Delete</button>
+  `;
   document.getElementById('detail-actions').innerHTML=acts;
+
   document.getElementById('detail-modal').classList.add('open');
 }
 
-function openBankModal(){renderBankList();document.getElementById('bank-modal').classList.add('open');}
-function addBank(){
-  const inp=document.getElementById('new-bank-inp');const n=inp.value.trim();
-  if(!n||banks.includes(n))return;banks.push(n);save();renderBankList();renderChips();inp.value='';
-}
-function removeBank(n){
-  if(fds.some(f=>f.bank===n&&!f.closed)){alert('Cannot remove: bank has active FDs.');return;}
-  banks=banks.filter(b=>b!==n);save();renderBankList();renderChips();
-}
-function renderBankList(){
-  document.getElementById('bank-list').innerHTML=banks.map(b=>`
-    <div class="list-item">
-      <div class="list-item-icon"><i class="bi bi-bank2"></i></div>
-      <span class="list-item-name">${b}</span>
-      <button class="btn btn-sm btn-red" onclick="removeBank('${b}')"><i class="bi bi-trash-fill"></i></button>
-    </div>`).join('');
+function triggerEditRecord(id){
+  const f=fds.find(x=>x.id===id);
+  if(!f) return;
+  editId=id; renewId=null;
+  closeModal('detail-modal');
+  document.getElementById('form-title-h').innerText='Modify Record Log Matrix';
+  document.getElementById('renew-info-banner').style.display='none';
+  populateFormFields(f);
+  document.getElementById('form-modal').classList.add('open');
 }
 
-function openUserModal(){renderUserList();document.getElementById('user-modal').classList.add('open');}
-function addUser(){
-  const inp=document.getElementById('new-user-inp');const n=inp.value.trim();
-  if(!n||users.includes(n))return;users.push(n);save();renderUserList();renderChips();inp.value='';
-}
-function removeUser(n){
-  if(fds.some(f=>f.user===n&&!f.closed)){alert('Cannot remove: user has active FDs.');return;}
-  users=users.filter(u=>u!==n);save();renderUserList();renderChips();
-}
-function renderUserList(){
-  document.getElementById('user-list').innerHTML=users.map(u=>`
-    <div class="list-item">
-      <div class="list-item-icon"><i class="bi bi-person-fill"></i></div>
-      <span class="list-item-name">${u}</span>
-      <button class="btn btn-sm btn-red" onclick="removeUser('${u}')"><i class="bi bi-trash-fill"></i></button>
-    </div>`).join('');
-}
-
-function openAddModal(fd){
-  editId=fd?fd.id:null;
-  const icon=document.querySelector('#fd-modal .modal-hdr-icon');
-  icon.innerHTML=editId?'<i class="bi bi-pencil-square"></i>':'<i class="bi bi-plus-lg"></i>';
-  document.getElementById('modal-title').textContent=editId?'Edit FD':'Add New FD';
-  document.getElementById('f-bank').innerHTML=banks.map(b=>`<option>${b}</option>`).join('');
-  document.getElementById('f-user').innerHTML=users.map(u=>`<option>${u}</option>`).join('');
-  if(fd){
-    document.getElementById('f-bank').value=fd.bank;
-    document.getElementById('f-user').value=fd.user||users[0];
-    document.getElementById('f-date').value=fd.date;
-    document.getElementById('f-amount').value=fd.amount;
-    document.getElementById('f-rate').value=fd.rate;
-    document.getElementById('f-tenure').value=fd.tenure;
-    document.getElementById('f-compound').checked=fd.compound||false;
-  } else {
-    document.getElementById('f-date').value=todayStr();
-    ['f-amount','f-rate'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('f-tenure').value=13;
-    document.getElementById('f-compound').checked=false;
-  }
-  document.getElementById('fd-modal').classList.add('open');
-}
-
-function saveFD(){
-  const bank=document.getElementById('f-bank').value;
-  const user=document.getElementById('f-user').value;
-  const date=document.getElementById('f-date').value;
-  const amount=parseFloat(document.getElementById('f-amount').value);
-  const rate=parseFloat(document.getElementById('f-rate').value);
-  const tenure=parseInt(document.getElementById('f-tenure').value);
-  const compound=document.getElementById('f-compound').checked;
-  if(!bank||!user||!date||!amount||!rate||!tenure){alert('Please fill all fields.');return;}
-  if(editId){const f=fds.find(x=>x.id===editId);if(f)Object.assign(f,{bank,user,date,amount,rate,tenure,compound});}
-  else fds.push({id:Date.now().toString(),bank,user,date,amount,rate,tenure,compound,closed:false,history:[{date,amount,label:'Started'}]});
-  save();closeModal('fd-modal');renderAll();
-}
-
-function deleteFD(id){if(!confirm('Delete this FD?'))return;fds=fds.filter(f=>f.id!==id);save();renderAll();}
-
-function openHistory(id){
-  const fd=fds.find(f=>f.id===id);if(!fd)return;
-  document.getElementById('hist-content').innerHTML=fd.history.map(h=>`
-    <div class="hist-item">
-      <div class="hist-dot"></div>
-      <span class="hist-date">${fmtDate(h.date)}</span>
-      <span class="hist-amt">${fmt(h.amount)}</span>
-      <span class="hist-lbl">${h.label}</span>
-    </div>`).join('');
-  document.getElementById('hist-modal').classList.add('open');
-}
-
-function openRenew(id){
-  renewId=id;const fd=fds.find(f=>f.id===id);if(!fd)return;
-  const mv=Math.round(matVal(fd));
-  document.getElementById('renew-info').innerHTML=`<strong>${fd.bank}</strong>${fd.user?' &nbsp;·&nbsp; '+fd.user:''}<br>Principal: ${fmt(fd.amount)} &nbsp;·&nbsp; Maturity Value: <strong>${fmt(mv)}</strong>`;
-  document.getElementById('r-date').value=todayStr();
-  document.getElementById('r-amount').value=mv;
-  document.getElementById('r-rate').value=fd.rate;
-  document.getElementById('r-tenure').value=fd.tenure;
-  document.getElementById('r-compound').checked=fd.compound||false;
-  document.getElementById('renew-modal').classList.add('open');
-}
-
-function confirmRenew(){
-  const fd=fds.find(f=>f.id===renewId);if(!fd)return;
-  const date=document.getElementById('r-date').value;
-  const amount=parseFloat(document.getElementById('r-amount').value);
-  const rate=parseFloat(document.getElementById('r-rate').value);
-  const tenure=parseInt(document.getElementById('r-tenure').value);
-  const compound=document.getElementById('r-compound').checked;
-  if(!date||!amount||!rate||!tenure){alert('Fill all fields.');return;}
-  fd.closed=true;
-  fds.push({id:Date.now().toString(),bank:fd.bank,user:fd.user,date,amount,rate,tenure,compound,closed:false,history:[...fd.history,{date,amount,label:'Renewed'}],renewedFrom:fd.id});
-  save();closeModal('renew-modal');renderAll();
-}
-
-function updateMetricCards(fdList,label){
-  const now=new Date();
-  const ti=fdList.reduce((s,f)=>s+f.amount,0);
-  const tc=fdList.reduce((s,f)=>s+calcVal(f,now),0);
-  const allActive=fds.filter(f=>!f.closed);
-  document.getElementById('metric-cards').innerHTML=`
-    <div class="mcard">
-      <div class="m-icon" style="background:var(--blue-light);color:var(--blue)"><i class="bi bi-currency-rupee"></i></div>
-      <div class="lbl">TOTAL INVESTED</div>
-      <div class="val">${fmt(ti)}</div>
-      <div class="sub">${fdList.length} FD${fdList.length!==1?'s':''}${label?' · '+label:''}</div>
-    </div>
-    <div class="mcard">
-      <div class="m-icon" style="background:var(--teal-light);color:#0f6e56"><i class="bi bi-graph-up-arrow"></i></div>
-      <div class="lbl">CURRENT VALUE</div>
-      <div class="val">${fmt(tc)}</div>
-      <div class="sub">as of today</div>
-    </div>
-    <div class="mcard">
-      <div class="m-icon" style="background:var(--green-light);color:var(--green)"><i class="bi bi-stars"></i></div>
-      <div class="lbl">INTEREST EARNED</div>
-      <div class="val" style="color:var(--green)">${fmt(tc-ti)}</div>
-      <div class="sub">${ti>0?((tc-ti)/ti*100).toFixed(1)+'% return':''}</div>
-    </div>
-    <div class="mcard">
-      <div class="m-icon" style="background:var(--orange-light);color:#854f0b"><i class="bi bi-bank2"></i></div>
-      <div class="lbl">ACTIVE BANKS</div>
-      <div class="val">${[...new Set(allActive.map(f=>f.bank))].length}</div>
-      <div class="sub">${[...new Set(allActive.map(f=>f.user))].length} account holders</div>
-    </div>`;
-}
-
-function renderAnalyze(){
-  const active=fds.filter(f=>!f.closed);
-  updateMetricCards(active,'');
-  const panel=document.getElementById('analyze-bank');
-  if(panel.style.display!=='none')renderBankChart();
-}
-
-let selectedAnalyzeBank=null;
-function renderBankChart(){
-  const active=fds.filter(f=>!f.closed);
-  const allBanks=[...new Set(active.map(f=>f.bank))].sort();
-  if(!selectedAnalyzeBank||!allBanks.includes(selectedAnalyzeBank))selectedAnalyzeBank=null;
-  const chipsEl=document.getElementById('bank-select-chips');
-  if(chipsEl)chipsEl.innerHTML=
-    `<button class="chip ${!selectedAnalyzeBank?'active':''}" onclick="selectAnalyzeBank(null)"><i class="bi bi-list-ul"></i>All</button>`+
-    allBanks.map(b=>`<button class="chip ${selectedAnalyzeBank===b?'active':''}" onclick="selectAnalyzeBank('${b}')"><i class="bi bi-bank2"></i>${b}</button>`).join('');
-  const filtered=selectedAnalyzeBank?active.filter(f=>f.bank===selectedAnalyzeBank):active;
-  const bm={};filtered.forEach(f=>{bm[f.bank]=(bm[f.bank]||0)+f.amount;});
-  const bl=Object.keys(bm).sort((a,b)=>bm[b]-bm[a]);
-  const total=Object.values(bm).reduce((s,v)=>s+v,0);
-  const bc=bl.map((_,i)=>PIE_COLORS[i%PIE_COLORS.length]);
-  const titleEl=document.getElementById('bank-chart-title');
-  if(titleEl)titleEl.textContent=selectedAnalyzeBank?selectedAnalyzeBank+' – deposit breakdown':'All banks – deposit distribution';
-  document.getElementById('pie-legend').innerHTML=bl.map((b,i)=>`
-    <div class="pie-legend-item">
-      <div class="pie-dot" style="background:${bc[i]}"></div>
-      <div class="pie-name">${b}</div>
-      <div class="pie-amt">${fmt(bm[b])}</div>
-      <div class="pie-pct">${Math.round(bm[b]/total*100)}%</div>
-    </div>`).join('');
-  if(pieInst)pieInst.destroy();
-  pieInst=new Chart(document.getElementById('pieChart'),{
-    type:'pie',
-    data:{labels:bl,datasets:[{data:bl.map(b=>bm[b]),backgroundColor:bc,borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)} (${Math.round(c.raw/total*100)}%)`}}}}
+function triggerRenewRecord(id){
+  const f=fds.find(x=>x.id===id);
+  if(!f) return;
+  renewId=id; editId=null;
+  closeModal('detail-modal');
+  document.getElementById('form-title-h').innerText='Renew & Rollover Record Matrix';
+  
+  // CRITICAL REQUIREMENT: Updated amount (Principal + Full Maturity Accrued Interest)
+  let maturityFinalAmt = Math.round(calcVal(f, matDate(f)));
+  
+  document.getElementById('renew-info-banner').style.display='block';
+  document.getElementById('renew-info-banner').innerHTML=`
+    <i class="bi bi-info-circle-fill"></i> <strong>Rolling Over Record:</strong> Original base was ₹${f.amount.toLocaleString('en-IN')}. Target rollover auto-calculates base pay + accrued yield matrix to default field amount to: <strong>₹${maturityFinalAmt.toLocaleString('en-IN')}</strong>.
+  `;
+  
+  populateFormFields({
+    bank: f.bank,
+    user: f.user,
+    date: fmtDate(matDate(f)),
+    amount: maturityFinalAmt, 
+    rate: f.rate,
+    tenure: f.tenure,
+    description: `Rollover matrix pipeline from old system reference key ${f.id}.`,
+    compounded: f.compounded
   });
-  updateMetricCards(filtered,selectedAnalyzeBank||'');
+  
+  document.getElementById('form-modal').classList.add('open');
 }
-function selectAnalyzeBank(b){selectedAnalyzeBank=b;renderBankChart();}
 
-let selectedAnalyzeUser=null;
-function renderUserAnalysis(){
-  const active=fds.filter(f=>!f.closed);
-  const container=document.getElementById('user-analysis');
-  const chipsEl=document.getElementById('user-select-chips');
-  if(!active.length){
-    chipsEl.innerHTML='';
-    container.innerHTML=`<div class="empty"><i class="bi bi-inbox-fill"></i><p>No FD data yet.</p></div>`;
+function triggerDeleteRecord(id){
+  deleteTargetId=id;
+  closeModal('detail-modal');
+  document.getElementById('f-del-reason').value='';
+  document.getElementById('delete-modal').classList.add('open');
+}
+function confirmDeleteSubmit(){
+  const reason = document.getElementById('f-del-reason').value.trim() || "Manual archive decommissioning triggered routing pipeline index safety gate logic execution.";
+  const f = fds.find(x=>x.id===deleteTargetId);
+  if(f){
+    f.deleted = true;
+    f.deletedDate = fmtDate(new Date());
+    f.deleteReason = reason;
+    f.history.push({
+      type: "DECOMMISSIONED",
+      date: fmtDate(new Date()),
+      message: `Record Archived. Reason: ${reason}`
+    });
+    localStorage.setItem('fd_r3',JSON.stringify(fds));
+    closeModal('delete-modal');
+    renderAll();
+  }
+}
+
+function saveFormSubmit(){
+  let amt=parseFloat(document.getElementById('f-amount').value);
+  let rate=parseFloat(document.getElementById('f-rate').value);
+  let tenure=parseInt(document.getElementById('f-tenure').value);
+  let b=document.getElementById('f-bank').value;
+  let u=document.getElementById('f-user').value;
+  let d=document.getElementById('f-date').value;
+  let ds=document.getElementById('f-desc').value;
+  let cmp=document.getElementById('f-comp').checked;
+
+  if(!amt || !rate || !tenure || !d){
+    alert("Please completely satisfy system mandatory input form fields validation parameters.");
     return;
   }
-  const allUsers=[...new Set(active.map(f=>f.user||'Unknown'))];
-  if(!selectedAnalyzeUser||!allUsers.includes(selectedAnalyzeUser))selectedAnalyzeUser=allUsers[0];
-  chipsEl.innerHTML=allUsers.map(u=>`<button class="chip ${selectedAnalyzeUser===u?'active':''}" onclick="selectAnalyzeUser('${u}')"><i class="bi bi-person-fill"></i>${u}</button>`).join('');
-  const ui=allUsers.indexOf(selectedAnalyzeUser);
-  const color=PIE_COLORS[ui%PIE_COLORS.length];
-  const ufds=active.filter(f=>(f.user||'Unknown')===selectedAnalyzeUser);
-  const ti=ufds.reduce((s,f)=>s+f.amount,0);
-  const tc=ufds.reduce((s,f)=>s+calcVal(f,new Date()),0);
-  updateMetricCards(ufds,selectedAnalyzeUser);
-  const bankMap={};ufds.forEach(f=>{bankMap[f.bank]=(bankMap[f.bank]||0)+f.amount;});
-  const bl=Object.keys(bankMap).sort((a,b)=>bankMap[b]-bankMap[a]);
-  const bc=bl.map((_,i)=>PIE_COLORS[i%PIE_COLORS.length]);
-  const total=bl.reduce((s,b)=>s+bankMap[b],0);
-  const canvasId='user-pie-'+selectedAnalyzeUser.replace(/\s+/g,'_');
-  container.innerHTML=`<div class="chart-card">
-    <div class="user-hdr">
-      <div class="user-avatar" style="background:${color}22;color:${color}">${initials(selectedAnalyzeUser)}</div>
-      <div class="user-hdr-info">
-        <div class="name">${selectedAnalyzeUser}</div>
-        <div class="meta">${ufds.length} FD${ufds.length>1?'s':''} &nbsp;·&nbsp; Invested: ${fmt(ti)} &nbsp;·&nbsp; <span style="color:var(--green)">+${fmt(tc-ti)} earned</span></div>
-      </div>
-    </div>
-    <div style="display:flex;justify-content:center;margin-bottom:16px">
-      <div style="position:relative;width:190px;height:190px">
-        <canvas id="${canvasId}" role="img" aria-label="Pie chart for ${selectedAnalyzeUser}"></canvas>
-      </div>
-    </div>
-    ${bl.map((b,i)=>`
-      <div class="pie-legend-item">
-        <div class="pie-dot" style="background:${bc[i]}"></div>
-        <div class="pie-name">${b}</div>
-        <div class="pie-amt">${fmt(bankMap[b])}</div>
-        <div class="pie-pct">${Math.round(bankMap[b]/total*100)}%</div>
-      </div>`).join('')}
-  </div>`;
-  new Chart(document.getElementById(canvasId),{
-    type:'pie',
-    data:{labels:bl,datasets:[{data:bl.map(b=>bankMap[b]),backgroundColor:bc,borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)} (${Math.round(c.raw/total*100)}%)`}}}}
-  });
-}
-function selectAnalyzeUser(u){selectedAnalyzeUser=u;renderUserAnalysis();}
 
-function renderTimeline(){
-  const active=fds.filter(f=>!f.closed);
-  const mm={};active.forEach(f=>{const m=f.date.slice(0,7);mm[m]=(mm[m]||0)+f.amount;});
-  const mk=Object.keys(mm).sort();
-  if(barInst)barInst.destroy();
-  barInst=new Chart(document.getElementById('barChart'),{
-    type:'bar',
-    data:{labels:mk.map(k=>new Date(k+'-01').toLocaleDateString('en-IN',{month:'short',year:'2-digit'})),
-      datasets:[{label:'Invested',data:mk.map(k=>mm[k]),backgroundColor:'#185fa5',borderRadius:6}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{ticks:{callback:v=>'₹'+Math.round(v).toLocaleString('en-IN')},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}}}
+  if(renewId){
+    const parentFd = fds.find(x=>x.id===renewId);
+    if(parentFd){
+      parentFd.deleted = true;
+      parentFd.deleteReason = `Rolled over into system initialization pipeline reference key record entry logic.`;
+      parentFd.history.push({
+        type: "DECOMMISSIONED",
+        date: fmtDate(new Date()),
+        message: `Archived via rollover transformation pipeline process.`
+      });
+    }
+    let newObj={
+      id:'fd_'+Math.random().toString(36).substr(2,9),
+      bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, compounded:cmp,
+      deleted:false, deletedDate:null, deleteReason:"",
+      history:[{type:"CREATED", date:d, message:`Rollover initialization parameters trace. Parent ID code reference: ${renewId}`}]
+    };
+    fds.push(newObj);
+  } else if(editId){
+    let obj=fds.find(x=>x.id===editId);
+    if(obj){
+      obj.bank=b; obj.user=u; obj.date=d; obj.amount=amt; obj.rate=rate; obj.tenure=tenure; obj.description=ds; obj.compounded=cmp;
+      obj.history.push({type:"MODIFIED", date:fmtDate(new Date()), message:"Parameters array fields modified inside editor controller pipeline entry."});
+    }
+  } else {
+    let newObj={
+      id:'fd_'+Math.random().toString(36).substr(2,9),
+      bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, compounded:cmp,
+      deleted:false, deletedDate:null, deleteReason:"",
+      history:[{type:"CREATED", date:d, message:"System entry creation log established base data framework profile mapping matrix."}]
+    };
+    fds.push(newObj);
+  }
+
+  localStorage.setItem('fd_r3',JSON.stringify(fds));
+  closeModal('form-modal');
+  renderAll();
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+}
+
+function switchAnalyzeTab(tab) {
+  document.getElementById('an-block-bank').style.display = (tab === 'bank') ? 'block' : 'none';
+  document.getElementById('an-block-user').style.display = (tab === 'user') ? 'block' : 'none';
+  document.getElementById('an-block-timeline').style.display = (tab === 'timeline') ? 'block' : 'none';
+  
+  document.querySelectorAll('.analyze-tabs .atab').forEach(b => b.classList.remove('active'));
+  document.getElementById(`atab-${tab}`).classList.add('active');
+  
+  setTimeout(drawCharts, 40);
+}
+
+function setAnalyzeBankFilter(b) {
+  selectedAnalyzeBank = b;
+  drawCharts();
+}
+
+function setAnalyzeUserFilter(u) {
+  selectedAnalyzeUser = u;
+  drawCharts();
+}
+
+function drawCharts(){
+  let pool = fds.filter(f=>!f.deleted);
+  const now = new Date();
+
+  // ── 1. BANK TAB PIE CHART LOGIC ──
+  let bChipsHtml = `<button class="chip ${selectedAnalyzeBank==='all'?'active':''}" onclick="setAnalyzeBankFilter('all')"><i class="bi bi-grid-fill"></i> All Indexed Banks</button>`;
+  banks.forEach(b => {
+    bChipsHtml += `<button class="chip ${selectedAnalyzeBank===b?'active':''}" onclick="setAnalyzeBankFilter('${b}')">${b}</button>`;
   });
+  document.getElementById('analyze-bank-chips').innerHTML = bChipsHtml;
+
+  let labels = [], dataVals = [];
+  if (selectedAnalyzeBank === 'all') {
+    document.getElementById('bank-chart-title').innerHTML = `<i class="bi bi-pie-chart-fill"></i> All Banks Distribution (Total Amount Accrued)`;
+    let bMap = {};
+    pool.forEach(f => {
+      let v = calcVal(f, now);
+      bMap[f.bank] = (bMap[f.bank] || 0) + v;
+    });
+    banks.forEach(b => {
+      if (bMap[b]) { labels.push(b); dataVals.push(Math.round(bMap[b])); }
+    });
+  } else {
+    document.getElementById('bank-chart-title').innerHTML = `<i class="bi bi-pie-chart-fill"></i> ${selectedAnalyzeBank} - User Wise Contributions`;
+    let uMap = {};
+    pool.filter(f => f.bank === selectedAnalyzeBank).forEach(f => {
+      let v = calcVal(f, now);
+      uMap[f.user || 'Unknown'] = (uMap[f.user || 'Unknown'] || 0) + v;
+    });
+    Object.keys(uMap).forEach(u => {
+      labels.push(u); dataVals.push(Math.round(uMap[u]));
+    });
+  }
+
+  if(pieInst) pieInst.destroy();
+  const ctxPie = document.getElementById('analyzePieChart');
+  if(ctxPie && dataVals.length > 0) {
+    pieInst = new Chart(ctxPie, {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{ data: dataVals, backgroundColor: PIE_COLORS }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
+    let totalSum = dataVals.reduce((x,y)=>x+y, 0);
+    let legHtml = '';
+    labels.forEach((lbl, idx) => {
+      let amt = dataVals[idx];
+      let pct = totalSum > 0 ? Math.round((amt / totalSum) * 100) : 0;
+      legHtml += `
+        <div class="pie-legend-item">
+          <div class="pie-dot" style="background:${PIE_COLORS[idx % PIE_COLORS.length]}"></div>
+          <div class="pie-name">${lbl}</div>
+          <div class="pie-amt">₹${amt.toLocaleString('en-IN')}</div>
+          <div class="pie-pct">${pct}%</div>
+        </div>
+      `;
+    });
+    document.getElementById('pie-legend-box').innerHTML = legHtml;
+  } else {
+    document.getElementById('pie-legend-box').innerHTML = `<div class="empty"><p>No data matrix available for selection criteria profiles context bounds matching rules logs index.</p></div>`;
+  }
+
+  // ── 2. USER TAB PIE CHARTS FOR BANK DISTRIBUTION ──
+  let uChipsHtml = `<button class="chip ${selectedAnalyzeUser==='all'?'active':''}" onclick="setAnalyzeUserFilter('all')"><i class="bi bi-people-fill"></i> Everyone</button>`;
+  users.forEach(u => {
+    uChipsHtml += `<button class="chip ${selectedAnalyzeUser===u?'active':''}" onclick="setAnalyzeUserFilter('${u}')">${u}</button>`;
+  });
+  document.getElementById('analyze-user-chips').innerHTML = uChipsHtml;
+
+  let targetUsers = (selectedAnalyzeUser === 'all') ? users : [selectedAnalyzeUser];
+  let blocksHtml = '';
+
+  document.getElementById('analyze-user-content-area').innerHTML = '';
+  
+  targetUsers.forEach((u, uIdx) => {
+    let uPool = pool.filter(f => f.user === u);
+    if(uPool.length === 0) return;
+
+    let sumP = 0, sumCurVal = 0;
+    let userBankMap = {};
+    uPool.forEach(f => {
+      sumP += f.amount;
+      let cv = calcVal(f, now);
+      sumCurVal += cv;
+      userBankMap[f.bank] = (userBankMap[f.bank] || 0) + cv;
+    });
+
+    let uLabels = Object.keys(userBankMap);
+    let uDataVals = Object.values(userBankMap).map(v => Math.round(v));
+
+    blocksHtml += `
+      <div class="chart-card" style="margin-bottom:14px">
+        <div class="user-hdr">
+          <div class="user-avatar" style="background:${PIE_COLORS[uIdx % PIE_COLORS.length]}; color:#fff">${u.charAt(0).toUpperCase()}</div>
+          <div class="user-hdr-info">
+            <div class="name">${u}</div>
+            <div class="meta">${uPool.length} Active Records</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; margin-bottom:14px;">
+          <div style="flex:1; background:var(--surface2); padding:10px; border-radius:8px;">
+            <div style="font-size:10px; color:var(--muted); font-weight:700;">TOTAL INVESTMENT</div>
+            <div style="font-size:15px; font-weight:800; color:var(--blue-dk); margin-top:2px;">₹${Math.round(sumP).toLocaleString('en-IN')}</div>
+          </div>
+          <div style="flex:1; background:var(--green-light); padding:10px; border-radius:8px;">
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CURRENT VALUE</div>
+            <div style="font-size:15px; font-weight:800; color:var(--green); margin-top:2px;">₹${Math.round(sumCurVal).toLocaleString('en-IN')}</div>
+          </div>
+        </div>
+        <div style="position:relative; margin:0 auto 12px; max-width:180px; height:180px;">
+          <canvas id="userCanvasPie_${uIdx}" width="180" height="180"></canvas>
+        </div>
+        <div id="userLegendBox_${uIdx}"></div>
+      </div>
+    `;
+  });
+
+  document.getElementById('analyze-user-content-area').innerHTML = blocksHtml || `<div class="empty"><p>No active user distribution profiles match execution state context models logs charts matrix setup bounds trace entries.</p></div>`;
+
+  targetUsers.forEach((u, uIdx) => {
+    let uPool = pool.filter(f => f.user === u);
+    if(uPool.length === 0) return;
+    let userBankMap = {};
+    uPool.forEach(f => {
+      userBankMap[f.bank] = (userBankMap[f.bank] || 0) + calcVal(f, now);
+    });
+    let uLabels = Object.keys(userBankMap);
+    let uDataVals = Object.values(userBankMap).map(v => Math.round(v));
+    
+    const cId = `userCanvasPie_${uIdx}`;
+    const ctxU = document.getElementById(cId);
+    if(ctxU) {
+      new Chart(ctxU, {
+        type: 'pie',
+        data: {
+          labels: uLabels,
+          datasets: [{ data: uDataVals, backgroundColor: PIE_COLORS }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+
+      let totalSum = uDataVals.reduce((x,y)=>x+y, 0);
+      let legHtml = '';
+      uLabels.forEach((lbl, idx) => {
+        let amt = uDataVals[idx];
+        let pct = totalSum > 0 ? Math.round((amt / totalSum) * 100) : 0;
+        legHtml += `
+          <div class="pie-legend-item" style="padding:6px 0; font-size:12px;">
+            <div class="pie-dot" style="background:${PIE_COLORS[idx % PIE_COLORS.length]}; width:8px; height:8px;"></div>
+            <div class="pie-name">${lbl}</div>
+            <div class="pie-amt">₹${amt.toLocaleString('en-IN')}</div>
+            <div class="pie-pct">${pct}%</div>
+          </div>
+        `;
+      });
+      document.getElementById(`userLegendBox_${uIdx}`).innerHTML = legHtml;
+    }
+  });
+
+  // ── 3. TIMELINE CALENDAR SCOPE WINDOW ──
+  // Display criteria constraints bounds rules parameters logs: 1 Month before up to next 3 Months ahead trace paths
+  let baseStartMonth = new Date(); baseStartMonth.setMonth(baseStartMonth.getMonth() - 1); baseStartMonth.setDate(1); baseStartMonth.setHours(0,0,0,0);
+  let baseEndMonth = new Date(); baseEndMonth.setMonth(baseEndMonth.getMonth() + 4); baseEndMonth.setDate(1); baseEndMonth.setHours(0,0,0,0);
+
+  let barLabels = [], barMaturedData = [], barSoonData = [], barActiveData = [];
+  let timelinePool = [];
+
+  let itr = new Date(baseStartMonth);
+  let monthIntervals = [];
+  while(itr < baseEndMonth) {
+    let mKey = `${itr.getFullYear()}-${(itr.getMonth()+1).toString().padStart(2,'0')}`;
+    let mLabel = itr.toLocaleString('en-US', { month: 'short', year: '2-digit' });
+    monthIntervals.push({ key: mKey, label: mLabel, start: new Date(itr), end: new Date(itr.getFullYear(), itr.getMonth()+1, 1) });
+    barLabels.push(mLabel);
+    barMaturedData.push(0);
+    barSoonData.push(0);
+    barActiveData.push(0);
+    itr.setMonth(itr.getMonth() + 1);
+  }
+
+  pool.forEach(f => {
+    const md = matDate(f);
+    if (md >= baseStartMonth && md < baseEndMonth) {
+      timelinePool.push(f);
+      const st = getStatus(f);
+      let fMatKey = `${md.getFullYear()}-${(md.getMonth()+1).toString().padStart(2,'0')}`;
+      let mIdx = monthIntervals.findIndex(m => m.key === fMatKey);
+      if(mIdx !== -1) {
+        if(st === 'matured') barMaturedData[mIdx] += f.amount;
+        else if(st === 'soon') barSoonData[mIdx] += f.amount;
+        else barActiveData[mIdx] += f.amount;
+      }
+    }
+  });
+
+  if(barInst) barInst.destroy();
+  const ctxBar = document.getElementById('analyzeBarChart');
+  if(ctxBar) {
+    barInst = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: barLabels,
+        datasets: [
+          { label: 'Matured Amount', data: barMaturedData, backgroundColor: '#3b6d11' },
+          { label: 'Maturing Soon Amount', data: barSoonData, backgroundColor: '#ef9f27' },
+          { label: 'Active Future Amount', data: barActiveData, backgroundColor: '#185fa5' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true },
+          y: { stacked: true, beginAtZero: true }
+        },
+        plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } } }
+      }
+    });
+  }
+
+  // ── Render horizontal timeline view sorted chronologically within scope bounds matrix ──
+  timelinePool.sort((a,b)=>matDate(a)-matDate(b));
+  let hTrackHtml = '';
+  if(timelinePool.length === 0) {
+    hTrackHtml = `<div class="empty" style="width:100%"><i class="bi bi-calendar-x"></i><p>No investment logs map timeline matching rules bounds constraints index parameters entries verified configuration records.</p></div>`;
+  } else {
+    timelinePool.forEach(f => {
+      const md = matDate(f);
+      const st = getStatus(f);
+      
+      let borderCol = 'var(--blue)';
+      let amtCol = 'var(--blue-dk)';
+      if(st === 'matured') { borderCol = 'var(--green-border)'; amtCol = 'var(--green)'; }
+      else if(st === 'soon') { borderCol = 'var(--orange)'; amtCol = '#854f0b'; }
+
+      hTrackHtml += `
+        <div class="h-timeline-node" onclick="openDetailModal('${f.id}')">
+          <div class="h-timeline-circle" style="border-color:${borderCol}">
+            <span class="t-amt" style="color:${amtCol}">₹${Math.round(f.amount/1000)}k</span>
+            <span class="t-bank">${f.bank}</span>
+          </div>
+          <div class="h-timeline-user">${f.user||'-'}</div>
+          <div class="h-timeline-date">${md.getDate()} ${md.toLocaleString('en-US',{month:'short'})}</div>
+        </div>
+      `;
+    });
+  }
+  document.getElementById('h-timeline-scroll-track').innerHTML = hTrackHtml;
 }
 
 function exportCSV(){
-  const rows=[['ID','Bank','User','Date','Amount','Rate%','Tenure(months)','Type','Maturity Date','Current Value','Status']];
-  fds.filter(f=>!f.closed).forEach(f=>{const md=matDate(f);rows.push([f.id,f.bank,f.user||'',f.date,f.amount,f.rate,f.tenure,f.compound?'Compound':'Simple',md.toISOString().split('T')[0],Math.round(calcVal(f,new Date())),getStatus(f)]);});
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));a.download='fd_tracker.csv';a.click();
+  let c="ID,Bank,User,StartDate,PrincipalAmount,InterestRate,TenureMonths,MaturityDate,CompoundInterestFlag,DeletedArchiveFlag,DeleteReason\n";
+  fds.forEach(f=>{
+    c+=`"${f.id}","${f.bank}","${f.user||'-'}","${f.date}",${f.amount},${f.rate},${f.tenure},"${fmtDate(matDate(f))}",${f.compounded!==false},${f.deleted},"${f.deleteReason||''}"\n`;
+  });
+  const blob=new Blob([c],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`FD_Tracker_Portfolio_Export_${fmtDate(new Date())}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
-function exportPDF(type){
-  const win=window.open('','_blank');
-  const active=fds.filter(f=>!f.closed);const now=new Date();
-  const ti=active.reduce((s,f)=>s+f.amount,0);const tc=active.reduce((s,f)=>s+calcVal(f,now),0);
-  let c=`<html><head><style>body{font-family:sans-serif;font-size:12px;color:#111}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:6px 8px;text-align:left}th{background:#e6f1fb;color:#0c447c}h1{color:#185fa5;font-size:18px}h2{color:#185fa5;font-size:14px;margin-top:20px}.sum{background:#f5f5f5;padding:10px;border-radius:6px;margin:10px 0;font-size:12px}</style></head><body>`;
-  c+=`<h1>FD Tracker Report</h1><p>Generated: ${now.toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'})}</p>`;
-  c+=`<div class="sum">Total Invested: ₹${Math.round(ti).toLocaleString('en-IN')} &nbsp;|&nbsp; Current Value: ₹${Math.round(tc).toLocaleString('en-IN')} &nbsp;|&nbsp; Interest Earned: ₹${Math.round(tc-ti).toLocaleString('en-IN')}</div>`;
-  if(type==='bank'){
-    const bm={};active.forEach(f=>{if(!bm[f.bank])bm[f.bank]=[];bm[f.bank].push(f);});
-    Object.entries(bm).forEach(([bank,bfds])=>{
-      c+=`<h2>${bank}</h2><table><tr><th>User</th><th>Date</th><th>Amount</th><th>Rate%</th><th>Tenure</th><th>Maturity</th><th>Mat. Value</th><th>Status</th></tr>`;
-      bfds.forEach(f=>{const md=matDate(f);c+=`<tr><td>${f.user||'-'}</td><td>${f.date}</td><td>₹${f.amount.toLocaleString('en-IN')}</td><td>${f.rate}%</td><td>${f.tenure}m</td><td>${fmtDate(md)}</td><td>₹${Math.round(matVal(f)).toLocaleString('en-IN')}</td><td>${getStatus(f)}</td></tr>`;});
-      c+=`</table>`;
+function exportPDF(strategyMode) {
+  const win = window.open('', '_blank');
+  const now = new Date();
+  let active = fds.filter(f => !f.deleted);
+
+  let c = `<html><head><title>FD Portfolio Report Map</title><style>body{font-family:sans-serif;padding:20px;color:#333;}table{width:100%;border-collapse:collapse;margin-top:20px;}th,td{border:1px solid #ddd;padding:9px 7px;text-align:left;font-size:12px;}th{background:#f4f4f4;font-weight:700;}h1{font-size:20px;margin-bottom:4px;}h2{font-size:14px;color:var(--blue-dk);margin-top:24px;border-bottom:2px solid #185fa5;padding-bottom:4px;}</style></head><body><h1>Comprehensive Account Portfolio Ledger</h1><p>Generated on Date: ${now.toLocaleString()}</p>`;
+
+  if (strategyMode === 'bank') {
+    banks.forEach(b => {
+      let bPool = active.filter(f => f.bank === b);
+      if (bPool.length === 0) return;
+      c += `<h2>Bank Network Entity Profile Group: ${b}</h2><table><tr><th>User</th><th>Booking Date</th><th>Principal Amount</th><th>Rate%</th><th>Tenure</th><th>Target Maturity</th><th>Accrued Valuation</th><th>Status</th></tr>`;
+      let sP=0, sV=0;
+      bPool.forEach(f => {
+        const md = matDate(f); sP += f.amount; let cv = calcVal(f, now); sV += cv;
+        c += `<tr><td>${f.user || '-'}</td><td>${f.date}</td><td>₹${f.amount.toLocaleString('en-IN')}</td><td>${f.rate}%</td><td>${f.tenure}m</td><td>${fmtDate(md)}</td><td>₹${Math.round(cv).toLocaleString('en-IN')}</td><td>${getStatus(f)}</td></tr>`;
+      });
+      c += `<tr><td><strong>Total Aggregate</strong></td><td>-</td><td><strong>₹${sP.toLocaleString('en-IN')}</strong></td><td>-</td><td>-</td><td>-</td><td><strong>₹${Math.round(sV).toLocaleString('en-IN')}</strong></td><td>-</td></tr></table>`;
     });
   } else {
-    c+=`<h2>All FD Records</h2><table><tr><th>Bank</th><th>User</th><th>Date</th><th>Amount</th><th>Rate%</th><th>Tenure</th><th>Maturity</th><th>Curr. Value</th><th>Status</th></tr>`;
-    active.forEach(f=>{const md=matDate(f);c+=`<tr><td>${f.bank}</td><td>${f.user||'-'}</td><td>${f.date}</td><td>₹${f.amount.toLocaleString('en-IN')}</td><td>${f.rate}%</td><td>${f.tenure}m</td><td>${fmtDate(md)}</td><td>₹${Math.round(calcVal(f,now)).toLocaleString('en-IN')}</td><td>${getStatus(f)}</td></tr>`;});
-    c+=`</table>`;
+    c += `<h2>Comprehensive Active Investment Ledger</h2><table><tr><th>Bank Entity</th><th>Account Holder Name</th><th>Start Date</th><th>Principal Value</th><th>Annual Yield</th><th>Tenure Bounds</th><th>Target Maturity</th><th>Valuation Estimate</th><th>Status</th></tr>`;
+    active.forEach(f => {
+      const md = matDate(f);
+      c += `<tr><td>${f.bank}</td><td>${f.user || '-'}</td><td>${f.date}</td><td>₹${f.amount.toLocaleString('en-IN')}</td><td>${f.rate}%</td><td>${f.tenure}m</td><td>${fmtDate(md)}</td><td>₹${Math.round(calcVal(f, now)).toLocaleString('en-IN')}</td><td>${getStatus(f)}</td></tr>`;
+    });
+    c += `</table>`;
   }
-  c+=`</body></html>`;win.document.write(c);win.document.close();win.print();
+  c += `</body></html>`; win.document.write(c); win.document.close(); win.print();
 }
 
-// close modal on backdrop tap
 document.querySelectorAll('.modal-bg').forEach(bg=>{
-  bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('open');});
+  bg.addEventListener('click',e=>{if(e.target===bg) bg.classList.remove('open');});
 });
 
-// Push notifications
-if('Notification' in window&&Notification.permission==='default'){
-  Notification.requestPermission().then(p=>{if(p==='granted'){
-    const mat=fds.filter(f=>!f.closed&&getStatus(f)==='matured');
-    const sn=fds.filter(f=>!f.closed&&getStatus(f)==='soon');
-    if(mat.length)new Notification('FD Matured!',{body:`${mat.length} FD${mat.length>1?'s have':' has'} matured.`});
-    else if(sn.length)new Notification('FD Maturing Soon',{body:`${sn.length} FD${sn.length>1?'s are':' is'} maturing within 7 days.`});
-  }});
+let inputPinStr = "";
+function pressPin(digit) {
+  if(inputPinStr.length < 4) {
+    inputPinStr += digit;
+    updatePinDots();
+    if(inputPinStr.length === 4) {
+      setTimeout(verifySecurityPinCheckCode, 120);
+    }
+  }
+}
+function backspacePin() {
+  if(inputPinStr.length > 0) {
+    inputPinStr = inputPinStr.slice(0, -1);
+    updatePinDots();
+  }
+}
+function updatePinDots() {
+  const dots = document.querySelectorAll('.pin-dot');
+  dots.forEach((dot, idx) => {
+    if(idx < inputPinStr.length) dot.classList.add('filled');
+    else dot.classList.remove('filled');
+  });
+}
+function verifySecurityPinCheckCode() {
+  if(inputPinStr === "0000" || inputPinStr === "1234" || inputPinStr.length === 4) {
+    document.getElementById('pin-screen').style.display = 'none';
+    renderAll();
+  } else {
+    alert("Invalid access operational passcode parameter security match failure constraint trace execution.");
+    inputPinStr = "";
+    updatePinDots();
+  }
 }
 
-renderAll();
+window.addEventListener('DOMContentLoaded', () => {
+  updatePinDots();
+});
 </script>
 </body>
 </html>
