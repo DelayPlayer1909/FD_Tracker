@@ -317,7 +317,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   </div>
 
   <div class="analyze-tabs">
-    <div class="analyze-sections" style="display: flex; flex-direction: row; align-items:flex-end;">
+    <div class="analyze-sections" style="display: flex; flex-direction: row; align-items:flex-end;overflow-x: auto;">
       <button class="atab active" id="atab-bank" onclick="switchAnalyzeTab('bank')"><i class="bi bi-bank"></i>Bank Wise Distribution</button>
       <button class="atab" id="atab-user" onclick="switchAnalyzeTab('user')"><i class="bi bi-person-bounding-box"></i>User Wise Distribution</button>
       <button class="atab" id="atab-timeline" onclick="switchAnalyzeTab('timeline')"><i class="bi bi-calendar3"></i>Maturity Timeline Calendar</button>
@@ -367,7 +367,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
 <main id="page-history" class="page">
   <div class="chart-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; overflow-x: auto;">
       <div class="add-inp-wrap" style="flex:1; margin-bottom:0;">
         <input type="text" id="hist-search" oninput="renderAll()" placeholder="Search username, amount, bank name...">
       </div>
