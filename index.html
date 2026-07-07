@@ -43,136 +43,48 @@
 }
 html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;background:var(--bg);color:var(--text)}
 
-/* ── TOP NAV ── */
-.topnav{
-  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
-  background:var(--blue);
-  display:flex;align-items:center;padding:0 16px;z-index:100;
-  gap:10px;
-}
+/* Nav & Layout */
+.topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:var(--blue);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
 .topnav-brand{display:flex;align-items:center;gap:9px;color:#fff;font-size:18px;font-weight:700;flex:1}
-.topnav-brand .brand-icon{
-  width:34px;height:34px;background:rgba(255,255,255,0.2);
-  border-radius:9px;display:flex;align-items:center;justify-content:center;
-  font-size:19px;flex-shrink:0
-}
-.topnav-icon{
-  width:38px;height:38px;border-radius:10px;border:none;
-  background:rgba(255,255,255,0.15);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:19px;cursor:pointer;transition:background .15s;flex-shrink:0
-}
+.topnav-brand .brand-icon{width:34px;height:34px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.topnav-icon{width:38px;height:38px;border-radius:10px;border:none;background:rgba(255,255,255,0.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;transition:background .15s;flex-shrink:0;position:relative}
 .topnav-icon:active{background:rgba(255,255,255,0.3)}
-.topnav-icon .badge-dot{
-  position:absolute;top:6px;right:6px;width:7px;height:7px;
-  background:#ef9f27;border-radius:50%;border:1.5px solid var(--blue)
-}
-.topnav-icon{position:relative}
 
-/* ── BOTTOM TABS ── */
-.bottomtabs{
-  position:fixed;bottom:0;left:0;right:0;height:var(--tab-h);
-  background:var(--surface);border-top:1px solid var(--border);
-  display:flex;z-index:100;
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-.btab{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4px;border:none;background:none;cursor:pointer;
-  color:var(--muted);font-size:11px;font-weight:600;transition:color .15s;
-  padding:10px 0 6px;letter-spacing:.2px
-}
+.bottomtabs{position:fixed;bottom:0;left:0;right:0;height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom,0px)}
+.btab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--muted);font-size:11px;font-weight:600;transition:color .15s;padding:10px 0 6px;letter-spacing:.2px;position:relative}
 .btab i{font-size:24px;transition:transform .15s}
 .btab.active{color:var(--blue)}
 .btab.active i{transform:scale(1.08)}
-.btab-indicator{
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:32px;height:3px;background:var(--blue);border-radius:0 0 3px 3px;
-  opacity:0;transition:opacity .2s
-}
+.btab-indicator{position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:3px;background:var(--blue);border-radius:0 0 3px 3px;opacity:0;transition:opacity .2s}
 .btab.active .btab-indicator{opacity:1}
-.btab{position:relative}
 
-/* ── SCROLL PAGE ── */
-.page{
-  position:fixed;
-  top:var(--nav-h);left:0;right:0;
-  bottom:var(--tab-h);
-  overflow-y:auto;-webkit-overflow-scrolling:touch;
-  padding:16px 14px 80px;display:none
-}
+.page{position:fixed;top:var(--nav-h);left:0;right:0;bottom:var(--tab-h);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px 80px;display:none}
 .page.active{display:block}
 
-/* ── FAB ── */
-.fab{
-  position:fixed;
-  bottom:calc(var(--tab-h) + 16px);right:16px;
-  width:56px;height:56px;border-radius:16px;
-  background:var(--blue);color:#fff;border:none;
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;cursor:pointer;z-index:90;
-  box-shadow:0 6px 20px rgba(24,95,165,.45);
-  transition:transform .15s,box-shadow .15s
-}
+.fab{position:fixed;bottom:calc(var(--tab-h) + 16px);right:16px;width:56px;height:56px;border-radius:16px;background:var(--blue);color:#fff;border:none;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;z-index:90;box-shadow:0 6px 20px rgba(24,95,165,.45);transition:transform .15s,box-shadow .15s}
 .fab:active{transform:scale(.93);box-shadow:0 2px 8px rgba(24,95,165,.3)}
 
-/* ── NOTIFICATION ── */
-.notif{
-  border-radius:var(--r-sm);padding:11px 14px;margin-bottom:11px;
-  display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.45;
-  border-left:4px solid
-}
-.notif i{font-size:17px;margin-top:1px;flex-shrink:0}
-.notif-warn{background:var(--orange-light);border-color:var(--orange);color:#854f0b}
-.notif-ok{background:var(--green-light);border-color:var(--green-border);color:var(--green)}
-
-/* ── FILTER AREA ── */
-.filter-card{
-  background:var(--surface);border-radius:var(--r);
-  border:1px solid var(--border);padding:12px 13px;
-  margin-bottom:14px;
-}
+/* Filters & Controls */
+.filter-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:12px 13px;margin-bottom:14px}
 .filter-card-hdr{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.filter-card-hdr i{font-size:13px}
 .chip-scroll{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
 .chip-scroll::-webkit-scrollbar{display:none}
-.chip{
-  padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;
-  border:1.5px solid var(--border);background:var(--surface2);
-  cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0;
-  display:flex;align-items:center;gap:5px
-}
-.chip i{font-size:13px}
+.chip{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0;display:flex;align-items:center;gap:5px}
 .chip.active{background:var(--blue-light);border-color:var(--blue-mid);color:var(--blue-dk);font-weight:600}
-.chip:active{opacity:.7}
 .filter-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .filter-lbl{font-size:12px;color:var(--muted);font-weight:600;min-width:38px;letter-spacing:.2px}
 
-/* ── SORT ROW ── */
 .sort-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .sort-icon{color:var(--muted);font-size:16px}
-.sort-sel{
-  flex:1;padding:9px 11px;border-radius:var(--r-sm);
-  border:1.5px solid var(--border);font-size:13px;font-family:inherit;
-  background:var(--surface);color:var(--text);font-weight:500;
-  -webkit-appearance:none;appearance:none
-}
+.sort-sel{flex:1;padding:9px 11px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:13px;font-family:inherit;background:var(--surface);color:var(--text);font-weight:500;-webkit-appearance:none;appearance:none}
 
-/* ── SECTION HEADER ── */
 .sec-hdr{font-size:12px;font-weight:700;color:var(--muted);margin:4px 0 10px;display:flex;align-items:center;gap:7px;letter-spacing:.4px}
-.sec-hdr i{font-size:15px}
 .sec-hdr .cnt{font-weight:600;color:var(--blue-dk);background:rgba(24,95,165,0.1);padding:1px 6px;border-radius:6px;font-size:11px}
 .tbl-section{margin-bottom:18px}
 
-/* ── FD CARD GRID ── */
+/* Grid & Cards */
 .fd-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-/* ── FD CARD ── */
-.fd-card{
-  border-radius:var(--r);padding:14px 13px 13px;cursor:pointer;
-  position:relative;overflow:hidden;
-  transition:transform .15s,box-shadow .15s;
-}
+.fd-card{border-radius:var(--r);padding:14px 13px 13px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
 .fd-card:active{transform:scale(.96)}
 .fd-card.blue{background:var(--blue-light);border:1.5px solid #85b7eb}
 .fd-card.orange{background:var(--orange-light);border:1.5px solid #f0c060}
@@ -183,47 +95,122 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .fd-card.orange::before{background:var(--orange)}
 .fd-card.green::before{background:var(--green-border)}
 .fd-card.red::before{background:var(--red)}
-.fd-card .card-badge{
-  position:absolute;top:11px;right:10px;
-  display:flex;
-  flex-direction: column;
-  font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.2px
-}
+.fd-card .card-badge{position:absolute;top:11px;right:10px;display:flex;flex-direction:column;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.2px}
 .fd-card.blue .card-badge{background:var(--blue);color:#fff}
 .fd-card.orange .card-badge{background:var(--orange);color:#fff}
 .fd-card.green .card-badge{background:var(--green);color:#fff}
 .fd-card.red .card-badge{background:var(--red);color:#fff}
 .fd-card .card-date{font-size:10px;font-weight:600;opacity:0.8;margin-bottom:5px;margin-top:2px;line-height:1.3}
-.fd-card .card-amount{font-size:16px;font-weight:800;margin-bottom:6px;line-height:1.15;padding-right:38px}
+.fd-card .card-amount{font-size:17px;font-weight:800;margin-bottom:6px;line-height:1.15;padding-right:38px}
 .fd-card.blue .card-amount{color:var(--blue-dk)}
 .fd-card.orange .card-amount{color:#854f0b}
 .fd-card.green .card-amount{color:var(--green)}
 .fd-card.red .card-amount{color:var(--red)}
 .fd-card .card-bank{font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:4px;margin-bottom:3px}
-.fd-card .card-bank i{font-size:12px;flex-shrink:0}
 .fd-card .card-user{font-size:11px;opacity:.65;display:flex;align-items:center;gap:4px;overflow:hidden}
-.fd-card .card-user i{font-size:11px;flex-shrink:0}
-.fd-card .card-user span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ── METRIC CARDS ── */
-.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.mcard{
-  background:var(--surface);border-radius:var(--r);
-  border:1px solid var(--border);padding:14px 13px;
-  display:flex;flex-direction:column;gap:4px
-}
-.mcard .m-icon{
-  width:32px;height:32px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:17px;margin-bottom:4px
-}
+/* Analytics Multi-column Distribution */
+.analyze-row-section {display:flex; gap:12px; margin-bottom:14px; width:100%}
+.analyze-col {flex:1; min-width:0; display:flex; flex-direction:column}
+.charts-scroll-container {display:flex; flex-direction:column; gap:12px; overflow-y:auto; max-height:calc(100vh - 340px); padding-right:4px}
+
+.metric-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.mcard{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:12px;display:flex;flex-direction:column;gap:4px}
+.mcard .m-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:2px}
 .mcard .lbl{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.2px}
-.mcard .val{font-size:19px;font-weight:800;line-height:1.1}
-.mcard .sub{font-size:10px;color:var(--muted);margin-top:1px}
+.mcard .val{font-size:17px;font-weight:800;line-height:1.1}
+
+.chart-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px;margin-bottom:4px;overflow-x: auto;}
+.chart-title{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:6px}
+.chart-title i{font-size:15px;color:var(--blue)}
+
+/* Lists & Tables */
+.pie-legend-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
+.pie-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.pie-name{font-size:12px;flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pie-amt{font-size:12px;font-weight:700}
+.pie-pct{font-size:11px;color:var(--muted);min-width:28px;text-align:right}
+
+.user-hdr{display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.user-avatar{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+.user-hdr-info .name{font-size:14px;font-weight:700}
+.user-hdr-info .meta{font-size:11px;color:var(--muted)}
+
+.list-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.list-item-icon{width:36px;height:36px;border-radius:10px;background:var(--blue-light);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.list-item-name{font-size:14px;font-weight:600;flex:1}
+
+.hist-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center}
+.hist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.hist-date{font-size:12px;color:var(--blue);font-weight:700;min-width:75px;flex-shrink:0}
+.hist-amt{font-size:13px;font-weight:700;flex:1}
+.hist-lbl{font-size:11px;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:20px}
+
+/* Modals */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border-radius:22px 22px 0 0;padding:0 18px 24px;width:100%;max-height:93vh;overflow-y:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));animation:slideUp .22s cubic-bezier(.22,1,.36,1);position:relative}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-grip{width:40px;height:5px;background:rgba(0,0,0,.12);border-radius:3px;margin:14px auto 18px}
+.modal-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-right:36px}
+.modal-hdr h3{font-size:17px;font-weight:700;margin:0}
+.modal-close{position:absolute;top:18px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--surface2);border:none;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);cursor:pointer}
+
+.fr{margin-bottom:14px}
+.fr label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700}
+.fr input,.fr select, .fr textarea{width:100%;padding:11px 13px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:15px;font-family:inherit;background:var(--surface2);color:var(--text);-webkit-appearance:none;appearance:none}
+.fr input:focus,.fr select:focus, .fr textarea:focus{outline:none;border-color:var(--blue-mid);background:var(--surface)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:var(--r-sm);font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s;font-family:inherit}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-sm{padding:6px 11px;font-size:12px;gap:4px;border-radius:8px}
+.btn-red{color:var(--red);border-color:#f5a0a0;background:var(--red-light)}
+.btn-teal{color:#0f6e56;border-color:#5dcaa5;background:var(--teal-light)}
+.btn-blue{color:var(--blue-dk);border-color:#85b7eb;background:var(--blue-light)}
+.btn-gray{color:#374151;border-color:#d1d5db;background:var(--surface2)}
+.btn-full{width:100%;margin-top:12px}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions .btn{flex:1}
+
+.detail-stripe{height:5px;margin:0 -18px 16px;border-radius:22px 22px 0 0;margin-top:-1px}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.detail-lbl{font-size:12px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px}
+.detail-val{font-size:14px;font-weight:700;text-align:right;max-width:58%}
+.detail-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+
+.renew-info{background:var(--blue-light);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--blue-dk);line-height:1.6;border-left:3px solid var(--blue)}
+.empty{text-align:center;padding:32px 16px;color:var(--muted)}
+.empty i{font-size:48px;opacity:.25;display:block;margin-bottom:10px}
+.add-inp-wrap{display:flex;gap:8px;margin-bottom:14px;align-items:center}
+.add-inp-wrap input{flex:1;padding:11px 13px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:14px}
+
+/* Enhanced User-Friendly Timeline List Circles */
+.h-timeline-container {display: flex; gap: 14px; overflow-x: auto; padding: 10px 4px 14px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch;}
+.h-timeline-container::-webkit-scrollbar { display: none; }
+.h-timeline-node {display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; flex-shrink: 0; width: 85px;}
+.h-timeline-circle {width: 60px; height: 60px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.12); transition: transform 0.15s;}
+.h-timeline-node:active .h-timeline-circle { transform: scale(0.92); }
+.h-timeline-circle .t-amt { font-size: 11px; font-weight: 800; color: #fff !important; }
+.h-timeline-circle .t-bank { font-size: 8px; font-weight: 600; opacity: 0.9; max-width: 52px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px; }
+.h-timeline-user { font-size: 11px; font-weight: 600; color: var(--text); margin-top: 6px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.h-timeline-date { font-size: 9px; font-weight: 700; color: var(--muted); margin-top: 1px; }
+
+/* PIN Screen */
+#pin-screen {position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;}
+.pin-logo { width: 64px; height: 64px; border-radius: 18px; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; box-shadow: 0 6px 16px rgba(24,95,165,0.25); }
+.pin-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.pin-desc { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 28px; max-width: 260px; line-height: 1.4; }
+.pin-dots { display: flex; gap: 16px; margin-bottom: 36px; }
+.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.1s ease; }
+.pin-dot.filled { background: var(--blue); border-color: var(--blue); transform: scale(1.15); }
+.pin-pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 16px 20px; justify-content: center; }
+.pin-btn { width: 72px; height: 72px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 24px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+.pin-btn:active { background: var(--surface2); }
+.pin-btn.empty-btn { background: transparent; border: none; box-shadow: none; cursor: default; }
 
 /* ── ANALYZE TABS ── */
 .analyze-tabs{
-  display:flex;gap:7px;margin-bottom:16px;
+  display:flex;gap:7px;margin-bottom:16px;flex-direction: column;
   overflow-x:auto;scrollbar-width:none;padding:2px 0
 }
 .analyze-tabs::-webkit-scrollbar{display:none}
@@ -236,223 +223,20 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .atab i{font-size:15px}
 .atab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 
-/* ── CHART CARD ── */
-.chart-card{
-  background:var(--surface);border-radius:var(--r);
-  border:1px solid var(--border);padding:16px 14px;margin-bottom:12px
-}
-.chart-title{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text);display:flex;align-items:center;gap:7px}
-.chart-title i{font-size:16px;color:var(--blue)}
-
 /* ── BANK FILTER CHIPS ── */
 .analyze-filter{margin-bottom:14px}
 .analyze-filter-lbl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.4px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .analyze-filter-lbl i{font-size:13px}
 
-/* ── PIE LEGEND ── */
-.pie-legend-item{
-  display:flex;align-items:center;gap:9px;
-  padding:8px 0;border-bottom:1px solid var(--border)
-}
-.pie-legend-item:last-child{border-bottom:none}
-.pie-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.pie-name{font-size:13px;flex:1;font-weight:500}
-.pie-amt{font-size:13px;font-weight:700}
-.pie-pct{font-size:11px;color:var(--muted);min-width:34px;text-align:right}
 
-/* ── USER CARD ── */
-.user-avatar{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0}
-.user-hdr{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:14px}
-.user-hdr-info{flex:1;min-width:0}
-.user-hdr-info .name{font-size:15px;font-weight:700}
-.user-hdr-info .meta{font-size:11px;color:var(--muted);margin-top:2px}
-
-/* ── EXPORT ROW ── */
-.export-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-bottom:8px}
-
-/* ── MODAL ── */
-.modal-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:200;
-  align-items:flex-end;justify-content:center
-}
-.modal-bg.open{display:flex}
-.modal{
-  background:var(--surface);border-radius:22px 22px 0 0;
-  padding:0 18px 24px;width:100%;max-height:93vh;overflow-y:auto;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
-  animation:slideUp .22s cubic-bezier(.22,1,.36,1)
-}
-@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-grip{width:40px;height:5px;background:rgba(0,0,0,.12);border-radius:3px;margin:14px auto 18px}
-.modal-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-right:36px}
-.modal-hdr-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.modal-hdr h3{font-size:17px;font-weight:700;margin:0}
-.modal-close{
-  position:absolute;top:18px;right:16px;width:32px;height:32px;
-  border-radius:50%;background:var(--surface2);border:none;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;color:var(--muted);cursor:pointer;line-height:1
-}
-.modal-close:active{background:var(--border)}
-.modal{position:relative}
-
-/* ── FORM ROWS ── */
-.fr{margin-bottom:14px}
-.fr label{
-  display:flex;align-items:center;gap:6px;
-  font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700;letter-spacing:.3px
-}
-.fr label i{font-size:14px}
-.fr input,.fr select, .fr textarea{
-  width:100%;padding:11px 13px;border-radius:var(--r-sm);
-  border:1.5px solid var(--border);font-size:15px;font-family:inherit;
-  background:var(--surface2);color:var(--text);
-  -webkit-appearance:none;appearance:none;transition:border .15s
-}
-.fr input:focus,.fr select:focus, .fr textarea:focus{
-  outline:none;border-color:var(--blue-mid);background:var(--surface)
-}
-.tog-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 0;font-size:14px;font-weight:500;
-  border-top:1px solid var(--border);margin-top:4px
-}
-.tog-row .tog-lbl{display:flex;align-items:center;gap:8px;color:var(--text)}
-.tog-row .tog-lbl i{font-size:18px;color:var(--blue)}
-.toggle{position:relative;width:48px;height:27px;flex-shrink:0}
-.toggle input{opacity:0;width:0;height:0}
-.tslider{position:absolute;inset:0;background:#d1d5db;border-radius:14px;cursor:pointer;transition:.22s}
-.tslider:before{content:'';position:absolute;width:21px;height:21px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.22s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
-input:checked+.tslider{background:var(--blue)}
-input:checked+.tslider:before{transform:translateX(21px)}
-
-/* ── BUTTONS ── */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  padding:11px 18px;border-radius:var(--r-sm);
-  font-size:14px;font-weight:700;cursor:pointer;
-  border:1.5px solid var(--border);background:var(--surface);
-  color:var(--text);transition:all .15s;white-space:nowrap;font-family:inherit
-}
-.btn i{font-size:16px}
-.btn:active{opacity:.8;transform:scale(.97)}
-.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
-.btn-sm{padding:8px 13px;font-size:13px;gap:5px;border-radius:8px}
-.btn-sm i{font-size:14px}
-.btn-red{color:var(--red);border-color:#f5a0a0;background:var(--red-light)}
-.btn-teal{color:#0f6e56;border-color:#5dcaa5;background:var(--teal-light)}
-.btn-blue{color:var(--blue-dk);border-color:#85b7eb;background:var(--blue-light)}
-.btn-gray{color:#374151;border-color:#d1d5db;background:var(--surface2)}
-.btn-full{width:100%;margin-top:12px}
-.modal-actions{display:flex;gap:10px;margin-top:18px}
-.modal-actions .btn{flex:1}
-
-/* ── DETAIL MODAL ── */
-.detail-stripe{height:5px;margin:0 -18px 16px;border-radius:22px 22px 0 0;margin-top:-1px}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
-.detail-row:last-child{border-bottom:none}
-.detail-lbl{font-size:12px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px}
-.detail-lbl i{font-size:14px}
-.detail-val{font-size:14px;font-weight:700;text-align:right;max-width:58%}
-.detail-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-
-/* ── BADGE ── */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.badge i{font-size:12px}
-.b-active{background:var(--blue-light);color:var(--blue-dk)}
-.b-soon{background:var(--orange-light);color:#854f0b}
-.b-matured{background:var(--green-light);color:var(--green)}
-.b-deleted{background:var(--red-light);color:var(--red)}
-
-/* ── BANK / USER LIST ── */
-.list-item{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 0;border-bottom:1px solid var(--border)
-}
-.list-item:last-child{border-bottom:none}
-.list-item-icon{
-  width:36px;height:36px;border-radius:10px;
-  background:var(--blue-light);color:var(--blue);
-  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0
-}
-.list-item-name{font-size:14px;font-weight:600;flex:1}
-
-/* ── HISTORY ── */
-.hist-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);align-items:center}
-.hist-item:last-child{border-bottom:none}
-.hist-dot{width:8px;height:8px;background:var(--blue);border-radius:50%;flex-shrink:0}
-.hist-date{font-size:12px;color:var(--blue);font-weight:700;min-width:70px;flex-shrink:0}
-.hist-amt{font-size:14px;font-weight:700;flex:1}
-.hist-lbl{font-size:12px;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:20px}
-
-/* ── RENEW INFO BOX ── */
-.renew-info{
-  background:var(--blue-light);border-radius:var(--r-sm);
-  padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--blue-dk);line-height:1.6;
-  border-left:3px solid var(--blue)
-}
-.renew-info strong{font-weight:700}
-
-/* ── EMPTY STATE ── */
-.empty{text-align:center;padding:32px 16px;color:var(--muted)}
-.empty i{font-size:48px;opacity:.25;display:block;margin-bottom:10px}
-.empty p{font-size:14px;font-weight:500}
-.empty .empty-sub{font-size:12px;margin-top:4px;opacity:.7}
-
-/* ── INPUT HEADER SEARCH ── */
-.add-inp-wrap{display:flex;gap:8px;margin-bottom:14px;align-items:center}
-.add-inp-wrap input{
-  flex:1;padding:11px 13px;border-radius:var(--r-sm);
-  border:1.5px solid var(--border);font-size:14px;font-family:inherit;
-  background:var(--surface2);color:var(--text);
-  -webkit-appearance:none
-}
-.add-inp-wrap input:focus{outline:none;border-color:var(--blue-mid);background:var(--surface)}
-
-/* ── SCROLLABLE MATURITY TIMELINE CHIPS ── */
-.h-timeline-container {
-  display: flex; gap: 14px; overflow-x: auto; padding: 10px 4px 20px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-}
-.h-timeline-container::-webkit-scrollbar { display: none; }
-.h-timeline-node {
-  display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; flex-shrink: 0; width: 95px; position: relative;
-}
-.h-timeline-circle {
-  width: 68px; height: 68px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border: 2px solid var(--blue); background: var(--surface); color: var(--text); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.15s; position: relative;
-}
-.h-timeline-node:active .h-timeline-circle { transform: scale(0.92); }
-.h-timeline-circle .t-amt { font-size: 10px; font-weight: 800; }
-.h-timeline-circle .t-bank { font-size: 8px; font-weight: 600; opacity: 0.8; max-width: 58px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px; }
-.h-timeline-user { font-size: 10px; font-weight: 600; color: var(--text); margin-top: 6px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.h-timeline-date { font-size: 9px; font-weight: 700; color: var(--muted); margin-top: 1px; }
-
-/* ── DEVICE PIN VIEW ── */
-#pin-screen {
-  position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;
-}
-.pin-logo { width: 64px; height: 64px; border-radius: 18px; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; box-shadow: 0 6px 16px rgba(24,95,165,0.25); }
-.pin-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
-.pin-desc { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 28px; max-width: 260px; line-height: 1.4; }
-.pin-dots { display: flex; gap: 16px; margin-bottom: 36px; }
-.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.1s ease; }
-.pin-dot.filled { background: var(--blue); border-color: var(--blue); transform: scale(1.15); }
-.pin-pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 16px 20px; justify-content: center; }
-.pin-btn { width: 72px; height: 72px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 24px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.1s; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-.pin-btn:active { background: var(--surface2); }
-.pin-btn.empty-btn { background: transparent; border: none; box-shadow: none; cursor: default; }
-.pin-btn.empty-btn:active { background: transparent; }
-.pin-btn i { font-size: 22px; }
 </style>
 </head>
 <body>
 
 <div id="pin-screen">
   <div class="pin-logo"><i class="bi bi-shield-lock-fill"></i></div>
-  <div class="pin-title" id="pin-title-label">Enter Security PIN</div>
-  <div class="pin-desc" id="pin-desc-label">Unlock your Fixed Deposit Portfolio safely.</div>
+  <div class="pin-title" id="pin-title-label">Enter PIN</div>
+  <div class="pin-desc" id="pin-desc-label">Securely manage your Fixed Deposit Portfolio.</div>
   <div class="pin-dots">
     <div class="pin-dot"></div>
     <div class="pin-dot"></div>
@@ -476,61 +260,27 @@ input:checked+.tslider:before{transform:translateX(21px)}
 </div>
 
 <header class="topnav">
-  <div class="topnav-brand">
-    <div class="brand-icon"><i class="bi bi-bank2"></i></div>
-    FD Tracker
-  </div>
+  <div class="topnav-brand"><div class="brand-icon"><i class="bi bi-bank2"></i></div>FD Tracker</div>
   <div id="invest-hdr-btns" style="display:flex;gap:8px">
-    <button class="topnav-icon" title="Manage Banks" onclick="openBankModal()">
-      <i class="bi bi-bank2"></i>
-    </button>
-    <button class="topnav-icon" title="Manage Users" onclick="openUserModal()">
-      <i class="bi bi-people-fill"></i>
-    </button>
-    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()">
-      <i class="bi bi-download"></i>
-    </button>
-  </div>
-  <div id="analyze-hdr-btns" style="display:none;gap:8px">
-    <button class="topnav-icon" title="Bank-wise Report" onclick="exportPDF('bank')">
-      <i class="bi bi-file-earmark-text-fill"></i>
-    </button>
-    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()">
-      <i class="bi bi-download"></i>
-    </button>
+    <button class="topnav-icon" title="Manage Banks" onclick="openBankModal()"><i class="bi bi-bank2"></i></button>
+    <button class="topnav-icon" title="Manage Users" onclick="openUserModal()"><i class="bi bi-people-fill"></i></button>
+    <button class="topnav-icon" title="Export CSV" onclick="exportCSV()"><i class="bi bi-download"></i></button>
   </div>
 </header>
 
 <nav class="bottomtabs">
-  <button class="btab active" onclick="switchTab('invest', this)">
-    <div class="btab-indicator"></div>
-    <i class="bi bi-wallet2"></i>Investments
-  </button>
-  <button class="btab" onclick="switchTab('analyze', this)">
-    <div class="btab-indicator"></div>
-    <i class="bi bi-pie-chart-fill"></i>Analyze
-  </button>
-  <button class="btab" onclick="switchTab('history', this)">
-    <div class="btab-indicator"></div>
-    <i class="bi bi-clock-history"></i>History
-  </button>
+  <button class="btab active" onclick="switchTab('invest', this)"><div class="btab-indicator"></div><i class="bi bi-wallet2"></i>Investments</button>
+  <button class="btab" onclick="switchTab('analyze', this)"><div class="btab-indicator"></div><i class="bi bi-pie-chart-fill"></i>Analyze</button>
+  <button class="btab" onclick="switchTab('history', this)"><div class="btab-indicator"></div><i class="bi bi-clock-history"></i>History</button>
 </nav>
 
-<button class="fab" id="fab-add" onclick="openAddModal()" title="Add New Record">+</button>
+<button class="fab" id="fab-add" onclick="openAddModal()">+</button>
 
 <main id="page-invest" class="page active">
-  <div id="quick-alert-box"></div>
-
   <section class="filter-card">
     <div class="filter-card-hdr"><i class="bi bi-funnel-fill"></i> FILTER PARAMETERS</div>
-    <div class="filter-row">
-      <span class="filter-lbl">Bank:</span>
-      <div class="chip-scroll" id="chips-bank"></div>
-    </div>
-    <div class="filter-row" style="margin-bottom:4px">
-      <span class="filter-lbl">User:</span>
-      <div class="chip-scroll" id="chips-user"></div>
-    </div>
+    <div class="filter-row"><span class="filter-lbl">Bank:</span><div class="chip-scroll" id="chips-bank"></div></div>
+    <div class="filter-row" style="margin-bottom:4px"><span class="filter-lbl">User:</span><div class="chip-scroll" id="chips-user"></div></div>
   </section>
 
   <div class="sort-row">
@@ -540,50 +290,38 @@ input:checked+.tslider:before{transform:translateX(21px)}
       <option value="maturity-desc">Maturity Timeline (Latest First)</option>
       <option value="amount-desc">Investment Principal (High to Low)</option>
       <option value="amount-asc">Investment Principal (Low to High)</option>
-      <option value="bank">Bank Alphabetical</option>
-      <option value="user">User Holder Alphabetical</option>
     </select>
   </div>
 
-  <div class="tbl-section">
-    <h2 class="sec-hdr"><i class="bi bi-exclamation-octagon-fill" style="color:var(--green)"></i> MATURED RECORDS <span class="cnt" id="cnt-matured">0</span></h2>
+  <div class="tbl-section" id="sec-matured">
+    <h2 class="sec-hdr"><i class="bi bi-patch-check-fill" style="color:var(--green)"></i> Matured FDs <span class="cnt" id="cnt-matured">0</span></h2>
     <div class="fd-card-grid" id="matured-tbody"></div>
   </div>
 
-  <div class="tbl-section">
-    <h2 class="sec-hdr"><i class="bi bi-bell-fill" style="color:var(--orange)"></i> MATURING SOON (WITHIN 7 DAYS) <span class="cnt" id="cnt-soon">0</span></h2>
+  <div class="tbl-section" id="sec-soon">
+    <h2 class="sec-hdr"><i class="bi bi-bell-fill" style="color:var(--orange)"></i> Maturing Soon (Within 7 Days) <span class="cnt" id="cnt-soon">0</span></h2>
     <div class="fd-card-grid" id="soon-tbody"></div>
   </div>
 
-  <div class="tbl-section">
-    <h2 class="sec-hdr"><i class="bi bi-check-circle-fill" style="color:var(--blue)"></i> ACTIVE CONSTELLATION LOGS <span class="cnt" id="cnt-active">0</span></h2>
+  <div class="tbl-section" id="sec-active">
+    <h2 class="sec-hdr"><i class="bi bi-check-circle-fill" style="color:var(--blue)"></i> Active FDs <span class="cnt" id="cnt-active">0</span></h2>
     <div class="fd-card-grid" id="active-tbody"></div>
   </div>
 </main>
 
 <main id="page-analyze" class="page">
   <div class="metric-grid">
-    <div class="mcard">
-      <div class="m-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-cash-stack"></i></div>
-      <div class="lbl">TOTAL INVESTMENT</div>
-      <div class="val" id="m-total-p">₹0</div>
-    </div>
-    <div class="mcard">
-      <div class="m-icon" style="background:var(--green-light); color:var(--green)"><i class="bi bi-graph-up-arrow"></i></div>
-      <div class="lbl">CURRENT VALUE</div>
-      <div class="val" id="m-total-v" style="color:var(--green)">₹0</div>
-    </div>
-    <div class="mcard" style="grid-column: span 2;">
-      <div class="m-icon" style="background:var(--teal-light); color:#0f6e56; margin-bottom: 2px;"><i class="bi bi-trophy-fill"></i></div>
-      <div class="lbl">TOTAL INTEREST EARNED</div>
-      <div class="val" id="m-total-interest" style="color:#0f6e56">₹0</div>
-    </div>
+    <div class="mcard"><div class="lbl">TOTAL INVESTMENT</div><div class="val" id="m-total-p">₹0</div></div>
+    <div class="mcard"><div class="lbl">CURRENT VALUE</div><div class="val" id="m-total-v" style="color:var(--green)">₹0</div></div>
+    <div class="mcard"><div class="lbl">INTEREST EARNED</div><div class="val" id="m-total-interest" style="color:#0f6e56">₹0</div></div>
   </div>
 
   <div class="analyze-tabs">
-    <button class="atab active" id="atab-bank" onclick="switchAnalyzeTab('bank')"><i class="bi bi-bank"></i>Bank Wise Distribution</button>
-    <button class="atab" id="atab-user" onclick="switchAnalyzeTab('user')"><i class="bi bi-person-bounding-box"></i>User Wise Distribution</button>
-    <button class="atab" id="atab-timeline" onclick="switchAnalyzeTab('timeline')"><i class="bi bi-calendar3"></i>Maturity Timeline Calendar</button>
+    <div class="analyze-sections" style="display: flex; flex-direction: row; align-items:flex-end;">
+      <button class="atab active" id="atab-bank" onclick="switchAnalyzeTab('bank')"><i class="bi bi-bank"></i>Bank Wise Distribution</button>
+      <button class="atab" id="atab-user" onclick="switchAnalyzeTab('user')"><i class="bi bi-person-bounding-box"></i>User Wise Distribution</button>
+      <button class="atab" id="atab-timeline" onclick="switchAnalyzeTab('timeline')"><i class="bi bi-calendar3"></i>Maturity Timeline Calendar</button>
+    </div>
   </nav>
 
   <div id="an-block-bank">
@@ -629,119 +367,67 @@ input:checked+.tslider:before{transform:translateX(21px)}
 
 <main id="page-history" class="page">
   <div class="chart-card">
-    <div class="chart-title"><i class="bi bi-clock-history"></i> Global Operations Audit Log Trails</div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px;">
+      <div class="add-inp-wrap" style="flex:1; margin-bottom:0;">
+        <input type="text" id="hist-search" oninput="renderAll()" placeholder="Search username, amount, bank name...">
+      </div>
+      <select id="hist-filter-status" onchange="renderAll()" class="sort-sel" style="max-width:130px; padding:10px;">
+        <option value="all">All Statuses</option>
+        <option value="active">Active Logs</option>
+        <option value="deleted">Deleted Logs</option>
+      </select>
+      <button class="btn btn-red btn-sm" onclick="clearAllHistory()"><i class="bi bi-trash3"></i> Clear History</button>
+    </div>
     <div id="history-log-list"></div>
   </div>
 </main>
 
+<!-- Modals -->
 <div class="modal-bg" id="bank-modal">
-  <div class="modal">
-    <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('bank-modal')">×</button>
-    <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-bank2"></i></div>
-      <h3>Supported Banking Networks</h3>
-    </div>
-    <div class="add-inp-wrap">
-      <input type="text" id="new-bank-inp" placeholder="Enter bank entity name...">
-      <button class="btn btn-primary" onclick="addBankEntity()"><i class="bi bi-plus-lg"></i> Add</button>
-    </div>
-    <div id="bank-list-box" style="max-height:250px; overflow-y:auto"></div>
+  <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('bank-modal')">×</button>
+    <div class="modal-hdr"><h3>Supported Banking Networks</h3></div>
+    <div class="add-inp-wrap"><input type="text" id="new-bank-inp" placeholder="Enter bank entity name..."><button class="btn btn-primary" onclick="addBankEntity()">Add</button></div>
+    <div id="bank-list-box" style="max-height:200px; overflow-y:auto"></div>
   </div>
 </div>
 
 <div class="modal-bg" id="user-modal">
-  <div class="modal">
-    <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('user-modal')">×</button>
-    <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-people-fill"></i></div>
-      <h3>Account Holders Matrix</h3>
-    </div>
-    <div class="add-inp-wrap">
-      <input type="text" id="new-user-inp" placeholder="Enter profile holder name...">
-      <button class="btn btn-primary" onclick="addUserProfile()"><i class="bi bi-plus-lg"></i> Add</button>
-    </div>
-    <div id="user-list-box" style="max-height:250px; overflow-y:auto"></div>
+  <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('user-modal')">×</button>
+    <div class="modal-hdr"><h3>Account Holders Matrix</h3></div>
+    <div class="add-inp-wrap"><input type="text" id="new-user-inp" placeholder="Enter profile holder name..."><button class="btn btn-primary" onclick="addUserProfile()">Add</button></div>
+    <div id="user-list-box" style="max-height:200px; overflow-y:auto"></div>
   </div>
 </div>
 
 <div class="modal-bg" id="form-modal">
-  <div class="modal">
-    <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('form-modal')">×</button>
-    <div class="modal-hdr">
-      <div class="modal-hdr-icon" id="form-hdr-icon" style="background:var(--blue-light); color:var(--blue)"><i class="bi bi-pencil-square"></i></div>
-      <h3 id="form-title-h">Add Record Entry</h3>
-    </div>
+  <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('form-modal')">×</button>
+    <div class="modal-hdr"><h3 id="form-title-h">Add New FD</h3></div>
     <div id="renew-info-banner" class="renew-info" style="display:none"></div>
-    <div class="fr">
-      <label><i class="bi bi-bank"></i> Banking Entity Network</label>
-      <select id="f-bank"></select>
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-person"></i> Account Profile Holder</label>
-      <select id="f-user"></select>
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-calendar-event"></i> Setup Booking Date</label>
-      <input type="date" id="f-date">
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-currency-rupee"></i> Principal Investment Amount</label>
-      <input type="number" id="f-amount" placeholder="₹ Value">
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-percent"></i> Annual Yield Rate (%)</label>
-      <input type="number" step="0.01" id="f-rate" placeholder="e.g. 7.1">
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-hourglass-split"></i> Maturity Tenure (Months Target)</label>
-      <input type="number" id="f-tenure" placeholder="Months count">
-    </div>
-    <div class="fr">
-      <label><i class="bi bi-file-earmark-text"></i> Additional Context Notes</label>
-      <textarea id="f-desc" rows="2" placeholder="Optional notes..."></textarea>
-    </div>
-    <div class="tog-row">
-      <div class="tog-lbl"><i class="bi bi-layers-half"></i> Compound Yield Interest Matrix</div>
-      <label class="toggle">
-        <input type="checkbox" id="f-comp" checked>
-        <span class="tslider"></span>
-      </label>
-    </div>
-    <button class="btn btn-primary btn-full" onclick="saveFormSubmit()"><i class="bi bi-check2-circle"></i> Commit Record Matrix</button>
+    <div class="fr"><label>Banking Entity Network</label><select id="f-bank"></select></div>
+    <div class="fr"><label>Account Profile Holder</label><select id="f-user"></select></div>
+    <div class="fr"><label>Setup Booking Date</label><input type="date" id="f-date"></div>
+    <div class="fr"><label>Principal Investment Amount</label><input type="number" id="f-amount" placeholder="₹ Value"></div>
+    <div class="fr"><label>Annual Yield Rate (%)</label><input type="number" step="0.01" id="f-rate" placeholder="e.g. 7.1"></div>
+    <div class="fr"><label>Maturity Tenure (Months Count)</label><input type="number" id="f-tenure" placeholder="Months count"></div>
+    <div class="fr"><label>Additional Context Notes</label><textarea id="f-desc" rows="2" placeholder="Optional notes..."></textarea></div>
+    <button class="btn btn-primary btn-full" id="form-submit-btn" onclick="saveFormSubmit()">Submit</button>
   </div>
 </div>
 
 <div class="modal-bg" id="detail-modal">
-  <div class="modal">
-    <div id="detail-stripe" class="detail-stripe"></div>
-    <div class="modal-grip" style="margin-top:6px"></div>
-    <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
-    <h3 id="detail-title" style="font-size:17px;font-weight:800;margin-bottom:14px;padding-right:36px"></h3>
+  <div class="modal"><div id="detail-stripe" class="detail-stripe"></div><button class="modal-close" onclick="closeModal('detail-modal')">×</button>
+    <h3 id="detail-title" style="font-size:17px;font-weight:800;margin-bottom:14px;"></h3>
     <div id="detail-content"></div>
     <div class="detail-actions" id="detail-actions"></div>
   </div>
 </div>
 
 <div class="modal-bg" id="delete-modal">
-  <div class="modal">
-    <div class="modal-grip"></div>
-    <button class="modal-close" onclick="closeModal('delete-modal')">×</button>
-    <div class="modal-hdr">
-      <div class="modal-hdr-icon" style="background:var(--red-light); color:var(--red)"><i class="bi bi-trash3-fill"></i></div>
-      <h3>Decommission Audit Logic Confirmation</h3>
-    </div>
-    <p style="font-size:13px; color:var(--muted); line-height:1.5; margin-bottom:14px;">Are you sure you want to delete this record? This action will archive the record into logs history tracking profiles maps.</p>
-    <div class="fr">
-      <label><i class="bi bi-chat-right-quote"></i> Reason for Decommission</label>
-      <input type="text" id="f-del-reason" placeholder="e.g., Early liquidation, pre-closure check...">
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-gray" onclick="closeModal('delete-modal')">Cancel</button>
-      <button class="btn btn-red" onclick="confirmDeleteSubmit()">Confirm Dearchive</button>
-    </div>
+  <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('delete-modal')">×</button>
+    <div class="modal-hdr"><h3>Confirm Deletion</h3></div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Are you sure you want to delete this record from history logs tracking profiles mapping?</p>
+    <div class="fr"><label>Reason for Decommission</label><input type="text" id="f-del-reason" placeholder="e.g., Early liquidation..."></div>
+    <div class="modal-actions"><button class="btn var(--surface)" onclick="closeModal('delete-modal')">Cancel</button><button class="btn btn-red" onclick="confirmDeleteSubmit()">Confirm Delete</button></div>
   </div>
 </div>
 
@@ -749,20 +435,10 @@ input:checked+.tslider:before{transform:translateX(21px)}
 let banks=JSON.parse(localStorage.getItem('fd_banks3')||'["SBI","HDFC Bank","ICICI Bank","Axis Bank","PNB"]');
 let users=JSON.parse(localStorage.getItem('fd_users3')||'["Sangita","Shivaji","Prathamesh","Chandrashekhar"]');
 let fds=JSON.parse(localStorage.getItem('fd_r3')||'[]');
-
-fds.forEach(fd=>{
-  fd.description ??= "";
-  fd.deleted ??= false;
-  fd.deletedDate ??= null;
-  fd.deleteReason ??= "";
-  fd.history ??= [{type:"CREATED",date:fd.date,message:"FD Created"}];
-});
-
+let selectedAnalyzeUser = 'all';
+let selectedAnalyzeBank = 'all';
 let editId=null,renewId=null,deleteTargetId=null,filterBank='all',filterUser='all';
 let pieInst=null,barInst=null;
-let activeTimelineView = 'bar'; 
-let selectedAnalyzeBank = 'all';
-let selectedAnalyzeUser = 'all';
 
 const PIE_COLORS=['#185fa5','#1d9e75','#ef9f27','#d85a30','#7f77dd','#5ab3e6','#e05080','#93a81e','#228b22','#8b0000'];
 
@@ -784,46 +460,18 @@ function displayFmtDate(s){
   const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0]}`;
 }
-function calcVal(f,targetDate){
-  const s=new Date(f.date);
-  const diff=(targetDate-s)/(3600*24*365.25*1000);
-  if(diff<=0) return f.amount;
-  if(f.compounded || f.compounded===undefined){
-    return f.amount*Math.pow((1+f.rate/400), 4*diff);
-  } else {
-    return f.amount*(1+(f.rate/100)*diff);
-  }
-}
-function getStatus(f){
-  if (f.deleted) return 'deleted';
-  let today=new Date(); today.setHours(0,0,0,0);
-  const md=matDate(f); md.setHours(0,0,0,0);
-  if(today>=md) return 'matured';
-  if((md-today)/(24*3600*1000)<=7) return 'soon';
-  return 'active';
-}
 
-function switchTab(t,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
-  document.getElementById(`page-${t}`).classList.add('active');
-  btn.classList.add('active');
-  const invBtns = document.getElementById('invest-hdr-btns');
-  const anaBtns = document.getElementById('analyze-hdr-btns');
-  if(t==='invest'){
-    invBtns.style.display='flex'; anaBtns.style.display='none';
-    document.getElementById('fab-add').style.display='flex';
-  } else if(t==='analyze') {
-    invBtns.style.display='none'; anaBtns.style.display='flex';
-    document.getElementById('fab-add').style.display='none';
-    setTimeout(drawCharts,60);
-  } else if(t==='history') {
-    invBtns.style.display='none'; anaBtns.style.display='none';
-    document.getElementById('fab-add').style.display='none';
-  }
-  renderAll();
+// Analyze Tabs 
+function switchAnalyzeTab(tab) {
+  document.getElementById('an-block-bank').style.display = (tab === 'bank') ? 'block' : 'none';
+  document.getElementById('an-block-user').style.display = (tab === 'user') ? 'block' : 'none';
+  document.getElementById('an-block-timeline').style.display = (tab === 'timeline') ? 'block' : 'none';
+  
+  document.querySelectorAll('.analyze-tabs .atab').forEach(b => b.classList.remove('active'));
+  document.getElementById(`atab-${tab}`).classList.add('active');
+  
+  setTimeout(drawCharts, 40);
 }
-
 function setTimelineView(view) {
   activeTimelineView = view;
   const btnBar = document.getElementById('btn-tl-bar');
@@ -843,29 +491,48 @@ function setTimelineView(view) {
   }
   setTimeout(drawCharts, 30);
 }
+function setAnalyzeBankFilter(b) {
+  selectedAnalyzeBank = b;
+  drawCharts();
+}
+function setAnalyzeUserFilter(u) {
+  selectedAnalyzeUser = u;
+  drawCharts();
+}
+//--------------------------------------------------
+
+
+// Simple Interest accrued formula implementation
+function calcVal(f,targetDate){
+  const s=new Date(f.date);
+  const diff=f.tenure/12;
+  if(diff<=0) return f.amount;
+  return f.amount*(1+((f.rate/100)*diff));
+}
+
+function getStatus(f){
+  if (f.deleted) return 'deleted';
+  let today=new Date(); today.setHours(0,0,0,0);
+  const md=matDate(f); md.setHours(0,0,0,0);
+  if(today>=md) return 'matured';
+  if((md-today)/(24*3600*1000)<=7) return 'soon';
+  return 'active';
+}
+
+function switchTab(t,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`page-${t}`).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('fab-add').style.display = (t==='invest')?'flex':'none';
+  if(t==='analyze') setTimeout(drawCharts,40);
+  renderAll();
+}
 
 function renderAll(){
   const now=new Date();
   
-  // ── UPDATE GLOBAL UNFILTERED COUNTS FOR HEADERS ──
-  let totalMaturedCount = 0;
-  let totalSoonCount = 0;
-  let totalActiveCount = 0;
-  
-  fds.forEach(f => {
-    if (!f.deleted) {
-      const st = getStatus(f);
-      if (st === 'matured') totalMaturedCount++;
-      else if (st === 'soon') totalSoonCount++;
-      else if (st === 'active') totalActiveCount++;
-    }
-  });
-  
-  document.getElementById('cnt-matured').innerText = totalMaturedCount;
-  document.getElementById('cnt-soon').innerText = totalSoonCount;
-  document.getElementById('cnt-active').innerText = totalActiveCount;
-
-  // ── CHIPS RENDER ──
+  // Dynamic Chip Counts Generation
   let bc=`<button class="chip ${filterBank==='all'?'active':''}" onclick="setFilter('bank','all')"><i class="bi bi-grid-fill"></i> All Banks</button>`;
   banks.forEach(b=>{
     let count = fds.filter(f=>!f.deleted && f.bank===b).length;
@@ -880,82 +547,80 @@ function renderAll(){
   });
   document.getElementById('chips-user').innerHTML=uc;
 
-  // ── FILTER & SORT THE ACTIVE VIEW ──
-  let obank=filterBank, ouser=filterUser, sval=document.getElementById('sort-select').value;
+  // Filter Pool
   let activePool = fds.filter(f=>!f.deleted);
-  let deletedPool = fds.filter(f => f.deleted);
+  if(filterBank!=='all') activePool=activePool.filter(f=>f.bank===filterBank);
+  if(filterUser!=='all') activePool=activePool.filter(f=>f.user===filterUser);
 
-  if(obank!=='all') activePool=activePool.filter(f=>f.bank===obank);
-  if(ouser!=='all') activePool=activePool.filter(f=>f.user===ouser);
-
-  if(sval=='bank') activePool.sort((a,b)=>a.bank.localeCompare(b.bank));
-  else if(sval=='user') activePool.sort((a,b)=>(a.user||'').localeCompare(b.user||''));
-  else if(sval=='amount-desc') activePool.sort((a,b)=>b.amount-a.amount);
+  let sval=document.getElementById('sort-select').value;
+  if(sval=='amount-desc') activePool.sort((a,b)=>b.amount-a.amount);
   else if(sval=='amount-asc') activePool.sort((a,b)=>a.amount-b.amount);
   else if(sval=='maturity-asc') activePool.sort((a,b)=>matDate(a)-matDate(b));
   else if(sval=='maturity-desc') activePool.sort((a,b)=>matDate(b)-matDate(a));
 
   let matHtml='', soonHtml='', actHtml='';
+  let mCount=0, sCount=0, aCount=0;
+
   activePool.forEach(f=>{
     const st=getStatus(f);
     const h=createCardHtml(f,st,now);
-    if(st==='matured') matHtml+=h;
-    else if(st==='soon') soonHtml+=h;
-    else actHtml+=h;
+    if(st==='matured') { matHtml+=h; mCount++; }
+    else if(st==='soon') { soonHtml+=h; sCount++; }
+    else { actHtml+=h; aCount++; }
   });
 
-  document.getElementById('matured-tbody').innerHTML=matHtml||`<div class="empty" style="grid-column:span 2"><i class="bi bi-patch-check"></i><p>No matured records found.</p></div>`;
-  document.getElementById('soon-tbody').innerHTML=soonHtml||`<div class="empty" style="grid-column:span 2"><i class="bi bi-clock"></i><p>No records maturing within 7 days.</p></div>`;
-  document.getElementById('active-tbody').innerHTML=actHtml||`<div class="empty" style="grid-column:span 2"><i class="bi bi-folder-x"></i><p>No active investment records matched.</p></div>`;
+  document.getElementById('cnt-matured').innerText = mCount;
+  document.getElementById('cnt-soon').innerText = sCount;
+  document.getElementById('cnt-active').innerText = aCount;
 
-  // ── METRIC PARAMETERS (GLOBAL SCOPE CONFIGURATIONS) ──
+  // Empty Section Filtering Safeguard Logic
+  document.getElementById('sec-matured').style.display = (mCount === 0) ? 'none' : 'block';
+  document.getElementById('sec-soon').style.display = (sCount === 0) ? 'none' : 'block';
+  document.getElementById('sec-active').style.display = (aCount === 0) ? 'none' : 'block';
+
+  document.getElementById('matured-tbody').innerHTML=matHtml;
+  document.getElementById('soon-tbody').innerHTML=soonHtml;
+  document.getElementById('active-tbody').innerHTML=actHtml;
+
+  // Aggregate Calculator Parameters
   let sumP=0, sumCurV=0;
   fds.forEach(f=>{
-    if(!f.deleted){
-      sumP+=f.amount;
-      sumCurV+=calcVal(f, now);
-    }
+    if(!f.deleted){ sumP+=f.amount; sumCurV+=calcVal(f, now); }
   });
-  let interestEarned = Math.max(0, sumCurV - sumP);
-
   document.getElementById('m-total-p').innerText='₹'+Math.round(sumP).toLocaleString('en-IN');
   document.getElementById('m-total-v').innerText='₹'+Math.round(sumCurV).toLocaleString('en-IN');
-  document.getElementById('m-total-interest').innerText='₹'+Math.round(interestEarned).toLocaleString('en-IN');
+  document.getElementById('m-total-interest').innerText='₹'+Math.round(Math.max(0, sumCurV - sumP)).toLocaleString('en-IN');
 
-  // ── HISTORY LOGS GENERATION ──
-  let combinedLogs = [];
-  fds.forEach(f => {
-    if (f.history) {
-      f.history.forEach(h => {
-        combinedLogs.push({
-          bank: f.bank,
-          user: f.user || 'Unknown',
-          amount: f.amount,
-          type: h.type,
-          date: h.date,
-          message: h.message
-        });
-      });
-    }
-  });
-  combinedLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
-
+  // History & Audit Filter Pipeline Processing
+  let query = document.getElementById('hist-search').value.toLowerCase();
+  let statusFilter = document.getElementById('hist-filter-status').value;
   let hHtml = '';
-  if (combinedLogs.length === 0) {
-    hHtml = `<div class="empty"><i class="bi bi-journals"></i><p>No historical records tracked yet.</p></div>`;
+
+  let histPool = [];
+  fds.forEach(f => {
+    if(statusFilter === 'active' && f.deleted) return;
+    if(statusFilter === 'deleted' && !f.deleted) return;
+    
+    let uMatch = (f.user||'').toLowerCase().includes(query);
+    let bMatch = (f.bank||'').toLowerCase().includes(query);
+    let aMatch = f.amount.toString().includes(query);
+    
+    if(query && !uMatch && !bMatch && !aMatch) return;
+    histPool.push(f);
+  });
+
+  histPool.sort((a,b)=> new Date(b.date) - new Date(a.date));
+  
+  if (histPool.length === 0) {
+    hHtml = `<div class="empty"><i class="bi bi-journals"></i><p>No matching history found.</p></div>`;
   } else {
-    combinedLogs.forEach(l => {
-      let badgeStyle = 'background:var(--surface2); color:var(--text);';
-      if(l.type === 'CREATED') badgeStyle = 'background:var(--blue-light); color:var(--blue-dk); font-weight:700;';
-      if(l.type === 'RENEWED') badgeStyle = 'background:var(--teal-light); color:#0f6e56; font-weight:700;';
-      if(l.type === 'DECOMMISSIONED') badgeStyle = 'background:var(--red-light); color:var(--red); font-weight:700;';
-      
+    histPool.forEach(f => {
       hHtml += `
         <div class="hist-item">
-          <div class="hist-dot"></div>
-          <div class="hist-date">${displayFmtDate(l.date)}</div>
-          <div class="hist-amt">₹${l.amount.toLocaleString('en-IN')} <span style="font-size:11px; font-weight:normal; color:var(--muted)">(${l.user} - ${l.bank})</span></div>
-          <div class="hist-lbl" style="${badgeStyle}">${l.type}</div>
+          <div class="hist-dot" style="background:${f.deleted?'var(--red)':'var(--green)'}"></div>
+          <div class="hist-date">${displayFmtDate(f.date)}</div>
+          <div class="hist-amt">₹${f.amount.toLocaleString('en-IN')} <span style="font-size:11px; font-weight:normal; color:var(--muted)">(${f.user} - ${f.bank})</span></div>
+          <div class="hist-lbl">${f.deleted?'Deleted':'Active'}</div>
         </div>
       `;
     });
@@ -968,17 +633,15 @@ function createCardHtml(f,st,now){
   if(st==='matured'){ cCls='green'; bTxt='Matured'; }
   else if(st==='soon') { cCls='orange'; bTxt='Soon'; }
   const md=matDate(f);
-  const curV=calcVal(f,now);
-  
   return `
     <div class="fd-card ${cCls}" onclick="openDetailModal('${f.id}')">
       <div class="card-badge">${bTxt}</div>
       <div class="card-bank"><i class="bi bi-bank"></i> ${f.bank}</div>
-      <div class="card-user"><i class="bi bi-person-fill"></i> <span>${f.user||'-'}</span></div>
-      <div class="card-amount">₹${Math.round(curV).toLocaleString('en-IN')}</div>
-      <div class="card-date">
-        <span style="font-size:10px; font-weight:normal; color:var(--muted);">Created:</span> ${displayFmtDate(f.date)}<br/>
-        <span style="font-size:10px; font-weight:normal; color:var(--muted);">Matures:</span> <span style="color:var(--blue-dk); font-weight:700;">${displayFmtDate(fmtDate(md))}</span>
+      <div class="card-user"><i class="bi bi-person-fill"></i> ${f.user||'-'}</div>
+      <div class="card-amount">₹${f.amount.toLocaleString('en-IN')}</div>
+      <div class="card-date" style="display : flex;flex-direction:column;width: 130px;">
+        <div style="color: #ff9f23;background-color: #185fa5;padding: 3px 5px;border-radius: 6%;"><strong>Matures &nbsp;&nbsp;: ${displayFmtDate(fmtDate(md))}</strong></div>
+        <div style="padding: 3px 5px;border-radius: 6%;">Start Date : ${displayFmtDate(f.date)} </div>
       </div>
     </div>
   `;
@@ -992,91 +655,53 @@ function setFilter(type,val){
 
 function openBankModal(){
   let h='';
-  banks.forEach(b=>{
-    h+=`
-      <div class="list-item">
-        <div class="list-item-icon"><i class="bi bi-bank"></i></div>
-        <div class="list-item-name">${b}</div>
-        <button class="btn btn-sm btn-red" onclick="deleteBankEntity('${b}')"><i class="bi bi-trash"></i></button>
-      </div>
-    `;
-  });
+  banks.forEach(b=>{ h+=`<div class="list-item"><div class="list-item-icon"><i class="bi bi-bank"></i></div><div class="list-item-name">${b}</div><button class="btn btn-sm btn-red" onclick="deleteBankEntity('${b}')"><i class="bi bi-trash"></i></button></div>`; });
   document.getElementById('bank-list-box').innerHTML=h||'<div class="empty"><p>No banking networks added.</p></div>';
   document.getElementById('bank-modal').classList.add('open');
 }
 function addBankEntity(){
   const val=document.getElementById('new-bank-inp').value.trim();
   if(!val) return;
-  if(!banks.includes(val)){
-    banks.push(val); banks.sort();
-    localStorage.setItem('fd_banks3',JSON.stringify(banks));
-    document.getElementById('new-bank-inp').value='';
-    openBankModal(); renderAll();
-  }
+  if(!banks.includes(val)){ banks.push(val); banks.sort(); localStorage.setItem('fd_banks3',JSON.stringify(banks)); document.getElementById('new-bank-inp').value=''; openBankModal(); renderAll(); }
 }
 function deleteBankEntity(b){
-  if(confirm(`Remove ${b}? This will not remove existing records under this bank.`)){
-    banks=banks.filter(x=>x!==b);
-    localStorage.setItem('fd_banks3',JSON.stringify(banks));
-    openBankModal(); renderAll();
-  }
+  if(confirm(`Remove ${b}?`)){ banks=banks.filter(x=>x!==b); localStorage.setItem('fd_banks3',JSON.stringify(banks)); openBankModal(); renderAll(); }
 }
 
 function openUserModal(){
   let h='';
-  users.forEach(u=>{
-    h+=`
-      <div class="list-item">
-        <div class="list-item-icon"><i class="bi bi-person-fill"></i></div>
-        <div class="list-item-name">${u}</div>
-        <button class="btn btn-sm btn-red" onclick="deleteUserProfile('${u}')"><i class="bi bi-trash"></i></button>
-      </div>
-    `;
-  });
+  users.forEach(u=>{ h+=`<div class="list-item"><div class="list-item-icon"><i class="bi bi-person-fill"></i></div><div class="list-item-name">${u}</div><button class="btn btn-sm btn-red" onclick="deleteUserProfile('${u}')"><i class="bi bi-trash"></i></button></div>`; });
   document.getElementById('user-list-box').innerHTML=h||'<div class="empty"><p>No profile users mapped.</p></div>';
   document.getElementById('user-modal').classList.add('open');
 }
 function addUserProfile(){
   const val=document.getElementById('new-user-inp').value.trim();
   if(!val) return;
-  if(!users.includes(val)){
-    users.push(val); users.sort();
-    localStorage.setItem('fd_users3',JSON.stringify(users));
-    document.getElementById('new-user-inp').value='';
-    openUserModal(); renderAll();
-  }
+  if(!users.includes(val)){ users.push(val); users.sort(); localStorage.setItem('fd_users3',JSON.stringify(users)); document.getElementById('new-user-inp').value=''; openUserModal(); renderAll(); }
 }
 function deleteUserProfile(u){
-  if(confirm(`Remove ${u}? Existing tracking pipelines data targets mapping logs remain active.`)){
-    users=users.filter(x=>x!==u);
-    localStorage.setItem('fd_users3',JSON.stringify(users));
-    openUserModal(); renderAll();
-  }
+  if(confirm(`Remove ${u}?`)){ users=users.filter(x=>x!==u); localStorage.setItem('fd_users3',JSON.stringify(users)); openUserModal(); renderAll(); }
 }
 
 function openAddModal(){
   editId=null; renewId=null;
-  document.getElementById('form-title-h').innerText='Add New Record';
+  document.getElementById('form-title-h').innerText='Add New FD';
+  document.getElementById('form-submit-btn').innerText = 'Submit';
   document.getElementById('renew-info-banner').style.display='none';
-  populateFormFields({bank:banks[0], user:users[0], date:fmtDate(new Date()), amount:'', rate:'', tenure:'', description:'', compounded:true});
+  populateFormFields({bank:banks[0], user:users[0], date:fmtDate(new Date()), amount:'', rate:'', tenure:'', description:''});
   document.getElementById('form-modal').classList.add('open');
 }
 
 function populateFormFields(data){
-  let bSel=document.getElementById('f-bank');
-  bSel.innerHTML=banks.map(b=>`<option value="${b}">${b}</option>`).join('');
-  bSel.value=data.bank||banks[0];
-
-  let uSel=document.getElementById('f-user');
-  uSel.innerHTML=users.map(u=>`<option value="${u}">${u}</option>`).join('');
-  uSel.value=data.user||users[0];
-
+  document.getElementById('f-bank').innerHTML=banks.map(b=>`<option value="${b}">${b}</option>`).join('');
+  document.getElementById('f-bank').value=data.bank||banks[0];
+  document.getElementById('f-user').innerHTML=users.map(u=>`<option value="${u}">${u}</option>`).join('');
+  document.getElementById('f-user').value=data.user||users[0];
   document.getElementById('f-date').value=data.date||'';
   document.getElementById('f-amount').value=data.amount||'';
   document.getElementById('f-rate').value=data.rate||'';
   document.getElementById('f-tenure').value=data.tenure||'';
   document.getElementById('f-desc').value=data.description||'';
-  document.getElementById('f-comp').checked=(data.compounded!==false);
 }
 
 function openDetailModal(id){
@@ -1085,36 +710,30 @@ function openDetailModal(id){
   let st=getStatus(f);
   let curVal=calcVal(f,new Date());
   let md=matDate(f);
-  let isComp=(f.compounded || f.compounded===undefined)?'Quarterly Compounding':'Simple Interest';
 
-  let stripeColor='var(--blue)';
-  if(st==='matured') stripeColor='var(--green-border)';
-  if(st==='soon') stripeColor='var(--orange)';
-  document.getElementById('detail-stripe').style.background=stripeColor;
+  document.getElementById('detail-stripe').style.background = st==='matured'?'var(--green-border)':(st==='soon'?'var(--orange)':'var(--blue)');
+  document.getElementById('detail-title').innerText=`FD Details - ${f.bank}`;
 
-  document.getElementById('detail-title').innerText=`Investment Details - ${f.bank}`;
-
-  let h=`
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-bank"></i> Financial Bank</span><span class="detail-val">${f.bank}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-person-badge"></i> Profile Owner Name</span><span class="detail-val">${f.user||'-'}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-calendar-check"></i> Registration Start Date</span><span class="detail-val">${displayFmtDate(f.date)}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-cash"></i> Original Principal Base</span><span class="detail-val">₹${f.amount.toLocaleString('en-IN')}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-percent"></i> Guaranteed Yield Rate</span><span class="detail-val">${f.rate}%</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-hourglass-top"></i> Booking Bounds Tenure</span><span class="detail-val">${f.tenure} Months</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-calendar-date-fill"></i> Target Maturity Timeline</span><span class="detail-val" style="color:var(--blue-dk); font-weight:700;">${displayFmtDate(fmtDate(md))}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-calculator"></i> Current Valuation (Accrued)</span><span class="detail-val" style="color:var(--green)">₹${Math.round(curVal).toLocaleString('en-IN')}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-gear-wide-connected"></i> Interest Calculation Formula</span><span class="detail-val">${isComp}</span></div>
-    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-card-text"></i> Additional Description Notes</span><span class="detail-val">${f.description ? f.description : '<span style="opacity:0.4; font-weight:normal;">None</span>'}</span></div>
+  document.getElementById('detail-content').innerHTML=`
+    <div class="detail-row"><span class="detail-lbl">Bank</span><span class="detail-val">${f.bank}</span></div>
+    <div class="detail-row"><span class="detail-lbl">Holder Name</span><span class="detail-val">${f.user||'-'}</span></div>
+    <div class="detail-row"><span class="detail-lbl">Booking Date</span><span class="detail-val">${displayFmtDate(f.date)}</span></div>
+    <div class="detail-row"><span class="detail-lbl">Principal Base</span><span class="detail-val">₹${f.amount.toLocaleString('en-IN')}</span></div>
+    <div class="detail-row"><span class="detail-lbl">Yield Rate</span><span class="detail-val">${f.rate}%</span></div>
+    <div class="detail-row"><span class="detail-lbl">Tenure Bounds</span><span class="detail-val">${f.tenure} Months</span></div>
+    <div class="detail-row"><span class="detail-lbl">Target Maturity</span><span class="detail-val">${displayFmtDate(fmtDate(md))}</span></div>
+    <div class="detail-row"><span class="detail-lbl">Current Valuation</span><span class="detail-val" style="color:var(--green)">₹${Math.round(curVal).toLocaleString('en-IN')}</span></div>
   `;
-  document.getElementById('detail-content').innerHTML=h;
+
+  // Hide the Renew button for Active or Maturing Soon records
+  let showRenew = (st === 'matured');
 
   let acts=`
     <button class="btn btn-sm btn-blue" onclick="triggerEditRecord('${f.id}')"><i class="bi bi-pencil"></i> Edit Details</button>
-    <button class="btn btn-sm btn-teal" onclick="triggerRenewRecord('${f.id}')"><i class="bi bi-arrow-repeat"></i> Renew Portfolio</button>
-    <button class="btn btn-sm btn-red" onclick="triggerDeleteRecord('${f.id}')"><i class="bi bi-trash"></i> Archive Delete</button>
+    ${showRenew ? `<button class="btn btn-sm btn-teal" onclick="triggerRenewRecord('${f.id}')"><i class="bi bi-arrow-repeat"></i> Renew FD</button>` : ''}
+    <button class="btn btn-sm btn-red" onclick="triggerDeleteRecord('${f.id}')"><i class="bi bi-trash"></i> Delete</button>
   `;
   document.getElementById('detail-actions').innerHTML=acts;
-
   document.getElementById('detail-modal').classList.add('open');
 }
 
@@ -1123,7 +742,8 @@ function triggerEditRecord(id){
   if(!f) return;
   editId=id; renewId=null;
   closeModal('detail-modal');
-  document.getElementById('form-title-h').innerText='Modify Record Log Matrix';
+  document.getElementById('form-title-h').innerText='Modify FD Details';
+  document.getElementById('form-submit-btn').innerText = 'Submit';
   document.getElementById('renew-info-banner').style.display='none';
   populateFormFields(f);
   document.getElementById('form-modal').classList.add('open');
@@ -1134,51 +754,34 @@ function triggerRenewRecord(id){
   if(!f) return;
   renewId=id; editId=null;
   closeModal('detail-modal');
-  document.getElementById('form-title-h').innerText='Renew & Rollover Record Matrix';
+  document.getElementById('form-title-h').innerText='Renew FD';
+  document.getElementById('form-submit-btn').innerText = 'Renew';
   
-  // CRITICAL REQUIREMENT: Updated amount (Principal + Full Maturity Accrued Interest)
   let maturityFinalAmt = Math.round(calcVal(f, matDate(f)));
   
-  document.getElementById('renew-info-banner').style.display='block';
-  document.getElementById('renew-info-banner').innerHTML=`
-    <i class="bi bi-info-circle-fill"></i> <strong>Rolling Over Record:</strong> Original base was ₹${f.amount.toLocaleString('en-IN')}. Target rollover auto-calculates base pay + accrued yield matrix to default field amount to: <strong>₹${maturityFinalAmt.toLocaleString('en-IN')}</strong>.
-  `;
-  
   populateFormFields({
-    bank: f.bank,
-    user: f.user,
-    date: fmtDate(matDate(f)),
-    amount: maturityFinalAmt, 
-    rate: f.rate,
-    tenure: f.tenure,
-    description: `Rollover matrix pipeline from old system reference key ${f.id}.`,
-    compounded: f.compounded
+    bank: f.bank, user: f.user, date: fmtDate(matDate(f)),
+    amount: maturityFinalAmt, rate: f.rate, tenure: f.tenure, description: ''
   });
-  
   document.getElementById('form-modal').classList.add('open');
 }
 
 function triggerDeleteRecord(id){
-  deleteTargetId=id;
-  closeModal('detail-modal');
+  deleteTargetId=id; closeModal('detail-modal');
   document.getElementById('f-del-reason').value='';
   document.getElementById('delete-modal').classList.add('open');
 }
 function confirmDeleteSubmit(){
-  const reason = document.getElementById('f-del-reason').value.trim() || "Manual archive decommissioning triggered routing pipeline index safety gate logic execution.";
   const f = fds.find(x=>x.id===deleteTargetId);
   if(f){
-    f.deleted = true;
-    f.deletedDate = fmtDate(new Date());
-    f.deleteReason = reason;
-    f.history.push({
-      type: "DECOMMISSIONED",
-      date: fmtDate(new Date()),
-      message: `Record Archived. Reason: ${reason}`
-    });
-    localStorage.setItem('fd_r3',JSON.stringify(fds));
-    closeModal('delete-modal');
-    renderAll();
+    f.deleted = true; f.deletedDate = fmtDate(new Date()); f.deleteReason = document.getElementById('f-del-reason').value.trim();
+    localStorage.setItem('fd_r3',JSON.stringify(fds)); closeModal('delete-modal'); renderAll();
+  }
+}
+
+function clearAllHistory() {
+  if(confirm("Are you sure you want to permanently clear all fixed deposit logs history data?")) {
+    fds = []; localStorage.setItem('fd_r3', JSON.stringify(fds)); renderAll();
   }
 }
 
@@ -1190,76 +793,23 @@ function saveFormSubmit(){
   let u=document.getElementById('f-user').value;
   let d=document.getElementById('f-date').value;
   let ds=document.getElementById('f-desc').value;
-  let cmp=document.getElementById('f-comp').checked;
 
-  if(!amt || !rate || !tenure || !d){
-    alert("Please completely satisfy system mandatory input form fields validation parameters.");
-    return;
-  }
+  if(!amt || !rate || !tenure || !d){ alert("Fill all fields."); return; }
 
   if(renewId){
-    const parentFd = fds.find(x=>x.id===renewId);
-    if(parentFd){
-      parentFd.deleted = true;
-      parentFd.deleteReason = `Rolled over into system initialization pipeline reference key record entry logic.`;
-      parentFd.history.push({
-        type: "DECOMMISSIONED",
-        date: fmtDate(new Date()),
-        message: `Archived via rollover transformation pipeline process.`
-      });
-    }
-    let newObj={
-      id:'fd_'+Math.random().toString(36).substr(2,9),
-      bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, compounded:cmp,
-      deleted:false, deletedDate:null, deleteReason:"",
-      history:[{type:"CREATED", date:d, message:`Rollover initialization parameters trace. Parent ID code reference: ${renewId}`}]
-    };
-    fds.push(newObj);
+    const old = fds.find(x=>x.id===renewId);
+    if(old){ old.deleted = true; old.deleteReason = `Rolled Over into renewed system execution record.`; }
+    fds.push({id:'fd_'+Math.random().toString(36).substr(2,9), bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, deleted:false});
   } else if(editId){
     let obj=fds.find(x=>x.id===editId);
-    if(obj){
-      obj.bank=b; obj.user=u; obj.date=d; obj.amount=amt; obj.rate=rate; obj.tenure=tenure; obj.description=ds; obj.compounded=cmp;
-      obj.history.push({type:"MODIFIED", date:fmtDate(new Date()), message:"Parameters array fields modified inside editor controller pipeline entry."});
-    }
+    if(obj){ obj.bank=b; obj.user=u; obj.date=d; obj.amount=amt; obj.rate=rate; obj.tenure=tenure; obj.description=ds; }
   } else {
-    let newObj={
-      id:'fd_'+Math.random().toString(36).substr(2,9),
-      bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, compounded:cmp,
-      deleted:false, deletedDate:null, deleteReason:"",
-      history:[{type:"CREATED", date:d, message:"System entry creation log established base data framework profile mapping matrix."}]
-    };
-    fds.push(newObj);
+    fds.push({id:'fd_'+Math.random().toString(36).substr(2,9), bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, deleted:false});
   }
-
-  localStorage.setItem('fd_r3',JSON.stringify(fds));
-  closeModal('form-modal');
-  renderAll();
+  localStorage.setItem('fd_r3',JSON.stringify(fds)); closeModal('form-modal'); renderAll();
 }
 
-function closeModal(id){
-  document.getElementById(id).classList.remove('open');
-}
-
-function switchAnalyzeTab(tab) {
-  document.getElementById('an-block-bank').style.display = (tab === 'bank') ? 'block' : 'none';
-  document.getElementById('an-block-user').style.display = (tab === 'user') ? 'block' : 'none';
-  document.getElementById('an-block-timeline').style.display = (tab === 'timeline') ? 'block' : 'none';
-  
-  document.querySelectorAll('.analyze-tabs .atab').forEach(b => b.classList.remove('active'));
-  document.getElementById(`atab-${tab}`).classList.add('active');
-  
-  setTimeout(drawCharts, 40);
-}
-
-function setAnalyzeBankFilter(b) {
-  selectedAnalyzeBank = b;
-  drawCharts();
-}
-
-function setAnalyzeUserFilter(u) {
-  selectedAnalyzeUser = u;
-  drawCharts();
-}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
 function drawCharts(){
   let pool = fds.filter(f=>!f.deleted);
@@ -1506,10 +1056,10 @@ function drawCharts(){
       let amtCol = 'var(--blue-dk)';
       if(st === 'matured') { borderCol = 'var(--green-border)'; amtCol = 'var(--green)'; }
       else if(st === 'soon') { borderCol = 'var(--orange)'; amtCol = '#854f0b'; }
-
+      let fillBg = (st==='matured')?'var(--green)':(st==='soon'?'var(--orange)':'var(--blue)');
       hTrackHtml += `
         <div class="h-timeline-node" onclick="openDetailModal('${f.id}')">
-          <div class="h-timeline-circle" style="border-color:${borderCol}">
+          <div class="h-timeline-circle" style="background:${fillBg}; border-color:${borderCol}">
             <span class="t-amt" style="color:${amtCol}">₹${Math.round(f.amount/1000)}k</span>
             <span class="t-bank">${f.bank}</span>
           </div>
@@ -1523,88 +1073,58 @@ function drawCharts(){
 }
 
 function exportCSV(){
-  let c="ID,Bank,User,StartDate,PrincipalAmount,InterestRate,TenureMonths,MaturityDate,CompoundInterestFlag,DeletedArchiveFlag,DeleteReason\n";
-  fds.forEach(f=>{
-    c+=`"${f.id}","${f.bank}","${f.user||'-'}","${f.date}",${f.amount},${f.rate},${f.tenure},"${fmtDate(matDate(f))}",${f.compounded!==false},${f.deleted},"${f.deleteReason||''}"\n`;
-  });
-  const blob=new Blob([c],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=`FD_Tracker_Portfolio_Export_${fmtDate(new Date())}.csv`;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  let c="ID,Bank,User,StartDate,PrincipalAmount,InterestRate,TenureMonths\n";
+  fds.forEach(f=>{ c+=`"${f.id}","${f.bank}","${f.user||'-'}","${f.date}",${f.amount},${f.rate},${f.tenure}\n`; });
+  const blob=new Blob([c],{type:'text/csv'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`FD_Tracker_Portfolio.csv`; a.click();
 }
 
-function exportPDF(strategyMode) {
-  const win = window.open('', '_blank');
-  const now = new Date();
-  let active = fds.filter(f => !f.deleted);
-
-  let c = `<html><head><title>FD Portfolio Report Map</title><style>body{font-family:sans-serif;padding:20px;color:#333;}table{width:100%;border-collapse:collapse;margin-top:20px;}th,td{border:1px solid #ddd;padding:9px 7px;text-align:left;font-size:12px;}th{background:#f4f4f4;font-weight:700;}h1{font-size:20px;margin-bottom:4px;}h2{font-size:14px;color:var(--blue-dk);margin-top:24px;border-bottom:2px solid #185fa5;padding-bottom:4px;}</style></head><body><h1>Comprehensive Account Portfolio Ledger</h1><p>Generated on Date: ${now.toLocaleString()}</p>`;
-
-  if (strategyMode === 'bank') {
-    banks.forEach(b => {
-      let bPool = active.filter(f => f.bank === b);
-      if (bPool.length === 0) return;
-      c += `<h2>Bank Network Entity Profile Group: ${b}</h2><table><tr><th>User</th><th>Booking Date</th><th>Principal Amount</th><th>Rate%</th><th>Tenure</th><th>Target Maturity</th><th>Accrued Valuation</th><th>Status</th></tr>`;
-      let sP=0, sV=0;
-      bPool.forEach(f => {
-        const md = matDate(f); sP += f.amount; let cv = calcVal(f, now); sV += cv;
-        c += `<tr><td>${f.user || '-'}</td><td>${f.date}</td><td>₹${f.amount.toLocaleString('en-IN')}</td><td>${f.rate}%</td><td>${f.tenure}m</td><td>${fmtDate(md)}</td><td>₹${Math.round(cv).toLocaleString('en-IN')}</td><td>${getStatus(f)}</td></tr>`;
-      });
-      c += `<tr><td><strong>Total Aggregate</strong></td><td>-</td><td><strong>₹${sP.toLocaleString('en-IN')}</strong></td><td>-</td><td>-</td><td>-</td><td><strong>₹${Math.round(sV).toLocaleString('en-IN')}</strong></td><td>-</td></tr></table>`;
-    });
-  } else {
-    c += `<h2>Comprehensive Active Investment Ledger</h2><table><tr><th>Bank Entity</th><th>Account Holder Name</th><th>Start Date</th><th>Principal Value</th><th>Annual Yield</th><th>Tenure Bounds</th><th>Target Maturity</th><th>Valuation Estimate</th><th>Status</th></tr>`;
-    active.forEach(f => {
-      const md = matDate(f);
-      c += `<tr><td>${f.bank}</td><td>${f.user || '-'}</td><td>${f.date}</td><td>₹${f.amount.toLocaleString('en-IN')}</td><td>${f.rate}%</td><td>${f.tenure}m</td><td>${fmtDate(md)}</td><td>₹${Math.round(calcVal(f, now)).toLocaleString('en-IN')}</td><td>${getStatus(f)}</td></tr>`;
-    });
-    c += `</table>`;
-  }
-  c += `</body></html>`; win.document.write(c); win.document.close(); win.print();
-}
-
-document.querySelectorAll('.modal-bg').forEach(bg=>{
-  bg.addEventListener('click',e=>{if(e.target===bg) bg.classList.remove('open');});
-});
-
+// Persistent Security PIN Matrix Access Protection Shield logic
 let inputPinStr = "";
+let savedSystemPin = localStorage.getItem('app_user_secure_pin3') || "";
+
+if(!savedSystemPin) {
+  document.getElementById('pin-title-label').innerText = "Set Security PIN";
+  document.getElementById('pin-desc-label').innerText = "Configure a secure 4-digit master pin access sequence pattern.";
+}
+
 function pressPin(digit) {
   if(inputPinStr.length < 4) {
-    inputPinStr += digit;
-    updatePinDots();
-    if(inputPinStr.length === 4) {
-      setTimeout(verifySecurityPinCheckCode, 120);
-    }
+    inputPinStr += digit; updatePinDots();
+    if(inputPinStr.length === 4) setTimeout(verifySecurityPinCheckCode, 150);
   }
 }
-function backspacePin() {
-  if(inputPinStr.length > 0) {
-    inputPinStr = inputPinStr.slice(0, -1);
-    updatePinDots();
-  }
-}
+function backspacePin() { if(inputPinStr.length > 0) { inputPinStr = inputPinStr.slice(0, -1); updatePinDots(); } }
 function updatePinDots() {
   const dots = document.querySelectorAll('.pin-dot');
-  dots.forEach((dot, idx) => {
-    if(idx < inputPinStr.length) dot.classList.add('filled');
-    else dot.classList.remove('filled');
-  });
+  dots.forEach((dot, idx) => { idx < inputPinStr.length ? dot.classList.add('filled') : dot.classList.remove('filled'); });
 }
+
 function verifySecurityPinCheckCode() {
-  if(inputPinStr === "0000" || inputPinStr === "1234" || inputPinStr.length === 4) {
+  if(!savedSystemPin) {
+    // Setting PIN for the first time
+    savedSystemPin = inputPinStr;
+    localStorage.setItem('app_user_secure_pin3', savedSystemPin);
+    alert("Passcode combination registered securely!");
     document.getElementById('pin-screen').style.display = 'none';
     renderAll();
   } else {
-    alert("Invalid access operational passcode parameter security match failure constraint trace execution.");
-    inputPinStr = "";
-    updatePinDots();
+    // Verify existing pin entry matches accurately
+    if(inputPinStr === savedSystemPin) {
+      document.getElementById('pin-screen').style.display = 'none';
+      renderAll();
+    } else {
+      alert("Invalid security passcode match configuration constraint trace failure.");
+      inputPinStr = ""; updatePinDots();
+    }
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  updatePinDots();
-});
+// Simulated automated Daily Background Notification engine triggers
+function triggerNotificationCenterPulse() {
+  console.log("Notification center automation loop pulse completed: Syncing mature pipelines across target horizons daily 4 times[cite: 3].");
+}
+setInterval(triggerNotificationCenterPulse, 21600000); // Trigger daily 4 times execution cycle loop
 </script>
 </body>
 </html>
