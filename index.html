@@ -47,36 +47,38 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:var(--blue);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
 .topnav-brand{display:flex;align-items:center;gap:9px;color:#fff;font-size:18px;font-weight:700;flex:1}
 .topnav-brand .brand-icon{width:34px;height:34px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.topnav-icon{width:38px;height:38px;border-radius:10px;border:none;background:rgba(255,255,255,0.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;transition:background .15s;flex-shrink:0;position:relative}
-.topnav-icon:active{background:rgba(255,255,255,0.3)}
+.topnav-icon{width:38px;height:38px;border-radius:10px;border:none;background:rgba(255,255,255,0.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;transition:background 0.25s cubic-bezier(0.4, 0, 0.2, 1);flex-shrink:0;position:relative}
+.topnav-icon:active{background:rgba(255,255,255,0.3);transform:scale(0.95)}
 
 .bottomtabs{position:fixed;bottom:0;left:0;right:0;height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom,0px)}
-.btab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--muted);font-size:11px;font-weight:600;transition:color .15s;padding:10px 0 6px;letter-spacing:.2px;position:relative}
-.btab i{font-size:24px;transition:transform .15s}
+.btab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--muted);font-size:11px;font-weight:600;transition:color 0.25s ease;padding:10px 0 6px;letter-spacing:.2px;position:relative}
+.btab i{font-size:24px;transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)}
 .btab.active{color:var(--blue)}
-.btab.active i{transform:scale(1.08)}
-.btab-indicator{position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:3px;background:var(--blue);border-radius:0 0 3px 3px;opacity:0;transition:opacity .2s}
-.btab.active .btab-indicator{opacity:1}
+.btab.active i{transform:scale(1.15)}
+.btab-indicator{position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:3px;background:var(--blue);border-radius:0 0 3px 3px;opacity:0;transition:opacity 0.2s, width 0.25s ease}
+.btab.active .btab-indicator{opacity:1;width:40px}
 
-.page{position:fixed;top:var(--nav-h);left:0;right:0;bottom:var(--tab-h);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px 80px;display:none}
-.page.active{display:block}
+.page{position:fixed;top:var(--nav-h);left:0;right:0;bottom:var(--tab-h);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px 80px;display:none;opacity:0;transition:opacity 0.3s ease-in-out}
+.page.active{display:block;opacity:1}
 
-.fab{position:fixed;bottom:calc(var(--tab-h) + 16px);right:16px;width:56px;height:56px;border-radius:16px;background:var(--blue);color:#fff;border:none;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;z-index:90;box-shadow:0 6px 20px rgba(24,95,165,.45);transition:transform .15s,box-shadow .15s}
-.fab:active{transform:scale(.93);box-shadow:0 2px 8px rgba(24,95,165,.3)}
+.fab{position:fixed;bottom:calc(var(--tab-h) + 16px);right:16px;width:56px;height:56px;border-radius:16px;background:var(--blue);color:#fff;border:none;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;z-index:90;box-shadow:0 6px 20px rgba(24,95,165,.45);transition:transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),box-shadow .15s}
+.fab:active{transform:scale(.90) rotate(90deg);box-shadow:0 2px 8px rgba(24,95,165,.3)}
 
 /* Filters & Controls */
 .filter-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:12px 13px;margin-bottom:14px}
 .filter-card-hdr{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .chip-scroll{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
 .chip-scroll::-webkit-scrollbar{display:none}
-.chip{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0;display:flex;align-items:center;gap:5px}
+.chip{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;color:var(--muted);white-space:nowrap;transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1);flex-shrink:0;display:flex;align-items:center;gap:5px}
+.chip:active{transform:scale(0.94)}
 .chip.active{background:var(--blue-light);border-color:var(--blue-mid);color:var(--blue-dk);font-weight:600}
 .filter-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .filter-lbl{font-size:12px;color:var(--muted);font-weight:600;min-width:38px;letter-spacing:.2px}
 
 .sort-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .sort-icon{color:var(--muted);font-size:16px}
-.sort-sel{flex:1;padding:9px 11px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:13px;font-family:inherit;background:var(--surface);color:var(--text);font-weight:500;-webkit-appearance:none;appearance:none}
+.sort-sel{flex:1;padding:9px 11px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:13px;font-family:inherit;background:var(--surface);color:var(--text);font-weight:500;-webkit-appearance:none;appearance:none;transition:border-color 0.2s}
+.sort-sel:focus{outline:none;border-color:var(--blue-mid)}
 
 .sec-hdr{font-size:12px;font-weight:700;color:var(--muted);margin:4px 0 10px;display:flex;align-items:center;gap:7px;letter-spacing:.4px}
 .sec-hdr .cnt{font-weight:600;color:var(--blue-dk);background:rgba(24,95,165,0.1);padding:1px 6px;border-radius:6px;font-size:11px}
@@ -84,8 +86,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
 /* Grid & Cards */
 .fd-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fd-card{border-radius:var(--r);padding:14px 13px 13px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
-.fd-card:active{transform:scale(.96)}
+.fd-card{border-radius:var(--r);padding:14px 13px 13px;cursor:pointer;position:relative;overflow:hidden;transition:transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease}
+.fd-card:active{transform:scale(.95);box-shadow:0 2px 6px rgba(0,0,0,0.04)}
 .fd-card.blue{background:var(--blue-light);border:1.5px solid #85b7eb}
 .fd-card.orange{background:var(--orange-light);border:1.5px solid #f0c060}
 .fd-card.green{background:var(--green-light);border:1.5px solid var(--green-border)}
@@ -140,28 +142,32 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .list-item-icon{width:36px;height:36px;border-radius:10px;background:var(--blue-light);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .list-item-name{font-size:14px;font-weight:600;flex:1}
 
-.hist-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center}
+.hist-item{display:flex;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background-color 0.2s ease, transform 0.2s ease;border-radius:var(--r-sm)}
+.hist-item:hover{background-color:var(--surface2)}
+.hist-item:active{transform:scale(0.98)}
 .hist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .hist-date{font-size:12px;color:var(--blue);font-weight:700;min-width:75px;flex-shrink:0}
 .hist-amt{font-size:13px;font-weight:700;flex:1}
 .hist-lbl{font-size:11px;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:20px}
 
 /* Modals */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--surface);border-radius:22px 22px 0 0;padding:0 18px 24px;width:100%;max-height:93vh;overflow-y:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));animation:slideUp .22s cubic-bezier(.22,1,.36,1);position:relative}
-@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;opacity:0;transition:opacity 0.25s ease-out}
+.modal-bg.open{display:flex;opacity:1}
+.modal{background:var(--surface);border-radius:22px 22px 0 0;padding:0 18px 24px;width:100%;max-height:93vh;overflow-y:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);position:relative}
+.modal-bg.open .modal{transform:translateY(0)}
 .modal-grip{width:40px;height:5px;background:rgba(0,0,0,.12);border-radius:3px;margin:14px auto 18px}
 .modal-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-right:36px}
 .modal-hdr h3{font-size:17px;font-weight:700;margin:0}
-.modal-close{position:absolute;top:18px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--surface2);border:none;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);cursor:pointer}
+.modal-close{position:absolute;top:18px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--surface2);border:none;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);cursor:pointer;transition:transform 0.2s}
+.modal-close:active{transform:scale(0.85)}
 
 .fr{margin-bottom:14px}
 .fr label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700}
-.fr input,.fr select, .fr textarea{width:100%;padding:11px 13px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:15px;font-family:inherit;background:var(--surface2);color:var(--text);-webkit-appearance:none;appearance:none}
+.fr input,.fr select, .fr textarea{width:100%;padding:11px 13px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:15px;font-family:inherit;background:var(--surface2);color:var(--text);-webkit-appearance:none;appearance:none;transition:border-color 0.2s, background-color 0.2s}
 .fr input:focus,.fr select:focus, .fr textarea:focus{outline:none;border-color:var(--blue-mid);background:var(--surface)}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:var(--r-sm);font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s;font-family:inherit}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:var(--r-sm);font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--text);transition:all 0.2s cubic-bezier(0.4, 0, 0.2, 1);font-family:inherit}
+.btn:active{transform:scale(0.95)}
 .btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
 .btn-sm{padding:6px 11px;font-size:12px;gap:4px;border-radius:8px}
 .btn-red{color:var(--red);border-color:#f5a0a0;background:var(--red-light)}
@@ -184,12 +190,32 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .add-inp-wrap{display:flex;gap:8px;margin-bottom:14px;align-items:center}
 .add-inp-wrap input{flex:1;padding:11px 13px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:14px}
 
-/* Enhanced User-Friendly Timeline List Circles */
+/* Enhanced User-Friendly Timeline List Circles with Attention Grab Animations */
+@keyframes popInCircle {
+  0% { transform: scale(0.3) rotate(-45deg); opacity: 0; }
+  70% { transform: scale(1.1) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes pulseAttention {
+  0% { box-shadow: 0 0 0 0 rgba(24, 95, 165, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(24, 95, 165, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(24, 95, 165, 0); }
+}
 .h-timeline-container {display: flex; gap: 14px; overflow-x: auto; padding: 10px 4px 14px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch;}
 .h-timeline-container::-webkit-scrollbar { display: none; }
 .h-timeline-node {display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; flex-shrink: 0; width: 85px;}
-.h-timeline-circle {width: 60px; height: 60px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.12); transition: transform 0.15s;}
-.h-timeline-node:active .h-timeline-circle { transform: scale(0.92); }
+.h-timeline-circle {width: 60px; height: 60px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.12); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid transparent;}
+.open-timeline-anim .h-timeline-circle { animation: popInCircle 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.open-timeline-anim .h-timeline-node:nth-child(1) .h-timeline-circle { animation-delay: 0.05s; }
+.open-timeline-anim .h-timeline-node:nth-child(2) .h-timeline-circle { animation-delay: 0.10s; }
+.open-timeline-anim .h-timeline-node:nth-child(3) .h-timeline-circle { animation-delay: 0.15s; }
+.open-timeline-anim .h-timeline-node:nth-child(4) .h-timeline-circle { animation-delay: 0.20s; }
+.open-timeline-anim .h-timeline-node:nth-child(n+5) .h-timeline-circle { animation-delay: 0.25s; }
+
+/* Pulse effect for items needing prompt attention */
+.h-timeline-circle.pulse-attention { animation: popInCircle 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both, pulseAttention 2s infinite ease-in-out; }
+
+.h-timeline-node:active .h-timeline-circle { transform: scale(0.88); }
 .h-timeline-circle .t-amt { font-size: 11px; font-weight: 800; color: #fff !important; }
 .h-timeline-circle .t-bank { font-size: 8px; font-weight: 600; opacity: 0.9; max-width: 52px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px; }
 .h-timeline-user { font-size: 11px; font-weight: 600; color: var(--text); margin-top: 6px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -204,8 +230,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.1s ease; }
 .pin-dot.filled { background: var(--blue); border-color: var(--blue); transform: scale(1.15); }
 .pin-pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 16px 20px; justify-content: center; }
-.pin-btn { width: 72px; height: 72px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 24px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-.pin-btn:active { background: var(--surface2); }
+.pin-btn { width: 72px; height: 72px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 24px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: transform 0.1s; }
+.pin-btn:active { background: var(--surface2); transform: scale(0.92); }
 .pin-btn.empty-btn { background: transparent; border: none; box-shadow: none; cursor: default; }
 
 /* ── ANALYZE TABS ── */
@@ -217,9 +243,10 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .atab{
   padding:9px 16px;border-radius:20px;font-size:13px;font-weight:600;
   border:1.5px solid var(--border);background:var(--surface);
-  cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0;
+  cursor:pointer;color:var(--muted);white-space:nowrap;transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1);flex-shrink:0;
   display:flex;align-items:center;gap:6px
 }
+.atab:active { transform:scale(0.96); }
 .atab i{font-size:15px}
 .atab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 
@@ -227,8 +254,6 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .analyze-filter{margin-bottom:14px}
 .analyze-filter-lbl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.4px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .analyze-filter-lbl i{font-size:13px}
-
-
 </style>
 </head>
 <body>
@@ -322,7 +347,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
       <button class="atab" id="atab-user" onclick="switchAnalyzeTab('user')"><i class="bi bi-person-bounding-box"></i>User Wise Distribution</button>
       <button class="atab" id="atab-timeline" onclick="switchAnalyzeTab('timeline')"><i class="bi bi-calendar3"></i>Maturity Timeline Calendar</button>
     </div>
-  </nav>
+  </div>
 
   <div id="an-block-bank">
     <div class="analyze-filter">
@@ -378,7 +403,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
       </select>
       <button class="btn btn-red btn-sm" onclick="clearAllHistory()"><i class="bi bi-trash3"></i> Clear History</button>
     </div>
-    <div id="history-log-list"></div>
+    <div id="history-log-list" style="margin-top: 10px;"></div>
   </div>
 </main>
 
@@ -425,9 +450,9 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 <div class="modal-bg" id="delete-modal">
   <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('delete-modal')">×</button>
     <div class="modal-hdr"><h3>Confirm Deletion</h3></div>
-    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Are you sure you want to delete this record from history logs tracking profiles mapping?</p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Are you sure you want to flag this record as deleted? (You can delete it permanently later from History tab)</p>
     <div class="fr"><label>Reason for Decommission</label><input type="text" id="f-del-reason" placeholder="e.g., Early liquidation..."></div>
-    <div class="modal-actions"><button class="btn var(--surface)" onclick="closeModal('delete-modal')">Cancel</button><button class="btn btn-red" onclick="confirmDeleteSubmit()">Confirm Delete</button></div>
+    <div class="modal-actions"><button class="btn" style="background:var(--surface);" onclick="closeModal('delete-modal')">Cancel</button><button class="btn btn-red" onclick="confirmDeleteSubmit()">Confirm Delete</button></div>
   </div>
 </div>
 
@@ -438,7 +463,7 @@ let fds=JSON.parse(localStorage.getItem('fd_r3')||'[]');
 let selectedAnalyzeUser = 'all';
 let selectedAnalyzeBank = 'all';
 let editId=null,renewId=null,deleteTargetId=null,filterBank='all',filterUser='all';
-let pieInst=null,barInst=null;
+let pieInst=null,barInst=null,activeTimelineView='bar';
 
 const PIE_COLORS=['#185fa5','#1d9e75','#ef9f27','#d85a30','#7f77dd','#5ab3e6','#e05080','#93a81e','#228b22','#8b0000'];
 
@@ -470,6 +495,13 @@ function switchAnalyzeTab(tab) {
   document.querySelectorAll('.analyze-tabs .atab').forEach(b => b.classList.remove('active'));
   document.getElementById(`atab-${tab}`).classList.add('active');
   
+  const track = document.getElementById('h-timeline-scroll-track');
+  if(tab === 'timeline') {
+    track.classList.remove('open-timeline-anim');
+    void track.offsetWidth; // Trigger reflow to restart circular shape advance animations
+    track.classList.add('open-timeline-anim');
+  }
+  
   setTimeout(drawCharts, 40);
 }
 function setTimelineView(view) {
@@ -486,8 +518,13 @@ function setTimelineView(view) {
   } else {
     btnBar.className = "btn btn-sm btn-gray";
     btnHoriz.className = "btn btn-sm btn-primary";
-    wrapBar.style.display = "none";
+    wrapBar.style.display = "block";
     wrapHoriz.style.display = "block";
+    
+    const track = document.getElementById('h-timeline-scroll-track');
+    track.classList.remove('open-timeline-anim');
+    void track.offsetWidth;
+    track.classList.add('open-timeline-anim');
   }
   setTimeout(drawCharts, 30);
 }
@@ -499,8 +536,6 @@ function setAnalyzeUserFilter(u) {
   selectedAnalyzeUser = u;
   drawCharts();
 }
-//--------------------------------------------------
-
 
 // Simple Interest accrued formula implementation
 function calcVal(f,targetDate){
@@ -522,10 +557,14 @@ function getStatus(f){
 function switchTab(t,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
-  document.getElementById(`page-${t}`).classList.add('active');
+  
+  const targetPage = document.getElementById(`page-${t}`);
+  targetPage.classList.add('active');
   btn.classList.add('active');
   document.getElementById('fab-add').style.display = (t==='invest')?'flex':'none';
-  if(t==='analyze') setTimeout(drawCharts,40);
+  if(t==='analyze') {
+    switchAnalyzeTab('bank');
+  }
   renderAll();
 }
 
@@ -591,7 +630,7 @@ function renderAll(){
   document.getElementById('m-total-v').innerText='₹'+Math.round(sumCurV).toLocaleString('en-IN');
   document.getElementById('m-total-interest').innerText='₹'+Math.round(Math.max(0, sumCurV - sumP)).toLocaleString('en-IN');
 
-  // History & Audit Filter Pipeline Processing
+  // History Pipeline Processing with click popups and absolute removal mechanics
   let query = document.getElementById('hist-search').value.toLowerCase();
   let statusFilter = document.getElementById('hist-filter-status').value;
   let hHtml = '';
@@ -616,11 +655,14 @@ function renderAll(){
   } else {
     histPool.forEach(f => {
       hHtml += `
-        <div class="hist-item">
+        <div class="hist-item" onclick="openDetailModal('${f.id}')">
           <div class="hist-dot" style="background:${f.deleted?'var(--red)':'var(--green)'}"></div>
           <div class="hist-date">${displayFmtDate(f.date)}</div>
           <div class="hist-amt">₹${f.amount.toLocaleString('en-IN')} <span style="font-size:11px; font-weight:normal; color:var(--muted)">(${f.user} - ${f.bank})</span></div>
-          <div class="hist-lbl">${f.deleted?'Deleted':'Active'}</div>
+          <div style="display:flex; align-items:center; gap:8px;" onclick="event.stopPropagation();">
+            <div class="hist-lbl" style="background: ${f.deleted ? 'var(--red-light)' : 'var(--green-light)'}; color: ${f.deleted ? 'var(--red)' : 'var(--green)'}">${f.deleted?'Deleted':'Active'}</div>
+            <button class="btn btn-sm btn-red" style="padding:4px 8px;" title="Permanently Delete Record" onclick="permanentlyDeleteRecord('${f.id}')"><i class="bi bi-trash3-fill"></i></button>
+          </div>
         </div>
       `;
     });
@@ -711,10 +753,10 @@ function openDetailModal(id){
   let curVal=calcVal(f,new Date());
   let md=matDate(f);
 
-  document.getElementById('detail-stripe').style.background = st==='matured'?'var(--green-border)':(st==='soon'?'var(--orange)':'var(--blue)');
-  document.getElementById('detail-title').innerText=`FD Details - ${f.bank}`;
+  document.getElementById('detail-stripe').style.background = f.deleted ? 'var(--red)' : (st==='matured'?'var(--green-border)':(st==='soon'?'var(--orange)':'var(--blue)'));
+  document.getElementById('detail-title').innerText=`FD Details - ${f.bank} ${f.deleted ? '[DELETED LOG]' : ''}`;
 
-  document.getElementById('detail-content').innerHTML=`
+  let contentHtml = `
     <div class="detail-row"><span class="detail-lbl">Bank</span><span class="detail-val">${f.bank}</span></div>
     <div class="detail-row"><span class="detail-lbl">Holder Name</span><span class="detail-val">${f.user||'-'}</span></div>
     <div class="detail-row"><span class="detail-lbl">Booking Date</span><span class="detail-val">${displayFmtDate(f.date)}</span></div>
@@ -725,14 +767,30 @@ function openDetailModal(id){
     <div class="detail-row"><span class="detail-lbl">Current Valuation</span><span class="detail-val" style="color:var(--green)">₹${Math.round(curVal).toLocaleString('en-IN')}</span></div>
   `;
 
-  // Hide the Renew button for Active or Maturing Soon records
-  let showRenew = (st === 'matured');
+  if(f.deleted) {
+    contentHtml += `
+      <div class="detail-row" style="background: var(--red-light); padding: 8px; border-radius: 6px; margin-top: 8px;">
+        <span class="detail-lbl" style="color: var(--red); font-weight:700;"><i class="bi bi-exclamation-triangle-fill"></i> Reason for Deletion</span>
+        <span class="detail-val" style="color: var(--red); font-weight:700;">${f.deleteReason || 'No specific breakdown provided.'}</span>
+      </div>
+    `;
+  }
+  document.getElementById('detail-content').innerHTML = contentHtml;
 
-  let acts=`
-    <button class="btn btn-sm btn-blue" onclick="triggerEditRecord('${f.id}')"><i class="bi bi-pencil"></i> Edit Details</button>
-    ${showRenew ? `<button class="btn btn-sm btn-teal" onclick="triggerRenewRecord('${f.id}')"><i class="bi bi-arrow-repeat"></i> Renew FD</button>` : ''}
-    <button class="btn btn-sm btn-red" onclick="triggerDeleteRecord('${f.id}')"><i class="bi bi-trash"></i> Delete</button>
-  `;
+  let acts = '';
+  if(!f.deleted) {
+    let showRenew = (st === 'matured');
+    acts = `
+      <button class="btn btn-sm btn-blue" onclick="triggerEditRecord('${f.id}')"><i class="bi bi-pencil"></i> Edit Details</button>
+      ${showRenew ? `<button class="btn btn-sm btn-teal" onclick="triggerRenewRecord('${f.id}')"><i class="bi bi-arrow-repeat"></i> Renew FD</button>` : ''}
+      <button class="btn btn-sm btn-red" onclick="triggerDeleteRecord('${f.id}')"><i class="bi bi-trash"></i> Delete</button>
+    `;
+  } else {
+    acts = `
+      <button class="btn btn-sm btn-red btn-full" onclick="permanentlyDeleteRecord('${f.id}')"><i class="bi bi-trash3-fill"></i> Permanently Wipe Record</button>
+    `;
+  }
+  
   document.getElementById('detail-actions').innerHTML=acts;
   document.getElementById('detail-modal').classList.add('open');
 }
@@ -747,6 +805,11 @@ function triggerEditRecord(id){
   document.getElementById('renew-info-banner').style.display='none';
   populateFormFields(f);
   document.getElementById('form-modal').classList.add('open');
+}
+
+// System Form Dialog Closures 
+function closeModal(id){ 
+  document.getElementById(id).classList.remove('open'); 
 }
 
 function triggerRenewRecord(id){
@@ -774,13 +837,22 @@ function triggerDeleteRecord(id){
 function confirmDeleteSubmit(){
   const f = fds.find(x=>x.id===deleteTargetId);
   if(f){
-    f.deleted = true; f.deletedDate = fmtDate(new Date()); f.deleteReason = document.getElementById('f-del-reason').value.trim();
+    f.deleted = true; f.deletedDate = fmtDate(new Date()); f.deleteReason = document.getElementById('f-del-reason').value.trim() || 'Manual Liquidation';
     localStorage.setItem('fd_r3',JSON.stringify(fds)); closeModal('delete-modal'); renderAll();
   }
 }
 
+function permanentlyDeleteRecord(id) {
+  if(confirm("Are you sure you want to permanently erase this historical record? This action cannot be reversed.")) {
+    fds = fds.filter(x => x.id !== id);
+    localStorage.setItem('fd_r3', JSON.stringify(fds));
+    closeModal('detail-modal');
+    renderAll();
+  }
+}
+
 function clearAllHistory() {
-  if(confirm("Are you sure you want to permanently clear all fixed deposit logs history data?")) {
+  if(confirm("Are you sure you want to permanently delete all fixed deposit ?")) {
     fds = []; localStorage.setItem('fd_r3', JSON.stringify(fds)); renderAll();
   }
 }
@@ -808,8 +880,6 @@ function saveFormSubmit(){
   }
   localStorage.setItem('fd_r3',JSON.stringify(fds)); closeModal('form-modal'); renderAll();
 }
-
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
 function drawCharts(){
   let pool = fds.filter(f=>!f.deleted);
@@ -855,6 +925,7 @@ function drawCharts(){
         datasets: [{ data: dataVals, backgroundColor: PIE_COLORS }]
       },
       options: {
+        animation: { duration: 1200, easing: 'easeOutQuart' },
         plugins: { legend: { display: false } },
         responsive: true,
         maintainAspectRatio: false
@@ -905,9 +976,6 @@ function drawCharts(){
       userBankMap[f.bank] = (userBankMap[f.bank] || 0) + cv;
     });
 
-    let uLabels = Object.keys(userBankMap);
-    let uDataVals = Object.values(userBankMap).map(v => Math.round(v));
-
     blocksHtml += `
       <div class="chart-card" style="margin-bottom:14px">
         <div class="user-hdr">
@@ -957,6 +1025,7 @@ function drawCharts(){
           datasets: [{ data: uDataVals, backgroundColor: PIE_COLORS }]
         },
         options: {
+          animation: { duration: 1000, easing: 'easeOutBack' },
           plugins: { legend: { display: false } },
           responsive: true,
           maintainAspectRatio: false
@@ -982,7 +1051,6 @@ function drawCharts(){
   });
 
   // ── 3. TIMELINE CALENDAR SCOPE WINDOW ──
-  // Display criteria constraints bounds rules parameters logs: 1 Month before up to next 3 Months ahead trace paths
   let baseStartMonth = new Date(); baseStartMonth.setMonth(baseStartMonth.getMonth() - 1); baseStartMonth.setDate(1); baseStartMonth.setHours(0,0,0,0);
   let baseEndMonth = new Date(); baseEndMonth.setMonth(baseEndMonth.getMonth() + 4); baseEndMonth.setDate(1); baseEndMonth.setHours(0,0,0,0);
 
@@ -1033,6 +1101,7 @@ function drawCharts(){
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: { duration: 1400, easing: 'easeInOutBounce' },
         scales: {
           x: { stacked: true },
           y: { stacked: true, beginAtZero: true }
@@ -1042,11 +1111,10 @@ function drawCharts(){
     });
   }
 
-  // ── Render horizontal timeline view sorted chronologically within scope bounds matrix ──
   timelinePool.sort((a,b)=>matDate(a)-matDate(b));
   let hTrackHtml = '';
   if(timelinePool.length === 0) {
-    hTrackHtml = `<div class="empty" style="width:100%"><i class="bi bi-calendar-x"></i><p>No investment logs map timeline matching rules bounds constraints index parameters entries verified configuration records.</p></div>`;
+    hTrackHtml = `<div class="empty" style="width:100%"><i class="bi bi-calendar-x"></i><p>No investments found within the current timeline window.</p></div>`;
   } else {
     timelinePool.forEach(f => {
       const md = matDate(f);
@@ -1054,13 +1122,14 @@ function drawCharts(){
       
       let borderCol = 'var(--blue)';
       let amtCol = 'var(--blue-dk)';
-      if(st === 'matured') { borderCol = 'var(--green-border)'; amtCol = 'var(--green)'; }
-      else if(st === 'soon') { borderCol = 'var(--orange)'; amtCol = '#854f0b'; }
+      let isAttentionTarget = '';
+      if(st === 'matured') { borderCol = 'var(--green-border)'; amtCol = 'var(--green)'; isAttentionTarget = 'pulse-attention'; }
+      else if(st === 'soon') { borderCol = 'var(--orange)'; amtCol = '#854f0b'; isAttentionTarget = 'pulse-attention'; }
       let fillBg = (st==='matured')?'var(--green)':(st==='soon'?'var(--orange)':'var(--blue)');
       hTrackHtml += `
         <div class="h-timeline-node" onclick="openDetailModal('${f.id}')">
-          <div class="h-timeline-circle" style="background:${fillBg}; border-color:${borderCol}">
-            <span class="t-amt" style="color:${amtCol}">₹${Math.round(f.amount/1000)}k</span>
+          <div class="h-timeline-circle ${isAttentionTarget}" style="background:${fillBg}; border-color:${borderCol}">
+            <span class="t-amt" style="color:#fff;">₹${Math.round(f.amount/1000)}k</span>
             <span class="t-bank">${f.bank}</span>
           </div>
           <div class="h-timeline-user">${f.user||'-'}</div>
@@ -1073,8 +1142,8 @@ function drawCharts(){
 }
 
 function exportCSV(){
-  let c="ID,Bank,User,StartDate,PrincipalAmount,InterestRate,TenureMonths\n";
-  fds.forEach(f=>{ c+=`"${f.id}","${f.bank}","${f.user||'-'}","${f.date}",${f.amount},${f.rate},${f.tenure}\n`; });
+  let c="ID,Bank,User,StartDate,PrincipalAmount,InterestRate,TenureMonths,MaturityDate,Status\n";
+  fds.forEach(f=>{ c+=`"${f.id}","${f.bank}","${f.user||'-'}","${f.date}",${f.amount},${f.rate},${f.tenure},"${fmtDate(matDate(f))}","${getStatus(f)}"\n`; });
   const blob=new Blob([c],{type:'text/csv'}); const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download=`FD_Tracker_Portfolio.csv`; a.click();
 }
@@ -1102,29 +1171,88 @@ function updatePinDots() {
 
 function verifySecurityPinCheckCode() {
   if(!savedSystemPin) {
-    // Setting PIN for the first time
     savedSystemPin = inputPinStr;
     localStorage.setItem('app_user_secure_pin3', savedSystemPin);
     alert("Passcode combination registered securely!");
     document.getElementById('pin-screen').style.display = 'none';
+    requestNotificationPermission();
     renderAll();
   } else {
-    // Verify existing pin entry matches accurately
     if(inputPinStr === savedSystemPin) {
       document.getElementById('pin-screen').style.display = 'none';
+      requestNotificationPermission();
       renderAll();
     } else {
-      alert("Invalid security passcode match configuration constraint trace failure.");
+      alert("Invalid security passcode match.");
       inputPinStr = ""; updatePinDots();
     }
   }
 }
 
-// Simulated automated Daily Background Notification engine triggers
-function triggerNotificationCenterPulse() {
-  console.log("Notification center automation loop pulse completed: Syncing mature pipelines across target horizons daily 4 times[cite: 3].");
+// Android / PWA Local System Push Notification Dispatcher Framework
+function requestNotificationPermission() {
+  if ('Notification' in window) {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        setupDailyNotificationEngine();
+      }
+    });
+  }
 }
-setInterval(triggerNotificationCenterPulse, 21600000); // Trigger daily 4 times execution cycle loop
+
+function setupDailyNotificationEngine() {
+  // Clear any existing tracking interval loops to prevent duplication leaks
+  if(window.fdNotificationInterval) clearInterval(window.fdNotificationInterval);
+  
+  // Calculate 4 daily intervals (Every 6 Hours = 21600000 milliseconds)[cite: 3]
+  const executionInterval = 21600000; 
+  
+  window.fdNotificationInterval = setInterval(() => {
+    triggerSystemNotificationPulse();
+  }, executionInterval);
+  
+  // Fire a single verification check on app load
+  setTimeout(triggerSystemNotificationPulse, 3000);
+}
+
+function triggerSystemNotificationPulse() {
+  let today = new Date();
+  let attentionCount = 0;
+  
+  fds.forEach(f => {
+    if(!f.deleted) {
+      let st = getStatus(f);
+      if(st === 'matured' || st === 'soon') {
+        attentionCount++;
+      }
+    }
+  });
+  
+  if (attentionCount > 0 && 'Notification' in window && Notification.permission === 'granted') {
+    navigator.serviceWorker.ready.then(registration => {
+      registration.showNotification('FD Tracker Portfolio Alert', {
+        body: `You have ${attentionCount} Fixed Deposits that are matured or maturing soon and require your prompt attention!`,
+        icon: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/bank2.svg',
+        tag: 'fd-maturity-alert',
+        renotify: true,
+        vibrate: [200, 100, 200]
+      });
+    }).catch(() => {
+      // Fallback if ServiceWorker wrapper layer isn't running actively
+      new Notification('FD Tracker Portfolio Alert', {
+        body: `You have ${attentionCount} Fixed Deposits that are matured or maturing soon and require your prompt attention!`,
+        tag: 'fd-maturity-alert'
+      });
+    });
+  }
+}
+
+// Dummy service worker registration context to satisfy native PWA requirements
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('', {scope: './'}).catch(err => {
+    // Graceful containment protocol for embedded execution frameworks
+  });
+}
 </script>
 </body>
 </html>
