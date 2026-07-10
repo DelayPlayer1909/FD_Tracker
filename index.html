@@ -234,6 +234,21 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .pin-btn:active { background: var(--surface2); transform: scale(0.92); }
 .pin-btn.empty-btn { background: transparent; border: none; box-shadow: none; cursor: default; }
 
+/* Unique IDs */
+.card-uID{
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    position: absolute;
+    right: -5px;
+    top: 99px;
+    width: 41px;
+    height: 33px;
+    padding-left: 8px;
+    background-color: #fffcfc7d;
+    align-items: center;
+    border-radius: 35%;
+}
 /* ── ANALYZE TABS ── */
 .analyze-tabs{
   display:flex;gap:7px;margin-bottom:16px;flex-direction: column;
@@ -287,6 +302,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 <header class="topnav">
   <div class="topnav-brand"><div class="brand-icon"><i class="bi bi-bank2"></i></div>FD Tracker</div>
   <div id="invest-hdr-btns" style="display:flex;gap:8px">
+    <button style="cursor: pointer;font-size: 1.3rem;color: #fff;background-color: #5298dd;padding: 2px 8px;border-radius: 24%;border: none;margin-left: 12px;position: relative;" onclick="openNotifModal()" title="Notification Settings"><i class="bi bi-bell-fill"> </i></button>
     <button class="topnav-icon" title="Manage Banks" onclick="openBankModal()"><i class="bi bi-bank2"></i></button>
     <button class="topnav-icon" title="Manage Users" onclick="openUserModal()"><i class="bi bi-people-fill"></i></button>
     <button class="topnav-icon" title="Export CSV" onclick="exportCSV()"><i class="bi bi-download"></i></button>
@@ -316,6 +332,9 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
       <option value="amount-desc">Investment Principal (High to Low)</option>
       <option value="amount-asc">Investment Principal (Low to High)</option>
     </select>
+  </div>
+  <div style="display:flex; justify-content: flex-end; margin-bottom: 14px;">
+    <button class="btn btn-sm btn-blue" onclick="generateUniqueIds()"><i class="bi bi-upc-scan"></i> Assign Unique IDs (A00-Z99)</button>
   </div>
 
   <div class="tbl-section" id="sec-matured">
@@ -424,6 +443,24 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   </div>
 </div>
 
+<div class="modal-bg" id="notif-modal">
+  <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('notif-modal')">×</button>
+    <div class="modal-hdr"><h3>Notification Settings</h3></div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Set how often the system checks for matured FDs. <i>Note: The app must remain open in the background for local alerts to trigger.</i></p>
+    <div class="fr">
+      <label>Alert Frequency</label>
+      <select id="notif-freq">
+        <option value="60000">Every 1 Minute (Testing)</option>
+        <option value="300000">Every 5 Minutes</option>
+        <option value="3600000">Every 1 Hour</option>
+        <option value="21600000">Every 6 Hours</option>
+        <option value="86400000">Every 24 Hours</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="saveNotifSettings()">Save & Activate</button>
+  </div>
+</div>
+
 <div class="modal-bg" id="form-modal">
   <div class="modal"><div class="modal-grip"></div><button class="modal-close" onclick="closeModal('form-modal')">×</button>
     <div class="modal-hdr"><h3 id="form-title-h">Add New FD</h3></div>
@@ -484,6 +521,67 @@ function displayFmtDate(s){
   if(parts.length!==3) return s;
   const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0]}`;
+}
+
+// Notification Modal 
+// --------------------------------
+// NEW CODE: Notification Configuration Logic
+let notifIntervalMs = parseInt(localStorage.getItem('fd_notif_freq3')) || 21600000; // Defaults to 6 hours
+
+function openNotifModal() {
+  document.getElementById('notif-freq').value = notifIntervalMs.toString();
+  document.getElementById('notif-modal').classList.add('open');
+}
+
+function saveNotifSettings() {
+  notifIntervalMs = parseInt(document.getElementById('notif-freq').value);
+  localStorage.setItem('fd_notif_freq3', notifIntervalMs.toString());
+  closeModal('notif-modal');
+  
+  if ('Notification' in window) {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        setupDailyNotificationEngine();
+        alert("Alert settings saved! You will receive a test ping shortly.");
+      } else {
+        alert("Please allow notifications in your browser/device settings first.");
+      }
+    });
+  }
+}
+
+// OVERWRITE your existing setupDailyNotificationEngine with this updated one:
+function setupDailyNotificationEngine() {
+  // Clear any existing tracking interval loops to prevent duplication leaks
+  if(window.fdNotificationInterval) clearInterval(window.fdNotificationInterval);
+  
+  window.fdNotificationInterval = setInterval(() => {
+    triggerSystemNotificationPulse();
+  }, notifIntervalMs);
+  
+  // Fire a single verification check 2 seconds after saving to validate it works
+  setTimeout(triggerSystemNotificationPulse, 2000);
+}
+// --------------------------------
+
+// Unique ID Generator and Scanner
+function generateUniqueIds() {
+  fds.forEach((f, index) => {
+    // Math logic for A00 to Z99 
+    let letter = String.fromCharCode(65 + Math.floor(index / 100));
+    let number = (index % 100).toString().padStart(2, '0');
+    
+    f.displayId = letter + number;
+    
+    // Assign a submission date if it doesn't already exist
+    if (!f.createdAt) {
+      f.createdAt = new Date().toISOString(); 
+    }
+  });
+  
+  localStorage.setItem('fd_r3', JSON.stringify(fds));
+  renderAll();
+  alert("Unique IDs (A00-Z99) have been successfully assigned to all FDs based on submission order.");
 }
 
 // Analyze Tabs 
@@ -685,6 +783,7 @@ function createCardHtml(f,st,now){
         <div style="color: #ff9f23;background-color: #185fa5;padding: 3px 5px;border-radius: 6%;"><strong>Matures &nbsp;&nbsp;: ${displayFmtDate(fmtDate(md))}</strong></div>
         <div style="padding: 3px 5px;border-radius: 6%;">Start Date : ${displayFmtDate(f.date)} </div>
       </div>
+      <div class="card-uID">${f.displayId ? f.displayId : ''}</div>
     </div>
   `;
 }
@@ -755,8 +854,11 @@ function openDetailModal(id){
 
   document.getElementById('detail-stripe').style.background = f.deleted ? 'var(--red)' : (st==='matured'?'var(--green-border)':(st==='soon'?'var(--orange)':'var(--blue)'));
   document.getElementById('detail-title').innerText=`FD Details - ${f.bank} ${f.deleted ? '[DELETED LOG]' : ''}`;
-
+  let subDateStr = f.createdAt ? new Date(f.createdAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'}) : 'Not Recorded';
+  
   let contentHtml = `
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-upc-scan"></i> Unique ID</span><span class="detail-val" style="color:var(--blue-dk)">${f.displayId || 'Unassigned'}</span></div>
+    <div class="detail-row"><span class="detail-lbl"><i class="bi bi-clock"></i> Submission Date</span><span class="detail-val">${subDateStr}</span></div>
     <div class="detail-row"><span class="detail-lbl">Bank</span><span class="detail-val">${f.bank}</span></div>
     <div class="detail-row"><span class="detail-lbl">Holder Name</span><span class="detail-val">${f.user||'-'}</span></div>
     <div class="detail-row"><span class="detail-lbl">Booking Date</span><span class="detail-val">${displayFmtDate(f.date)}</span></div>
@@ -868,15 +970,22 @@ function saveFormSubmit(){
 
   if(!amt || !rate || !tenure || !d){ alert("Fill all fields."); return; }
 
+  // NEW CODE: Calculate next available ID and current timestamp
+  let nextIdx = fds.length;
+  let dId = String.fromCharCode(65 + Math.floor(nextIdx / 100)) + (nextIdx % 100).toString().padStart(2, '0');
+  let creationTime = new Date().toISOString();
+
   if(renewId){
     const old = fds.find(x=>x.id===renewId);
     if(old){ old.deleted = true; old.deleteReason = `Rolled Over into renewed system execution record.`; }
-    fds.push({id:'fd_'+Math.random().toString(36).substr(2,9), bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, deleted:false});
+    // Added displayId and createdAt
+    fds.push({id:'fd_'+Math.random().toString(36).substr(2,9), displayId: dId, createdAt: creationTime, bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, deleted:false});
   } else if(editId){
     let obj=fds.find(x=>x.id===editId);
-    if(obj){ obj.bank=b; obj.user=u; obj.date=d; obj.amount=amt; obj.rate=rate; obj.tenure=tenure; obj.description=ds; }
+    if(obj){ obj.bank=b; obj.user=u; obj.date=d; obj.amount=amt; obj.rate=rate; obj.tenure=tenure; obj.description=ds; } // Does not overwrite existing ID/createdAt
   } else {
-    fds.push({id:'fd_'+Math.random().toString(36).substr(2,9), bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, deleted:false});
+    // Added displayId and createdAt
+    fds.push({id:'fd_'+Math.random().toString(36).substr(2,9), displayId: dId, createdAt: creationTime, bank:b, user:u, date:d, amount:amt, rate:rate, tenure:tenure, description:ds, deleted:false});
   }
   localStorage.setItem('fd_r3',JSON.stringify(fds)); closeModal('form-modal'); renderAll();
 }
