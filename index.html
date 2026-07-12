@@ -327,6 +327,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   <div class="sort-row">
     <i class="bi bi-sort-down sort-icon"></i>
     <select id="sort-select" class="sort-sel" onchange="renderAll()">
+      <option value="unique-id">FD Card ID (Low to High) </option>
+      <option value="unique-id">FD Card ID (Low to High) </option>
       <option value="maturity-asc">Maturity Timeline (Soonest First)</option>
       <option value="maturity-desc">Maturity Timeline (Latest First)</option>
       <option value="amount-desc">Investment Principal (High to Low)</option>
@@ -694,6 +696,7 @@ function renderAll(){
   else if(sval=='amount-asc') activePool.sort((a,b)=>a.amount-b.amount);
   else if(sval=='maturity-asc') activePool.sort((a,b)=>matDate(a)-matDate(b));
   else if(sval=='maturity-desc') activePool.sort((a,b)=>matDate(b)-matDate(a));
+  else if(sval=='unique-id') activePool.sort((a,b)=> a.displayId-b.displayId);
 
   let matHtml='', soonHtml='', actHtml='';
   let mCount=0, sCount=0, aCount=0;
